@@ -1,0 +1,19 @@
+[project]
+name = "denial-triage"
+version = "0.1.0"
+description = "Denial triage and appeal agent on synthetic claim denials, with measured evals."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "anthropic>=0.40",
+    "pydantic>=2.7",
+]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
