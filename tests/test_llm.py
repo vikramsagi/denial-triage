@@ -23,3 +23,9 @@ def test_every_call_is_written_to_the_ledger():
     llm.register_mock("t", lambda u: {"x": 1})
     llm.call(tier="small", system="s", user="u", tool={"name": "t"}, purpose="test", run_id="abc")
     assert [e["run_id"] for e in budget.entries()] == ["abc"] and budget.entries()[0]["mock"] is True
+
+
+def test_module_scope_is_mock_too():
+    """Guards the import-time setting in conftest: module fixtures run before per-test fixtures."""
+    import os
+    assert os.environ["TRIAGE_MOCK"] == "1" and "ANTHROPIC_API_KEY" not in os.environ
