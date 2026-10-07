@@ -151,7 +151,8 @@ def submit_batch(*, tier: str, system: str, items: list[tuple[str, str]], tool: 
         "model": config.MODELS[tier]["id"], "max_tokens": max_tokens,
         "system": [{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}],
         "messages": [{"role": "user", "content": u}], "tools": [tool],
-        "tool_choice": {"type": "tool", "name": tool["name"]}}} for cid, u in items]
+        "tool_choice": ({"type": "tool", "name": tool["name"]} if config.MODELS[tier].get("forced_tool", True) else {"type": "auto"})}}
+        for cid, u in items]
     return _client().messages.batches.create(requests=reqs).id
 
 
