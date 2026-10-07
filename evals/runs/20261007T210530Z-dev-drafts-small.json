@@ -1,0 +1,1409 @@
+{
+  "run_id": "20261007T210530Z-drafts-small",
+  "mock": false,
+  "split": "dev",
+  "classifications_from": "20261007T153959Z-m_rules_small_think-681557",
+  "model": "claude-haiku-4-5-20251001",
+  "prompt_version": "draft_v3",
+  "letters": 61,
+  "passed_first_try": 13,
+  "passed_after_retry": 19,
+  "failed_twice": 29,
+  "sent_to_person": 40,
+  "limited_cases": 13,
+  "median_words": 116,
+  "cost_usd": 0.392583,
+  "cost_per_letter_usd": 0.006436,
+  "records": [
+    {
+      "denial_id": "DN-98795",
+      "letter": "Claim ID: DN-98795 [claim.denial_id]\nMember ID: W36031849 [claim.member_id]\nProcedure code: 29881 [claim.procedure_codes]\nService date: 2025-06-18 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that Lakeshore Medicaid Partners reverse the denial of claim DN-98795 and pay the allowed amount of 4840.57 USD [claim.allowed_amount].\n\nThe procedure code 29881 is covered after 6 or more weeks of failed conservative care [D3]. We ask that you reconsider this claim and advise if additional clinical documentation regarding conservative care treatment is needed to support payment. We are prepared to submit further records upon your request.\n\nPlease provide your reconsideration of this matter.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "DN-98795 does not appear in [claim.allowed_amount]: \"We request that Lakeshore Medicaid Partners reverse the denial of claim DN-98795 and pay the allowed amount of 4840.57 U\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.006840000000000001,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 102,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D3"
+      ]
+    },
+    {
+      "denial_id": "DN-15965",
+      "letter": "Claim ID: DN-15965 [claim.denial_id]\nMember ID: W29011264 [claim.member_id]\nProcedure code: 29881 [claim.procedure_codes]\nService date: 2025-10-21 [claim.service_date]\nPayer: Bluewater Mutual Insurance [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that you reconsider the denial and provide payment for this claim.\n\nThe provider is in network with Bluewater Mutual Insurance [D2]. The procedure code 29881 was performed on 2025-10-21 for diagnosis code M23.221 [claim.procedure_codes][claim.diagnosis_codes][claim.service_date]. The claim was submitted on 2025-11-14 [claim.submitted_date], within the 90-day filing limit [payer.filing_limit_days].\n\nPlease reconsider this claim and advise if additional documentation would support reversal of the denial.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.003544,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 90,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D4",
+        "D6"
+      ]
+    },
+    {
+      "denial_id": "DN-20644",
+      "letter": "Claim ID: DN-20644 [claim.denial_id]\nMember ID: W19438569 [claim.member_id]\nProcedure code: 99285 [claim.procedure_codes]\nService date: 2026-04-10 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-29 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe claim was accepted by the payer's clearinghouse on 2026-08-20 [D5], which is prior to the expiration of the 180-day filing limit [D4]. The payer's own system confirmed receipt and acceptance of the claim within the required timeframe. The subsequent denial based on timely filing does not reflect the documented submission date on record.\n\nPlease reconsider this appeal and advise of payment status. We are prepared to provide additional documentation if needed.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The payer's own system confirmed receipt and acceptance of the claim within the required timeframe.\"",
+        "makes a statement with no citation; cite it or remove it: \"The subsequent denial based on timely filing does not reflect the documented submission date on record.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.006756,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 109,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D4",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-39870",
+      "letter": "Claim ID: DN-39870 [claim.denial_id]\nMember ID: W23761173 [claim.member_id]\nProcedure code: 95810 [claim.procedure_codes]\nService date: 2025-08-05 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that Summit Care Advantage reverse the denial and pay this claim.\n\nThe payer's own coverage criteria for procedure code 95810 require a minimum of 6 weeks of conservative therapy before approval [D2]. The clinical note from the service date documents 10 weeks of failed conservative management prior to ordering the attended overnight sleep study [D5]. The documented conservative therapy history exceeds the payer's stated threshold. The rendering provider is credentialed with Summit Care Advantage [D3].\n\nPlease reconsider this denial. We are prepared to submit additional records if needed.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The documented conservative therapy history exceeds the payer's stated threshold.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007273999999999999,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 116,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D4",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-41346",
+      "letter": "Claim ID: DN-41346 [claim.denial_id]\nMember ID: W19222150 [claim.member_id]\nProcedure code: 95810 [claim.procedure_codes]\nService date: 2026-01-30 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-204 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nBenefit verification conducted on 2026-01-19 explicitly confirms that attended overnight sleep study is covered under the employer group plan rider [D5]. The employer benefit summary states the rider expands benefits to include attended overnight sleep study [D3]. The service performed on 2026-01-30 [claim.service_date] falls directly within this covered benefit category.\n\nPlease reconsider this claim based on the coverage confirmation in our records and advise if you require additional documentation.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.007294,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 106,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D3",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-40385",
+      "letter": "Claim ID: DN-40385 [claim.denial_id]\nMember ID: W93127201 [claim.member_id]\nProcedure code: 97110 [claim.procedure_codes]\nService date: 2025-11-18 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-204 [denial.reason_code]\n\nWe request reversal of the denial and payment of the claim.\n\nA benefit verification call on 2025-10-17 with reference REF-539709 confirmed that therapeutic exercise session is covered under a plan rider [D1]. The plan rider document lists therapeutic exercise session as a covered benefit [D5]. The denial states this service is not covered under the patient's current benefit plan, but the documentation confirms coverage was in effect at the time of service.\n\nPlease reconsider this claim. We are prepared to provide additional records as needed.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The denial states this service is not covered under the patient's current benefit plan, but the documentation confirms c\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007113,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 111,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-45867",
+      "letter": "Claim ID: DN-45867 [claim.denial_id]\nMember ID: W39498427 [claim.member_id]\nProcedure code: 95810 [claim.procedure_codes]\nService date: 2025-08-25 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that Summit Care Advantage reverse the denial and pay this claim.\n\nThe payer's medical policy for procedure code 95810 specifies that the service is covered after 6 or more weeks of failed conservative care [D4]. Clinical documentation from 2025-08-25 confirms that 6 weeks of documented conservative treatment failed before the attended overnight sleep study was ordered [D5]. The diagnosis is G47.33 with objective findings and worsening function documented on 2025-08-25 [D3]. The service meets the payer's stated coverage criteria.\n\nPlease reconsider this denial and advise of any additional records needed to support payment.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The service meets the payer's stated coverage criteria.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007439,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 121,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D3",
+        "D4",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-24006",
+      "letter": "Claim ID: DN-24006 [claim.denial_id]\nMember ID: W76700868 [claim.member_id]\nProcedure code: 29881 [claim.procedure_codes]\nService date: 2025-08-11 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-16 [denial.reason_code]\n\nWe request that Lakeshore Medicaid Partners reverse the denial of this claim and process payment.\n\nA 270/271 eligibility inquiry run on the service date of 2025-08-11 returned active coverage [D3]. The payer's letter dated 2025-09-18 states that coverage was terminated retroactively to 2025-07-19 [D5]. The service was performed on 2025-08-11, which is after the retroactive termination date stated by the payer. The eligibility verification on the service date itself confirmed active coverage at the time the claim was submitted and the service was rendered. The rendering provider is credentialed with Lakeshore Medicaid Partners [D1].\n\nPlease reconsider this denial and advise if additional records are needed to support payment.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "states 2025-08-11 with no citation: \"The service was performed on 2025-08-11, which is after the retroactive termination date stated by the payer.\"",
+        "makes a statement with no citation; cite it or remove it: \"The eligibility verification on the service date itself confirmed active coverage at the time the claim was submitted an\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007867,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 134,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D3",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-28780",
+      "letter": "Claim ID: DN-28780 [claim.denial_id]\nMember ID: W21232290 [claim.member_id]\nProcedure code: J9271 [claim.procedure_codes]\nService date: 2025-07-09 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-16 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe claim includes prior authorization number PA-9644087 [claim.prior_auth_number]. The rendering provider NPI 1056295330 is credentialed with Summit Care Advantage [D1]. Clinical documentation dated 2025-07-09 supports diagnosis C34.90 with worsening function [D2][claim.diagnosis_codes]. History on 2025-07-09 documents 11 weeks of failed conservative management prior to ordering the pembrolizumab infusion [D5]. The payer's coverage criteria for J9271 require minimum 6 weeks of conservative therapy before approval [D4], and the documented 11 weeks exceeds this requirement [D5].\n\nPlease reconsider this claim and advise if you require additional supporting records.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.00771,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 122,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "human_review",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D4",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-17973",
+      "letter": "Claim ID: DN-17973 [claim.denial_id]\nMember ID: W08551907 [claim.member_id]\nProcedure code: 93458 [claim.procedure_codes]\nService date: 2025-07-28 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-22 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe payer denied this claim based on coordination of benefits, citing Granite State Benefit Plan as primary coverage [D1]. However, the patient provided proof that Granite State Benefit Plan coverage ended on 2025-04-17 [D4]. The service was provided on 2025-07-28 [claim.service_date], which was after the Granite State coverage termination date. The payer's COB file does not reflect that Granite State Benefit Plan was no longer in effect at the time of service [D1][D4].\n\nPlease reconsider this denial and advise on next steps.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.0073030000000000005,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 119,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "human_review",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-24886",
+      "letter": "Claim ID: DN-24886 [claim.denial_id]\nMember ID: W07905547 [claim.member_id]\nProcedure code: 45380 [claim.procedure_codes]\nService date: 2025-10-16 [claim.service_date]\nPayer: Bluewater Mutual Insurance [payer.name]\nDenial reason code: CO-15 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe authorization PA-3155578 was approved and submitted within the payer's filing limit [claim.prior_auth_number][payer.filing_limit_days]. The operative note documents that intraoperative findings required converting to procedure code 45380 [D5]. The payer's denial stated the authorization does not apply to the billed services; however, the clinical documentation supports the procedure code change based on findings discovered during the operation [D5].\n\nPlease reconsider this denial and advise if you require additional records to verify the clinical rationale for the procedure conversion.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.007188,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 114,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-13591",
+      "letter": "Claim ID: DN-13591 [claim.denial_id]\nMember ID: W72046899 [claim.member_id]\nProcedure code: 93458 [claim.procedure_codes]\nService date: 2025-09-15 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-29 [denial.reason_code]\n\nWe request that Summit Care Advantage reverse the denial and pay this claim.\n\nThe claim was accepted by the payer on 2026-03-10, which is within 365 days after the service date of 2025-09-15. [D1][claim.service_date][payer.filing_limit_days] The timely filing rule for Summit Care Advantage allows 365 days after service to file. [D2] Because the claim was submitted within the contractual filing window, the denial based on an expired filing deadline should be reversed.\n\nPlease reconsider this claim and advise if you require additional documentation to support payment.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.007137,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 111,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D2"
+      ]
+    },
+    {
+      "denial_id": "DN-88024",
+      "letter": "Claim ID: DN-88024 [claim.denial_id]\nMember ID: W67280190 [claim.member_id]\nProcedure code: 93306 [claim.procedure_codes]\nService date: 2026-02-16 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-96 [denial.reason_code]\n\nWe request that Summit Care Advantage reconsider and reverse the denial of this claim.\n\nThe claim was denied as a non-covered charge on 2026-03-21 [denial.denial_date]. The patient presented on 2026-02-16 with a symptom duration of 1 week [D1]. Summit Care Advantage's medical policy for procedure code 93306 requires at least 6 weeks of failed conservative treatment [D7]. We respectfully request reconsideration of this denial and welcome the opportunity to provide any additional clinical documentation that may support coverage.\n\nPlease review this appeal and advise on next steps.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.00355,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 113,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "write_off",
+      "true_evidence_lines": [
+        "D1",
+        "D7"
+      ]
+    },
+    {
+      "denial_id": "DN-11403",
+      "letter": "Claim ID: DN-11403 [claim.denial_id]\nMember ID: W94245271 [claim.member_id]\nProcedure code: 93458 [claim.procedure_codes]\nService date: 2025-07-31 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-27 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nAn official eligibility inquiry run on 2025-07-31 returned active coverage [D1]. The payer's retroactive termination notice received 2025-09-13 states coverage ended on 2025-07-22 [D2], nine days before the service date of 2025-07-31 [claim.service_date]. The service was rendered on a date when eligibility confirmation showed active coverage in the payer's own system [D1].\n\nPlease reconsider this appeal and advise of your decision. We are available to provide additional records as needed.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.00741,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 107,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D2"
+      ]
+    },
+    {
+      "denial_id": "DN-68011",
+      "letter": "Claim ID: DN-68011 [claim.denial_id]\nMember ID: W55956782 [claim.member_id]\nProcedure code: V5261 [claim.procedure_codes]\nService date: 2026-01-01 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-96 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nOn 2025-12-07, benefit verification confirmed that a rider benefit applies to binaural hearing aid fitting [D3]. The benefit summary documents that the group rider is attached to the member's plan [D4]. The service billed under code V5261 [claim.procedure_codes] is a hearing aid fitting covered by this rider benefit. The denial as a non-covered charge appears to reflect a failure to apply the rider coverage to this claim.\n\nPlease reconsider this claim and advise of your decision. We are prepared to provide additional documentation on request.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The denial as a non-covered charge appears to reflect a failure to apply the rider coverage to this claim.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.00692,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 122,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-45608",
+      "letter": "Claim ID: DN-45608 [claim.denial_id]\nMember ID: W84308589 [claim.member_id]\nProcedure code: 74177 [claim.procedure_codes]\nService date: 2026-02-21 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-27 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nA real-time eligibility verification performed on 2026-02-21 confirmed that coverage was active [D3]. The payer issued notice of coverage retro-termination effective 2026-02-16 on 2026-04-05 [D2], which is after the service date of 2026-02-21 [claim.service_date] and after the claim was submitted on 2026-03-21 [claim.submitted_date]. The service was rendered when eligibility verification confirmed coverage was in effect.\n\nPlease reconsider this denial and advise if you require any additional documentation.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The service was rendered when eligibility verification confirmed coverage was in effect.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.0073360000000000005,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 104,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D3"
+      ]
+    },
+    {
+      "denial_id": "DN-36779",
+      "letter": "Claim ID: DN-36779 [claim.denial_id]\nMember ID: W12726111 [claim.member_id]\nProcedure code: 93458 [claim.procedure_codes]\nService date: 2026-03-01 [claim.service_date]\nPayer: Bluewater Mutual Insurance [payer.name]\nDenial reason code: CO-197 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe service on 2026-03-01 was an emergent workup, with triage acuity level 2 and left heart catheterization with coronary angiography started without delay [D4]. Your policy exempts emergency services from precertification requirements [D2]. Because this service qualifies as emergent care under your own policy criteria, the precertification requirement does not apply to this claim [D2][D4].\n\nPlease reconsider this denial and advise if you require any additional clinical or billing records to process this appeal.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.007129,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 111,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "human_review",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-36013",
+      "letter": "Claim ID: DN-36013 [claim.denial_id]\nMember ID: W45253730 [claim.member_id]\nProcedure code: 74177 [claim.procedure_codes]\nService date: 2026-01-27 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-27 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe payer's real-time eligibility verification on 2026-01-27 confirmed that coverage was active [D4]. The payer subsequently applied a retroactive termination date of 2026-01-05 [D1]. Since the eligibility system showed coverage active on the service date, the service was provided under active coverage and should be paid.\n\nPlease reconsider this claim and advise if you require any additional documentation.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"Since the eligibility system showed coverage active on the service date, the service was provided under active coverage \""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.006829999999999999,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 95,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-53005",
+      "letter": "Claim ID: DN-53005 [claim.denial_id]\nMember ID: W59676633 [claim.member_id]\nProcedure code: V5261 [claim.procedure_codes]\nService date: 2026-04-04 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-96 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe claim was denied as non-covered under reason code CO-96 [denial.reason_code]. However, benefit verification completed on 2026-03-14 confirms that a rider benefit applies to binaural hearing aid fitting for this member [D3]. The member's plan benefit summary documents that a group rider attached to the plan adds coverage for binaural hearing aid fitting [D4]. The procedure code V5261 [claim.procedure_codes] for the service date 2026-04-04 [claim.service_date] falls within the scope of this documented rider benefit.\n\nPlease reconsider this denial and advise if you require additional documentation to support payment of this claim.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.0073030000000000005,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 128,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-63789",
+      "letter": "Claim ID: DN-63789 [claim.denial_id]\nMember ID: W60355240 [claim.member_id]\nProcedure code: 72148 [claim.procedure_codes]\nService date: 2026-01-04 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that Summit Care Advantage reconsider and reverse the denial of this claim.\n\nThe claim was denied as non-covered because the service was not deemed medically necessary [denial.reason_code]. Summit Care Advantage policy for procedure code 72148 requires at least 6 weeks of failed conservative treatment [D1]. The clinical documentation dated 2026-01-04 indicates symptoms present for 1 week with no conservative treatment documented prior to the MRI [D4].\n\nWe ask that you reconsider this denial and advise whether additional clinical documentation or records would support reconsideration of this claim.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.003476,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 115,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-48852",
+      "letter": "Claim ID: DN-48852 [claim.denial_id]\nMember ID: W44924349 [claim.member_id]\nProcedure code: 45380 [claim.procedure_codes]\nService date: 2026-04-23 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-22 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim as submitted.\n\nThe claim was denied under CO-22 coordination of benefits, with the payer indicating that Granite State Benefit Plan is primary [D5]. However, Granite State Benefit Plan coverage ended on 2026-04-01 [D2]. The service was rendered on 2026-04-23 [claim.service_date], after Granite State coverage had terminated [D2][claim.service_date]. On the service date, Lakeshore Medicaid Partners was the primary and liable payer. The provider is credentialed with Lakeshore Medicaid Partners [D6].\n\nPlease reconsider this appeal and allow us to submit additional documentation if needed.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "22 does not appear in [D5]: \"The claim was denied under CO-22 coordination of benefits, with the payer indicating that Granite State Benefit Plan is \"",
+        "makes a statement with no citation; cite it or remove it: \"On the service date, Lakeshore Medicaid Partners was the primary and liable payer.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007686999999999999,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 119,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-62012",
+      "letter": "Claim ID: DN-62012 [claim.denial_id]\nMember ID: W57658758 [claim.member_id]\nProcedure code: 93458 [claim.procedure_codes]\nService date: 2025-07-17 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-29 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe claim was accepted by the payer on 2025-10-26 [D6], which is within 180 days of the service date of 2025-07-17 [claim.service_date][payer.filing_limit_days]. Northwind Health Plan's filing limit is 180 days from the date of service [D4]. The denial on the basis of timely filing should be reconsidered.\n\nPlease reconsider this appeal. We can provide additional documentation upon request.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The denial on the basis of timely filing should be reconsidered.\"",
+        "makes a statement with no citation; cite it or remove it: \"We can provide additional documentation upon request.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007012,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 95,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D4",
+        "D6"
+      ]
+    },
+    {
+      "denial_id": "DN-71814",
+      "letter": "Claim ID: DN-71814 [claim.denial_id]\nMember ID: W75132347 [claim.member_id]\nProcedure code: 72148 [claim.procedure_codes]\nService date: 2025-09-24 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-22 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nLakeshore Medicaid Partners denied this claim citing coordination of benefits. However, the termination letter from Crestline Employers Trust confirms that coverage ended on 2025-05-28 [D2], before the service date of 2025-09-24 [claim.service_date]. The payer's records still list Crestline Employers Trust as primary [D3], which does not reflect the ended coverage. The service was provided when Lakeshore Medicaid Partners was the member's only active coverage and is therefore responsible for payment.\n\nPlease reconsider this claim. We are available to provide additional documentation if needed.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"Lakeshore Medicaid Partners denied this claim citing coordination of benefits.\"",
+        "makes a statement with no citation; cite it or remove it: \"The service was provided when Lakeshore Medicaid Partners was the member's only active coverage and is therefore respons\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.0073609999999999995,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 120,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D3"
+      ]
+    },
+    {
+      "denial_id": "DN-36956",
+      "letter": "Claim ID: DN-36956 [claim.denial_id]\nMember ID: W60711502 [claim.member_id]\nProcedure code: 93458 [claim.procedure_codes]\nService date: 2026-05-05 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-27 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe payer's eligibility check system confirmed the member had an active plan on 2026-05-05 with reference REF-331692 [D4]. The payer's subsequent correspondence on 2026-06-02 applied a retroactive termination date of 2026-04-29 [D2]. Since the eligibility verification on the service date showed active coverage [D4], the service was rendered while the payer's own records confirmed plan status as active.\n\nPlease reconsider this appeal and advise whether additional records are needed to support this claim.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.0070810000000000005,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 110,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-91577",
+      "letter": "Claim ID: DN-91577 [claim.denial_id]\nMember ID: W60672632 [claim.member_id]\nProcedure code: 72148 [claim.procedure_codes]\nService date: 2026-05-01 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that you reconsider the denial and approve payment for this claim.\n\nThe service was ordered at the patient's first visit on 2026-05-01 after 1 week of symptoms with no prior therapy [D4]. Your medical policy for procedure code 72148 states that coverage is provided after 6 or more weeks of failed conservative care [D1]. We ask that you reconsider whether the timing of this service warrants coverage under your plan's criteria or whether additional clinical documentation supports medical necessity.\n\nPlease reconsider this appeal and advise if you require additional records from the clinical file.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.003478,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 122,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-14039",
+      "letter": "Claim ID: DN-14039 [claim.denial_id]\nMember ID: W25438434 [claim.member_id]\nProcedure code: 95810 [claim.procedure_codes]\nService date: 2026-04-25 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that Summit Care Advantage reverse the denial and pay this claim.\n\nThe member was diagnosed with obstructive sleep apnea, moderate [claim.diagnosis_codes]. The payer requested documentation of medical necessity for procedure 95810 on 2026-06-01 [D1]. The sleep study procedure is supported by the diagnosis code on file [claim.diagnosis_codes]. We respectfully request reconsideration of the medical necessity denial and welcome the opportunity to submit any additional clinical documentation you may require.\n\nPlease reconsider this appeal and advise of the determination.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.003488,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 106,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "fix_and_resubmit",
+      "true_evidence_lines": [
+        "D1",
+        "D2"
+      ]
+    },
+    {
+      "denial_id": "DN-56827",
+      "letter": "Claim ID: DN-56827 [claim.denial_id]\nMember ID: W98518314 [claim.member_id]\nProcedure code: 74177 [claim.procedure_codes]\nService date: 2026-04-06 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-29 [denial.reason_code]\n\nWe request that you reverse the timely filing denial and pay this claim.\n\nThe service was provided on 2026-04-06 [claim.service_date]. The payer's timely filing rule requires submission within 180 days after service [D2]. The clearinghouse acceptance report documents that the claim was accepted by the payer on 2026-09-04 [D5], which falls within the 180-day filing window [claim.service_date][D2][D5].\n\nPlease reconsider this denial and allow us to resubmit any additional documentation you may require.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.007006,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 98,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-85877",
+      "letter": "Claim ID: DN-85877 [claim.denial_id]\nMember ID: W95712727 [claim.member_id]\nProcedure code: 29881 [claim.procedure_codes]\nService date: 2026-01-09 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-4 [denial.reason_code]\n\nWe request that Summit Care Advantage reverse the denial and pay the claim.\n\nPrior authorization PA-6896851 covered procedure code 29880 [D3]. The operative note dated 2026-01-09 documents that intraoperative findings made code 29881 medically required instead of 29880 [D6]. The billed code 29881 reflects the procedure that was clinically necessary based on findings during the case, not a code-modifier mismatch [D6]. The denial reason CO-4 does not account for the clinical documentation supporting the billed code.\n\nPlease reconsider this appeal and allow us to provide any additional records you may need.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "states 4 with no citation: \"The denial reason CO-4 does not account for the clinical documentation supporting the billed code.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.0072840000000000005,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 117,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D3",
+        "D6"
+      ]
+    },
+    {
+      "denial_id": "DN-77417",
+      "letter": "Claim ID: DN-77417 [claim.denial_id]\nMember ID: W11545834 [claim.member_id]\nProcedure code: 74177 [claim.procedure_codes]\nService date: 2025-11-12 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-27 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nA real-time eligibility check performed on 2025-11-12 confirmed coverage was active [D4]. The payer subsequently applied a retroactive termination date of 2025-11-09 through correspondence dated 2026-01-01 [D3]. Because the eligibility verification at the point of service on 2025-11-12 [D4] showed active coverage, the service was appropriately rendered under valid coverage status at that time. The retroactive application of a termination date after service delivery and billing contradicts the active status confirmed by the payer's own real-time system.\n\nPlease reconsider this denial and advise if you need additional documentation.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The retroactive application of a termination date after service delivery and billing contradicts the active status confi\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.0071070000000000005,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 125,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-42957",
+      "letter": "Claim ID: DN-42957 [claim.denial_id]\nMember ID: W04208741 [claim.member_id]\nProcedure code: 72148 [claim.procedure_codes]\nService date: 2025-08-27 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe provider's records document 10 weeks of unsuccessful conservative care leading to the MRI of the lumbar spine without contrast on 2025-08-27 [D2]. The payer's medical policy states that CPT 72148 is covered after 6 or more weeks of failed conservative care [D5]. The clinical documentation shows objective findings consistent with M54.16 on examination [D3]. The patient's clinical course meets the payer's own coverage criteria for this service.\n\nPlease reconsider this denial and advise if you require any additional documentation.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The patient's clinical course meets the payer's own coverage criteria for this service.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007379999999999999,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 117,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D3",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-11930",
+      "letter": "Claim ID: DN-11930 [claim.denial_id]\nMember ID: W83113510 [claim.member_id]\nProcedure code: 29881 [claim.procedure_codes]\nService date: 2025-08-25 [claim.service_date]\nPayer: Bluewater Mutual Insurance [payer.name]\nDenial reason code: CO-197 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe payer's authorization tracking system contains no record of a prior authorization request for procedure 29881 [D3]. The elective procedure was scheduled on 2025-07-31, and prior authorization was not requested at that time [D4]. The service was delivered on 2025-08-25 [claim.service_date], and the member received the authorized care. We ask for reconsideration of this claim and welcome the opportunity to provide any additional records you may need.\n\nPlease review this appeal and advise of your determination.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.006956,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 113,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-37254",
+      "letter": "Claim ID: DN-37254 [claim.denial_id]\nMember ID: W41958452 [claim.member_id]\nProcedure code: 95810 [claim.procedure_codes]\nService date: 2026-04-04 [claim.service_date]\nPayer: Medicare Part B (synthetic jurisdiction) [payer.name]\nDenial reason code: CO-29 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe payer requires claims to be filed within 365 days of the service date [D1][payer.filing_limit_days]. The service was provided on 2026-04-04 [claim.service_date], and the payer accepted the claim submission on 2027-02-22 [D3]. This acceptance date falls within the required filing window [D1][D3].\n\nPlease reconsider this appeal and advise us of your decision. We are prepared to submit additional documentation upon request.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.00688,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 100,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D3"
+      ]
+    },
+    {
+      "denial_id": "DN-30166",
+      "letter": "Claim ID: DN-30166 [claim.denial_id]\nMember ID: W10640674 [claim.member_id]\nProcedure code: 99285 [claim.procedure_codes]\nService date: 2025-06-04 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-27 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe payer denied the claim based on coverage termination effective 2025-05-30 [D1]. However, on 2025-06-04, the service date, a real-time eligibility check confirmed that member coverage was active [D2]. The patient paid the required copay of 20 USD at the time of service, reflecting the expectation of active coverage [D3]. The payer's retroactive termination notice conflicts with the eligibility verification obtained on the same date the service was rendered [D2][D1].\n\nPlease reconsider this denial and advise if you need additional documentation to verify the eligibility check results or other records supporting this claim.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.007248,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 130,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D2"
+      ]
+    },
+    {
+      "denial_id": "DN-62058",
+      "letter": "Claim ID: DN-62058 [claim.denial_id]\nMember ID: W64576077 [claim.member_id]\nProcedure code: 95810 [claim.procedure_codes]\nService date: 2025-09-21 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-31 [denial.reason_code]\n\nWe request that Summit Care Advantage reverse the denial and pay the claim.\n\nThe denial correspondence indicates the payer believed Harborview Union Health Fund is primary [D2]. However, Harborview Union Health Fund certificate of creditable coverage shows an end date of 2025-05-25 [D5], which precedes the service date of 2025-09-21 [claim.service_date]. At the time of service, Summit Care Advantage was the patient's only active coverage and should have processed the claim accordingly.\n\nPlease reconsider this claim and advise if you require any additional records to verify the patient's coverage status at the time of service.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"At the time of service, Summit Care Advantage was the patient's only active coverage and should have processed the claim\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007327,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 121,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-29077",
+      "letter": "Claim ID: DN-29077 [claim.denial_id]\nMember ID: W16637292 [claim.member_id]\nProcedure code: 29881 [claim.procedure_codes]\nService date: 2025-06-07 [claim.service_date]\nPayer: Bluewater Mutual Insurance [payer.name]\nDenial reason code: CO-29 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe clearinghouse confirms the payer received the original claim on 2025-07-17 [D4]. The service date was 2025-06-07 [claim.service_date]. Bluewater Mutual Insurance's timely filing rule requires submission within 90 days after service [D6]. The claim was submitted and received by the payer well within this window.\n\nPlease reconsider this denial and advise if you require any additional documentation.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The claim was submitted and received by the payer well within this window.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.00699,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 94,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D4",
+        "D6"
+      ]
+    },
+    {
+      "denial_id": "DN-56758",
+      "letter": "Claim ID: DN-56758 [claim.denial_id]\nMember ID: W77006645 [claim.member_id]\nProcedure code: 93458 [claim.procedure_codes]\nService date: 2026-03-18 [claim.service_date]\nPayer: Bluewater Mutual Insurance [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe payer's coverage criteria for CPT 93458 require a minimum of 6 weeks of conservative therapy before approval [D3]. The clinical documentation records that 6 weeks of unsuccessful conservative care was completed before the left heart catheterization with coronary angiography performed on 2026-03-18 [D5]. The service satisfies the payer's stated criterion for medical necessity.\n\nPlease reconsider this denial and allow us to provide any additional records you may require to process this claim for payment.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The service satisfies the payer's stated criterion for medical necessity.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007188,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 112,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D3",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-79371",
+      "letter": "Claim ID: DN-79371 [claim.denial_id]\nMember ID: W43126265 [claim.member_id]\nProcedure code: 29881 [claim.procedure_codes]\nService date: 2025-06-24 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that Lakeshore Medicaid Partners reverse the denial and pay the claim.\n\nThe payer's medical policy for procedure code 29881 specifies that the service is covered after 6 or more weeks of failed conservative care [D1]. The clinical note documents that the patient underwent 7 weeks of unsuccessful conservative care prior to the knee arthroscopy with meniscectomy performed on 2025-06-24 [D4]. The exam on 2025-06-24 shows objective findings consistent with the diagnosis code M23.221 [D5]. The service meets the payer's own stated coverage criteria and was authorized under prior authorization number PA-9884315 [claim.prior_auth_number].\n\nPlease reconsider this appeal and advise of your decision. We are prepared to submit additional records if needed.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.003826,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 138,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D4",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-60969",
+      "letter": "Claim ID: DN-60969 [claim.denial_id]\nMember ID: W83167208 [claim.member_id]\nProcedure code: 93306 [claim.procedure_codes]\nService date: 2025-10-05 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-96 [denial.reason_code]\n\nWe request that you reconsider the denial and provide payment for this claim.\n\nThe claim was submitted within the filing limit of 365 days [payer.filing_limit_days]. The service was performed on 2025-10-05 [claim.service_date] and submitted on 2025-11-01 [claim.submitted_date]. We respectfully ask that you review the clinical circumstances of this case and reconsider whether coverage criteria have been met. Additional documentation is available upon request.\n\nPlease reconsider this denial and advise the outcome at your earliest convenience.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.003487,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 101,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D4",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-83094",
+      "letter": "Claim ID: DN-83094 [claim.denial_id]\nMember ID: W92467778 [claim.member_id]\nProcedure code: 99285 [claim.procedure_codes]\nService date: 2026-02-17 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-197 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe claim was denied for absent precertification/authorization [denial.reason_code]. However, Lakeshore Medicaid Partners provider manual states that prior authorization is not required for emergency services [D2]. The service provided on 2026-02-17 was an emergency department visit with acuity level 2, documented as an emergent workup that began without delay [D3]. The payer's own policy exempts this type of service from the authorization requirement that triggered the denial.\n\nPlease reconsider this appeal and advise if you need any additional documentation from our records.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The payer's own policy exempts this type of service from the authorization requirement that triggered the denial.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007124999999999999,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 118,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D3"
+      ]
+    },
+    {
+      "denial_id": "DN-97484",
+      "letter": "Claim ID: DN-97484 [claim.denial_id]\nMember ID: W72589313 [claim.member_id]\nProcedure code: 29881 [claim.procedure_codes]\nService date: 2025-07-11 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe knee arthroscopy with meniscectomy was ordered at the first visit after one week of symptoms with no prior therapy [D1]. Your coverage criteria for procedure code 29881 require a minimum of six weeks of conservative therapy before approval [D4]. The clinical documentation shows the procedure was performed before this prerequisite could be satisfied.\n\nWe respectfully ask for reconsideration of this denial and remain available to submit any additional records you may require.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The clinical documentation shows the procedure was performed before this prerequisite could be satisfied.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.006993,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 110,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-67576",
+      "letter": "Claim ID: DN-67576 [claim.denial_id]\nMember ID: W91801534 [claim.member_id]\nProcedure code: 95810 [claim.procedure_codes]\nService date: 2026-04-20 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-204 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nA benefit verification call conducted on 2026-04-03 confirms that an attended overnight sleep study is covered under the plan rider [D1]. The plan rider document lists attended overnight sleep study as a covered benefit [D2]. The service billed under procedure code 95810 [claim.procedure_codes] on 2026-04-20 [claim.service_date] falls within the covered benefit documented in the rider and verified prior to the service date.\n\nPlease reconsider this claim and advise the outcome. We are prepared to provide additional records upon request.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.007033,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 116,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D2"
+      ]
+    },
+    {
+      "denial_id": "DN-40350",
+      "letter": "Claim ID: DN-40350 [claim.denial_id]\nMember ID: W87110100 [claim.member_id]\nProcedure code: 93458 [claim.procedure_codes]\nService date: 2025-09-08 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe service was performed emergently in the emergency department when the patient arrived by ambulance with acute symptoms [D3]. Summit Care Advantage's provider manual states that prior authorization is not required for emergency services [D1], which recognizes that emergency services are medically necessary by their nature. The emergency cardiac catheterization on 2025-09-08 [claim.service_date] meets the criteria for emergency care and should not have been denied on medical necessity grounds.\n\nPlease reconsider this denial and advise us of your decision. We are available to provide additional clinical records if needed.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.003559,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 126,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D3"
+      ]
+    },
+    {
+      "denial_id": "DN-32477",
+      "letter": "Claim ID: DN-32477 [claim.denial_id]\nMember ID: W21854274 [claim.member_id]\nProcedure code: 22612 [claim.procedure_codes]\nService date: 2025-09-26 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-16 [denial.reason_code]\n\nWe request that Northwind Health Plan reconsider this denial and approve payment of the claim.\n\nThe service was elective and scheduled in advance on 2025-09-05 [D6]. The treatment consent form was on file and check-in was completed without issue [D4][D3]. Patient copay was collected at the time of service [D2]. We recognize that the authorization step was not completed prior to the procedure [D6][D8] and respectfully request reconsideration of this claim in light of the advance scheduling and preparation documented in the record.\n\nPlease review this request and let us know if additional information from the medical record would support approval.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.003592,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 127,
+      "flags": [],
+      "route": "human_review",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D6",
+        "D8"
+      ]
+    },
+    {
+      "denial_id": "DN-27999",
+      "letter": "Claim ID: DN-27999 [claim.denial_id]\nMember ID: W48638956 [claim.member_id]\nProcedure code: 95810 [claim.procedure_codes]\nService date: 2025-12-25 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that Northwind Health Plan reverse the denial and pay this claim.\n\nBenefit verification dated 2025-12-10 confirms that a rider benefit applies to attended overnight sleep study [D4]. The member's plan includes a group rider that provides coverage for attended overnight sleep study [D6]. The service rendered on 2025-12-25 was a sleep study with procedure code 95810 [claim.service_date][claim.procedure_codes]. The denial based on medical necessity does not account for the rider benefit that was in effect at the time of service.\n\nPlease reconsider this claim for payment. We are available to provide any additional records you may require.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The denial based on medical necessity does not account for the rider benefit that was in effect at the time of service.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007229,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 124,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D4",
+        "D6"
+      ]
+    },
+    {
+      "denial_id": "DN-67112",
+      "letter": "Claim ID: DN-67112 [claim.denial_id]\nMember ID: W03679622 [claim.member_id]\nProcedure code: 93306 [claim.procedure_codes]\nService date: 2025-06-02 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-96 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nNorthwind Health Plan's medical policy for procedure code 93306 requires at least 6 weeks of failed conservative treatment. [D5] The clinical documentation for this claim shows that 6 weeks of failed conservative management was documented prior to ordering the transthoracic echocardiogram on 2025-06-02. [D2] The exam on 2025-06-02 confirms objective findings consistent with diagnosis code R06.02. [D3] The service met your plan's stated medical necessity requirement and should not have been denied as a non-covered charge.\n\nPlease reconsider this appeal and advise of your decision. We are happy to provide additional clinical records upon request.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.003707,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 132,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D3",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-53098",
+      "letter": "Claim ID: DN-53098 [claim.denial_id]\nMember ID: W24098818 [claim.member_id]\nProcedure code: 74177 [claim.procedure_codes]\nService date: 2025-09-16 [claim.service_date]\nPayer: Bluewater Mutual Insurance [payer.name]\nDenial reason code: CO-29 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe claim was accepted by the payer on 2025-10-10 [D2], which falls within the 90-day filing limit from the service date of 2025-09-16 [claim.service_date][payer.filing_limit_days]. The clearinghouse acceptance report documents receipt by the payer in batch B25211 [D2], establishing that the claim was filed timely.\n\nPlease reconsider this denial and advise the status of payment.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.006843,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 91,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D3"
+      ]
+    },
+    {
+      "denial_id": "DN-41313",
+      "letter": "Claim ID: DN-41313 [claim.denial_id]\nMember ID: W66845054 [claim.member_id]\nProcedure code: 95810 [claim.procedure_codes]\nService date: 2026-04-13 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that Northwind Health Plan reconsider this claim denial and provide payment.\n\nThe claim was denied as not medically necessary under the payer's policy for CPT 95810. [D5] The service was performed on 2026-04-13 with prior authorization number PA-9820978 [claim.prior_auth_number][claim.service_date]. We ask that you reconsider whether the clinical documentation supports medical necessity under your criteria.\n\nPlease review this appeal and contact our office if you need additional records to support reconsideration of this claim.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.003471,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 101,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-33069",
+      "letter": "Claim ID: DN-33069 [claim.denial_id]\nMember ID: W31865491 [claim.member_id]\nProcedure code: 74177 [claim.procedure_codes]\nService date: 2025-09-01 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-31 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nAn eligibility inquiry (270/271) run on the service date returned active coverage with reference REF-599947 [D4]. The patient's identity was verified with photo ID at the time of service [D5]. The payer's notice of retro-termination effective 2025-08-10 was received on 2025-09-25 [D1], which is after the service date of 2025-09-01 [claim.service_date]. The claim was filed within the payer's filing limit of 365 days [payer.filing_limit_days], submitted on 2025-09-19 [claim.submitted_date].\n\nPlease reconsider this denial and advise if you need any additional documentation to support payment of this claim.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.007579,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 123,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-82634",
+      "letter": "Claim ID: DN-82634 [claim.denial_id]\nMember ID: W35180619 [claim.member_id]\nProcedure code: 74177 [claim.procedure_codes]\nService date: 2025-10-28 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that Summit Care Advantage reverse the denial and pay this claim.\n\nOn 2025-10-28, the member presented with acute right lower quadrant pain and underwent triage with acuity level 2, at which time CT of the abdomen and pelvis with contrast was started without delay as an emergent workup [D8]. Summit Care Advantage's provider manual states that prior authorization is not required for emergency services [D7]. The clinical record documents the emergent nature and medical necessity of the imaging performed on the date of service [D8].\n\nPlease reconsider this denial. We are available to provide additional clinical records or documentation upon request.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.007205,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 129,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D7",
+        "D8"
+      ]
+    },
+    {
+      "denial_id": "DN-16957",
+      "letter": "Claim ID: DN-16957 [claim.denial_id]\nMember ID: W57113537 [claim.member_id]\nProcedure code: 93458 [claim.procedure_codes]\nService date: 2026-03-12 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-197 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe claim was submitted with prior authorization PA-3455194 [claim.prior_auth_number], which contradicts the denial reason that precertification is absent. The authorization log shows that PA-3455194 covers CPT 93454 [D6]. During the procedure on 2026-03-12, intraoperative findings required the provider to perform CPT 93458 instead [D3]. The operative note documents that the procedure performed was 93458 because of findings at the time of surgery [D3], supporting the medical basis for the code change from the authorized procedure.\n\nPlease reconsider this appeal and advise if you need additional documentation to support payment.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.003664,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 126,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D3",
+        "D6"
+      ]
+    },
+    {
+      "denial_id": "DN-23617",
+      "letter": "Claim ID: DN-23617 [claim.denial_id]\nMember ID: W57217638 [claim.member_id]\nProcedure code: 72148 [claim.procedure_codes]\nService date: 2026-04-08 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe payer's coverage criteria for procedure code 72148 require a minimum of 6 weeks of conservative therapy before approval [D1]. The clinical note dated 2026-04-08 documents that 6 weeks of conservative treatment failed before the MRI of the lumbar spine without contrast was ordered [D5]. The service date corresponds to the examination showing objective findings consistent with diagnosis code M54.16 [claim.service_date][claim.diagnosis_codes][D3].\n\nPlease reconsider this claim and advise of your determination. We can provide additional records upon request.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"We can provide additional records upon request.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007259,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 114,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D3",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-77112",
+      "letter": "Claim ID: DN-77112 [claim.denial_id]\nMember ID: W89752360 [claim.member_id]\nProcedure code: 93458 [claim.procedure_codes]\nService date: 2026-01-11 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that Summit Care Advantage reverse the denial and pay the claim.\n\nThe payer's coverage criteria for procedure code 93458 require a minimum of 6 weeks of conservative therapy before approval [D3]. The clinical note dated 2026-01-11 documents that 11 weeks of documented conservative treatment failed before left heart catheterization with coronary angiography was ordered [D5]. The documentation demonstrates that the service satisfies the payer's stated coverage criteria.\n\nPlease reconsider this denial and advise of the coverage determination. We are prepared to submit additional records upon request.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The documentation demonstrates that the service satisfies the payer's stated coverage criteria.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007379,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 114,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D3",
+        "D5"
+      ]
+    },
+    {
+      "denial_id": "DN-38116",
+      "letter": "Claim ID: DN-38116 [claim.denial_id]\nMember ID: W28723298 [claim.member_id]\nProcedure code: 74177 [claim.procedure_codes]\nService date: 2026-02-16 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-22 [denial.reason_code]\n\nWe request that Summit Care Advantage reverse the denial and pay this claim.\n\nThe claim was denied under coordination of benefits with the stated belief that another payer is primary [D4]. However, patient records show that Crestline Employers Trust coverage ended on 2025-11-18 [D3], which is before the service date of 2026-02-16 [claim.service_date]. Summit Care Advantage was the active payer at the time of service. The provider is in network with Summit Care Advantage [D5].\n\nPlease reconsider this denial and contact us if you need any additional records.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"Summit Care Advantage was the active payer at the time of service.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007296,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 114,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-46414",
+      "letter": "Claim ID: DN-46414 [claim.denial_id]\nMember ID: W13059090 [claim.member_id]\nProcedure code: 29881 [claim.procedure_codes]\nService date: 2025-07-02 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-197 [denial.reason_code]\n\nWe request that you reconsider this denial and advise whether any alternative authorization pathway or clinical exception may support payment.\n\nThe claim for procedure code 29881 [claim.procedure_codes] on 2025-07-02 [claim.service_date] was denied under reason code CO-197 for absent precertification [denial.reason_code]. The authorization log shows no authorization on file for this procedure code [D3]. We request reconsideration of this denial and ask that you advise whether the provider may submit supporting clinical documentation or request a retrospective authorization review under your plan's policies.\n\nPlease consider this request for reconsideration and contact us if additional records would assist your review.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.0070480000000000004,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 124,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D3"
+      ]
+    },
+    {
+      "denial_id": "DN-77360",
+      "letter": "Claim ID: DN-77360 [claim.denial_id]\nMember ID: W04080333 [claim.member_id]\nProcedure code: 72148 [claim.procedure_codes]\nService date: 2025-12-02 [claim.service_date]\nPayer: Medicare Part B (synthetic jurisdiction) [payer.name]\nDenial reason code: CO-22 [denial.reason_code]\n\nWe request reversal of the coordination of benefits denial and payment of this claim.\n\nThe denial cited coordination of benefits, indicating Crestline Employers Trust should be primary [D4]. However, the Crestline Employers Trust certificate of creditable coverage shows an end date of 2025-10-21 [D3]. The service was provided on 2025-12-02 [claim.service_date], which is after Crestline's coverage terminated. At the time of service, Crestline was not the active primary payer, making the coordination of benefits determination incorrect.\n\nPlease reconsider this claim and advise if you need additional documentation to verify the coverage status.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"At the time of service, Crestline was not the active primary payer, making the coordination of benefits determination in\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007231,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 120,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-73270",
+      "letter": "Claim ID: DN-73270 [claim.denial_id]\nMember ID: W13711889 [claim.member_id]\nProcedure code: 93458 [claim.procedure_codes]\nService date: 2025-09-26 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-16 [denial.reason_code]\n\nWe request that Northwind Health Plan reverse the denial and pay this claim.\n\nThe patient was documented to have undergone 10 weeks of documented conservative treatment failed before left heart catheterization with coronary angiography was ordered on 2025-09-26 [D9]. Northwind Health Plan medical policy for 93458 requires at least 6 weeks of failed conservative treatment [D3]. The clinical record shows the service met this requirement. The provider is in-network with Northwind Health Plan [D2], prior authorization number PA-6285811 was obtained [claim.prior_auth_number], diagnosis code I25.10 is documented [claim.diagnosis_codes][D7], and the claim was submitted 2025-10-14, within the 180-day filing limit [claim.submitted_date][payer.filing_limit_days].\n\nPlease reconsider this claim and advise the reason for the continued denial. We are available to provide additional documentation upon request.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The clinical record shows the service met this requirement.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.008073,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 146,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D3",
+        "D7",
+        "D9"
+      ]
+    },
+    {
+      "denial_id": "DN-88726",
+      "letter": "Claim ID: DN-88726 [claim.denial_id]\nMember ID: W85551796 [claim.member_id]\nProcedure code: 95810 [claim.procedure_codes]\nService date: 2026-01-24 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-96 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe payer denied this claim as non-covered, but the member's plan includes a rider that explicitly covers attended overnight sleep study [D3]. On 2026-01-04, a payer representative confirmed that this rider covers attended overnight sleep study [D1]. The service billed on 2026-01-24 is the exact service covered under the documented rider [claim.service_date][D1][D3]. The denial appears to reflect a payer system error rather than an actual coverage gap.\n\nPlease reconsider this appeal and advise of any additional information you require.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The denial appears to reflect a payer system error rather than an actual coverage gap.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007195,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 116,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D3"
+      ]
+    },
+    {
+      "denial_id": "DN-97512",
+      "letter": "Claim ID: DN-97512 [claim.denial_id]\nMember ID: W37031429 [claim.member_id]\nProcedure code: 72148 [claim.procedure_codes]\nService date: 2026-03-14 [claim.service_date]\nPayer: Bluewater Mutual Insurance [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nThe service was provided on 2026-03-14 [claim.service_date] with prior authorization number PA-7536740 [claim.prior_auth_number]. We ask that you reconsider this denial and advise whether additional clinical documentation would support approval of this claim.\n\nPlease reconsider this request. We are prepared to submit any additional records you may require to process this appeal.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.006878,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 88,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "denial_id": "DN-18708",
+      "letter": "Claim ID: DN-18708 [claim.denial_id]\nMember ID: W83009211 [claim.member_id]\nProcedure code: 74177 [claim.procedure_codes]\nService date: 2025-11-18 [claim.service_date]\nPayer: Summit Care Advantage [payer.name]\nDenial reason code: CO-27 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nOn the service date of 2025-11-18, an eligibility inquiry (270/271) was run for this member and returned active coverage with reference REF-554013 [D3]. This eligibility confirmation contradicts the denial reason stating coverage terminated effective 2025-10-30 [D1]. The member's coverage was active on the date of service according to the payer's own eligibility system response [D3]. The claim was submitted within the filing limit of 365 days [payer.filing_limit_days].\n\nPlease reconsider this appeal and advise whether additional records would be helpful in resolving this matter.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.003558,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 120,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D3"
+      ]
+    },
+    {
+      "denial_id": "DN-83463",
+      "letter": "Claim ID: DN-83463 [claim.denial_id]\nMember ID: W51000227 [claim.member_id]\nProcedure code: 93458 [claim.procedure_codes]\nService date: 2025-07-08 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request reversal of the denial and payment of this claim.\n\nNorthwind Health Plan's medical policy for CPT 93458 requires covered services to be performed after 6 or more weeks of failed conservative care [D2]. The clinical record documents that 6 weeks of documented conservative treatment failed before left heart catheterization with coronary angiography was ordered on 2025-07-08 [D6]. The service was ordered in accordance with the payer's own policy criteria and should not have been denied on grounds of medical necessity.\n\nPlease reconsider this denial. We are prepared to submit additional records upon request.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The service was ordered in accordance with the payer's own policy criteria and should not have been denied on grounds of\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.007311,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 121,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D4",
+        "D6"
+      ]
+    },
+    {
+      "denial_id": "DN-88139",
+      "letter": "Claim ID: DN-88139 [claim.denial_id]\nMember ID: W55357765 [claim.member_id]\nProcedure code: 93458 [claim.procedure_codes]\nService date: 2026-01-16 [claim.service_date]\nPayer: Bluewater Mutual Insurance [payer.name]\nDenial reason code: CO-197 [denial.reason_code]\n\nWe request that you reverse the denial and pay this claim.\n\nBluewater Mutual Insurance provider manual states that prior authorization is not required for emergency services [D1]. The patient arrived by ambulance with acute symptoms and the service was performed emergently [D3]. The claim also contains prior authorization number PA-3269144 [claim.prior_auth_number]. The denial should be reversed because the service qualifies for the emergency exemption under your own policy.\n\nPlease reconsider this appeal and advise us of your decision. We are happy to provide additional records upon request.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The denial should be reversed because the service qualifies for the emergency exemption under your own policy.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.00715,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 113,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D1",
+        "D3"
+      ]
+    }
+  ]
+}
