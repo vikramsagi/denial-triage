@@ -1,0 +1,87 @@
+{
+  "run_id": "20261007T204806Z-drafts-small",
+  "mock": false,
+  "split": "dev",
+  "classifications_from": "20261007T153959Z-m_rules_small_think-681557",
+  "model": "claude-haiku-4-5-20251001",
+  "prompt_version": "draft_v2",
+  "letters": 3,
+  "passed_first_try": 1,
+  "passed_after_retry": 1,
+  "failed_twice": 1,
+  "sent_to_person": 3,
+  "limited_cases": 2,
+  "median_words": 102,
+  "cost_usd": 0.016387,
+  "cost_per_letter_usd": 0.005462,
+  "records": [
+    {
+      "denial_id": "DN-98795",
+      "letter": "Claim ID: W36031849 [claim.member_id]\nProcedure Code: 29881 [claim.procedure_codes]\nService Date: 2025-06-18 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial Reason Code: CO-50 [denial.reason_code]\n\nWe request that you reverse the denial and approve this claim for payment.\n\nThe payer's policy requires 6 or more weeks of failed conservative care before coverage of procedure 29881 [D3]. The clinical note documents symptom duration of only 1 week at the time of service [D2]. We respectfully ask for reconsideration of this denial based on the clinical circumstances, and we remain available to submit any additional documentation if it would assist in your review.\n\nPlease contact us if you require any further information to support reconsideration of this claim.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.006559000000000001,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 113,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D3"
+      ]
+    },
+    {
+      "denial_id": "DN-15965",
+      "letter": "Claim ID: DN-15965 [claim.denial_id]\nProcedure Code: 29881 [claim.procedure_codes]\nService Date: 2025-10-21 [claim.service_date]\nPayer: Bluewater Mutual Insurance [payer.name]\nDenial Reason: CO-50 [denial.reason_code]\n\nWe request that Bluewater Mutual Insurance reconsider this denial and pay the claim.\n\nThe service was provided by an in-network provider [D2]. The claim was submitted on 2025-11-14 [claim.submitted_date], within the 90-day filing limit [payer.filing_limit_days]. We respectfully ask that the payer review whether this service meets coverage criteria under the member's plan and provide reconsideration of the denial.\n\nPlease advise if additional clinical or administrative records would support reconsideration of this claim.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.003228,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 93,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D4",
+        "D6"
+      ]
+    },
+    {
+      "denial_id": "DN-20644",
+      "letter": "Claim ID [claim.denial_id]: DN-20644\nProcedure Code [claim.procedure_codes]: 99285\nService Date [claim.service_date]: 2026-04-10\nPayer [payer.name]: Northwind Health Plan\nDenial Reason [denial.reason_code]: CO-29\n\nWe request that you reverse the denial and pay the claim.\n\nThe service was rendered on 2026-04-10 [claim.service_date]. The payer's clearinghouse acceptance report shows the claim was accepted by the payer on 2026-08-20 [D5]. The filing limit requirement of 180 days [payer.filing_limit_days] runs from 2026-04-10 to 2026-10-08. The claim was accepted on 2026-08-20, which falls within this window and satisfies timely filing under Northwind Health Plan policy [D4].\n\nPlease reconsider this denial. We are prepared to provide additional documentation upon request.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "2026-04-10 does not appear in [payer.filing_limit_days]: \"The filing limit requirement of 180 days [payer.filing_limit_days] runs from 2026-04-10 to 2026-10-08.\"",
+        "2026-10-08 does not appear in [payer.filing_limit_days]: \"The filing limit requirement of 180 days [payer.filing_limit_days] runs from 2026-04-10 to 2026-10-08.\"",
+        "2026-08-20 does not appear in [D4]: \"The claim was accepted on 2026-08-20, which falls within this window and satisfies timely filing under Northwind Health \""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.0066,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 102,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D4",
+        "D5"
+      ]
+    }
+  ]
+}
