@@ -18,8 +18,8 @@ CLINICAL_ROOT_CAUSES = {"medical_necessity", "prior_authorization"}
 # High-risk review: every claim at or above this amount goes to a person, with the system's
 # recommendation and reasoning attached. See docs/assumptions.md.
 HUMAN_REVIEW_AMOUNT_THRESHOLD = 5000.0
-# Later, from the confidence calibration table: unsure mid-size claims may join the queue, ranked by
-# expected dollars lost = (1 - confidence) x dollars at risk.
+# Not used: model confidence did not predict errors on dev. Two independent reads decide instead
+# (docs/adr/ADR-004-two-read-agreement-check.md).
 HUMAN_REVIEW_CONFIDENCE_CUTOFF = None
 HUMAN_QUEUE_CAPACITY = None
 
@@ -30,12 +30,14 @@ MODELS = {
     "large": {"id": "claude-sonnet-5-5", "input": 2.00, "output": 10.00, "cache_write": 2.50, "cache_read": 0.20,
               "forced_tool": False,  # this model rejects tool_choice "tool"; the tool is offered with "auto"
               "thinking": "adaptive"},  # this model takes adaptive thinking with an effort level, not a token budget
+    "judge": {"id": "claude-opus-5-5", "input": 4.00, "output": 20.00, "cache_write": 5.00, "cache_read": 0.40,
+              "forced_tool": False, "thinking": "adaptive"},  # grades letters; a different, stronger model than the writer
 }
 THINKING_EFFORT = "medium"  # for models with adaptive thinking
 BATCH_DISCOUNT = 0.50
 CLASSIFY_MAX_TOKENS = 1000   # raised from 600: longer reason-first answers were cut off
 THINKING_BUDGET_TOKENS = 1500   # reasoning tokens allowed before the answer, for the "thinking" arms
-CLASSIFY_PROMPT_VERSION = "classify_v3"
+CLASSIFY_PROMPT_VERSION = "classify_v4"
 DRAFT_TIER = "large"   # appeal letters: Claude Sonnet 5.5 passed the citation checker on 61 of 61 dev letters, Haiku 4.5 on 42   # earlier versions kept unchanged in prompts/ for comparison
 
 # ---------------------------------------------------------------- budget
