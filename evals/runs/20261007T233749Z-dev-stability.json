@@ -1,0 +1,45 @@
+{
+  "runs": [
+    "20261007T224224Z-m_rules_small_think-1f2421",
+    "20261007T231302Z-m_rules_small_think-2699a0"
+  ],
+  "denials": 200,
+  "same_route_in_all_runs": 194,
+  "stability": 0.97,
+  "target": 0.95,
+  "single_runs": [
+    {
+      "run": "20261007T224224Z-m_rules_small_think-1f2421",
+      "value_captured": 0.9870460328376559,
+      "dollars_lost": 3025.6299999999756,
+      "human_review": 9
+    },
+    {
+      "run": "20261007T231302Z-m_rules_small_think-2699a0",
+      "value_captured": 0.9873580621098377,
+      "dollars_lost": 2952.75,
+      "human_review": 9
+    }
+  ],
+  "pairs": [
+    {
+      "runs": [
+        "20261007T224224Z-m_rules_small_think-1f2421",
+        "20261007T231302Z-m_rules_small_think-2699a0"
+      ],
+      "routes_agree": 194,
+      "disagree": [
+        "DN-20894",
+        "DN-24006",
+        "DN-39098",
+        "DN-51701",
+        "DN-79796",
+        "DN-95747"
+      ],
+      "value_captured_with_check": 0.9988989922113847,
+      "dollars_lost_with_check": 257.1599999999744,
+      "dollars_lost_first_run_alone": 3025.6299999999756,
+      "human_review_with_check": 15
+    }
+  ]
+}
