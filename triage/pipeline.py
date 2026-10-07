@@ -6,6 +6,8 @@ Configurations:
   b2_rules_ev           no model: structural rules, reason-code fallback, probability table, EV routing
   m_rules_<tier>[_think] structural rules, then the model on denials the rules cannot settle
   m_all_small           the model on every denial, no rules (for the rules-first comparison)
+  m_rules_small_think_x2 rules first, then two independent model reads; if they lead to different
+                        actions, a person decides with both readings attached
 """
 
 from __future__ import annotations
@@ -37,16 +39,17 @@ REASON_CODE_DEFAULTS: dict[str, tuple[str, bool, bool]] = {
 }
 FALLBACK_CONFIDENCE = 0.5
 
-# name: (model tier, thinking, rules first)
+# name: (model tier, thinking, rules first, independent reads)
 MODEL_CONFIGS = {
-    "m_rules_small": ("small", False, True),
-    "m_rules_small_think": ("small", True, True),
-    "m_rules_large": ("large", False, True),
-    "m_rules_large_think": ("large", True, True),
-    "m_all_small": ("small", False, False),
-    "m_all_small_think": ("small", True, False),
+    "m_rules_small": ("small", False, True, 1),
+    "m_rules_small_think": ("small", True, True, 1),
+    "m_rules_small_think_x2": ("small", True, True, 2),
+    "m_rules_large": ("large", False, True, 1),
+    "m_rules_large_think": ("large", True, True, 1),
+    "m_all_small": ("small", False, False, 1),
+    "m_all_small_think": ("small", True, False, 1),
 }
-DEFAULT_CONFIG = "m_rules_small_think"  # chosen in docs/adr/ADR-002-model-tiering.md
+DEFAULT_CONFIG = "m_rules_small_think_x2"  # rules first, two reads (ADR-001, ADR-002, ADR-004)
 CONFIGS = ["b0_appeal_above_500", "b1_reason_code", "b2_rules_ev", *MODEL_CONFIGS]
 
 
@@ -63,6 +66,25 @@ def reason_code_classification(d: DenialInput) -> Classification:
     cause, correctable, supports = REASON_CODE_DEFAULTS[d.denial.carc]
     return Classification(root_cause=cause, correctable=correctable, evidence_supports_appeal=supports, evidence_lines=[],
                           confidence=FALLBACK_CONFIDENCE, reason=f"No structural rule fired; reason-code default for {d.denial.carc}.", source="reason_code")
+
+
+def _best_action(c: Classification, allowed: float, table: dict) -> str:
+    p, _ = probability.lookup(c, table)
+    ev = router.expected_values(c, allowed, p)
+    return max(router.ORDER, key=lambda a: (ev[a], -router.ORDER.index(a)))
+
+
+def _disagreement(c1: Classification, mo2: classify.ModelOutcome, allowed: float, table: dict) -> str | None:
+    """Return a review trigger when a second independent read leads to a different action, else None."""
+    c2 = mo2.classification
+    if c2 is None:
+        return "second AI read failed validation; a person decides"
+    a1, a2 = _best_action(c1, allowed, table), _best_action(c2, allowed, table)
+    if a1 == a2:
+        return None
+    return (f"two AI reads disagree. Read 1: {c1.root_cause}, fixable {c1.correctable}, evidence supports appeal "
+            f"{c1.evidence_supports_appeal}, so {a1}. Read 2: {c2.root_cause}, fixable {c2.correctable}, evidence supports "
+            f"appeal {c2.evidence_supports_appeal}, so {a2}. Read 2 reason: {c2.reason}")
 
 
 def _default_action(c: Classification) -> str:
@@ -97,9 +119,13 @@ def run_one(d: DenialInput, config_name: str, rec: Recorder, table: dict) -> Res
         c = rr.classification
         rec.emit(did, TraceStep(stage="classify", summary="skipped: rules resolved this denial", inputs={}, output={"skipped": True}), started=t)
     elif model_cfg:
-        tier, thinking, _ = model_cfg
+        tier, thinking, _, reads = model_cfg
         mo = classify.classify(d, tier=tier, run_id=rec.run_id, thinking=thinking)
         cost, flags = (mo.result.cost_usd if mo.result else 0.0), mo.flags
+        second = None
+        if reads == 2 and mo.classification is not None:
+            second = classify.classify(d, tier=tier, run_id=rec.run_id, thinking=thinking)
+            cost += second.result.cost_usd if second.result else 0.0
         if mo.classification is None:
             c = reason_code_classification(d)
             force = "AI output failed validation twice; showing the reason-code default as the recommendation"
@@ -107,6 +133,10 @@ def run_one(d: DenialInput, config_name: str, rec: Recorder, table: dict) -> Res
             c = mo.classification
             if "cited_suspicious_line" in flags:
                 force = f"AI cited a line that tries to give it instructions ({', '.join(mo.suspicious_lines)})"
+            elif second is not None:
+                force = _disagreement(c, second, allowed, table)
+                if force:
+                    flags = [*flags, "reads_disagree"]
         rec.emit(did, TraceStep(stage="classify", summary=f"{config.MODELS[tier]['id']}{' with thinking' if thinking else ''}: {c.root_cause}, confidence {c.confidence:.2f}",
                                 inputs={"prompt_version": config.CLASSIFY_PROMPT_VERSION, "model": config.MODELS[tier]["id"], "thinking": thinking},
                                 output={**c.model_dump(), "suspicious_lines": mo.suspicious_lines, "error": mo.error},
@@ -145,8 +175,8 @@ def run(denials: list[DenialInput], config_name: str, write_events: bool = True)
         raise ValueError(f"unknown config {config_name!r}; choose from {CONFIGS}")
     versions = {"rules": rules.RULES_VERSION}
     if config_name in MODEL_CONFIGS:
-        tier, thinking, _ = MODEL_CONFIGS[config_name]
-        versions |= {"model": config.MODELS[tier]["id"], "prompt": config.CLASSIFY_PROMPT_VERSION, "thinking": str(thinking)}
+        tier, thinking, _, reads = MODEL_CONFIGS[config_name]
+        versions |= {"model": config.MODELS[tier]["id"], "prompt": config.CLASSIFY_PROMPT_VERSION, "thinking": str(thinking), "reads": str(reads)}
     rec = Recorder(config_name, versions=versions, write=write_events)
     table = probability.load_table()
     return [run_one(d, config_name, rec, table) for d in denials], rec
