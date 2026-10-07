@@ -1,0 +1,119 @@
+{
+  "fitted_on": "dev",
+  "shrink_k": 3,
+  "shrink_below_n": 10,
+  "cells": {
+    "coding_error|supports=False|correctable=False": {
+      "p": 0.0,
+      "n": 10,
+      "shrunk": false
+    },
+    "coding_error|supports=False|correctable=True": {
+      "p": 0.2674,
+      "n": 22,
+      "shrunk": false
+    },
+    "coordination_of_benefits|supports=False|correctable=True": {
+      "p": 0.1022,
+      "n": 10,
+      "shrunk": false
+    },
+    "coordination_of_benefits|supports=True|correctable=False": {
+      "p": 0.7064,
+      "n": 6,
+      "shrunk": true
+    },
+    "duplicate_claim|supports=False|correctable=False": {
+      "p": 0.0082,
+      "n": 8,
+      "shrunk": true
+    },
+    "duplicate_claim|supports=False|correctable=True": {
+      "p": 0.2999,
+      "n": 6,
+      "shrunk": true
+    },
+    "medical_necessity|supports=False|correctable=False": {
+      "p": 0.1547,
+      "n": 10,
+      "shrunk": false
+    },
+    "medical_necessity|supports=False|correctable=True": {
+      "p": 0.3151,
+      "n": 9,
+      "shrunk": true
+    },
+    "medical_necessity|supports=True|correctable=False": {
+      "p": 0.7005,
+      "n": 11,
+      "shrunk": false
+    },
+    "non_covered_service|supports=False|correctable=False": {
+      "p": 0.0,
+      "n": 12,
+      "shrunk": false
+    },
+    "non_covered_service|supports=True|correctable=False": {
+      "p": 0.6074,
+      "n": 8,
+      "shrunk": true
+    },
+    "prior_authorization|supports=False|correctable=False": {
+      "p": 0.0513,
+      "n": 8,
+      "shrunk": true
+    },
+    "prior_authorization|supports=False|correctable=True": {
+      "p": 0.3583,
+      "n": 8,
+      "shrunk": true
+    },
+    "prior_authorization|supports=True|correctable=False": {
+      "p": 0.6281,
+      "n": 10,
+      "shrunk": false
+    },
+    "registration_eligibility|supports=False|correctable=False": {
+      "p": 0.0,
+      "n": 12,
+      "shrunk": false
+    },
+    "registration_eligibility|supports=False|correctable=True": {
+      "p": 0.209,
+      "n": 27,
+      "shrunk": false
+    },
+    "registration_eligibility|supports=True|correctable=False": {
+      "p": 0.6662,
+      "n": 9,
+      "shrunk": true
+    },
+    "timely_filing|supports=False|correctable=False": {
+      "p": 0.009,
+      "n": 7,
+      "shrunk": true
+    },
+    "timely_filing|supports=True|correctable=False": {
+      "p": 0.7993,
+      "n": 7,
+      "shrunk": true
+    }
+  },
+  "shrink_toward": "evidence_profile_mean",
+  "profile_mean": {
+    "supports=False|correctable=False": 0.0302,
+    "supports=False|correctable=True": 0.2524,
+    "supports=True|correctable=False": 0.6827
+  },
+  "cause_mean": {
+    "coding_error": 0.1838,
+    "coordination_of_benefits": 0.3332,
+    "duplicate_claim": 0.1387,
+    "medical_necessity": 0.4092,
+    "non_covered_service": 0.2316,
+    "prior_authorization": 0.3823,
+    "registration_eligibility": 0.2415,
+    "timely_filing": 0.4246
+  },
+  "global_mean": 0.2877
+}
