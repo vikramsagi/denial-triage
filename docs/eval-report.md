@@ -4,12 +4,31 @@ All results on this page use the dev split (200 denials). The held-out split has
 
 ## Headline
 
-| System | Root cause correct | Appeal recall | Appeal precision | Value captured | Value captured, system alone | API cost per denial |
-| --- | --- | --- | --- | --- | --- | --- |
-| Best system without a model | 82.5% (77.5 to 87.5) | 58.1% (46.3 to 70.2) | 81.8% (69.7 to 92.7) | 83.1% (76.0 to 89.5) | 78.3% (69.5 to 86.5) | 0 USD |
-| Rules first, then Claude Haiku 4.5 with thinking | 94.5% (91.0 to 97.5) | 95.2% (89.4 to 100) | 96.7% (91.8 to 100) | 98.9% (97.5 to 99.9) | 99.0% (97.6 to 100) | 0.0053 USD |
+The final system: structural rules first, then two independent reads by Claude Haiku 4.5 with thinking (classifier prompt version 4). When the two reads lead to different actions, a person decides. Claims of 5,000 USD or more always go to a person. Claude Sonnet 5.5 writes appeal letters, a deterministic checker verifies every citation, and Claude Opus 5.5 grades every letter.
 
-The model system beats the best system without a model on every metric, and the 95% intervals do not overlap on root cause, appeal recall, or value captured. On 200 denials it loses 2,506 USD against a perfect decision on every denial, compared with 39,500 USD for the best system without a model. Run files: [baseline](../evals/runs/20261007T162440Z-dev-b2_rules_ev.json), [model system](../evals/runs/20261007T162445Z-dev-m_rules_small_think-replay.json).
+| System | Root cause correct | Appeal recall | Appeal precision | Value captured | API cost per denial |
+| --- | --- | --- | --- | --- | --- |
+| Best system without a model | 82.5% (77.5 to 87.5) | 58.1% (46.3 to 70.2) | 81.8% (69.7 to 92.7) | 83.1% (76.0 to 89.5) | 0 USD |
+| Final system | 95.5% (92.5 to 98.0) | 98.4% (94.7 to 100) | 98.4% (94.9 to 100) | 99.9% (99.8 to 99.9) | 0.0185 USD |
+
+On 200 dev denials the final system loses 257 USD against a perfect decision on every denial, compared with 39,500 USD for the best system without a model. It sends 15 claims (7.5%) to a person. API cost per denial covers two classifier reads (0.0104 USD), letters (0.0033 USD), and grading (0.0047 USD). Run files: [baseline](../evals/runs/20261007T162440Z-dev-b2_rules_ev.json), [final system](../evals/runs/20261007T233811Z-dev-two-read-check.json).
+
+### Against the targets
+
+"Met with confidence" means the low end of the 95% interval clears the target.
+
+| Measure | Target | Dev result | Met with confidence |
+| --- | --- | --- | --- |
+| Root-cause accuracy | 85% or better | 95.5% (92.5 to 98.0) | Yes |
+| Appeal recall | 90% or better | 98.4% (94.7 to 100) | Yes |
+| Appeal precision | 75% or better | 98.4% (94.9 to 100) | Yes |
+| Value captured | Beat both baselines | 99.9% vs 83.1% | Yes, intervals do not overlap |
+| Prompt injection success | 0% | 0 of 12 | Rate met; 12 records is a weak bound |
+| Shipped letters pass the citation checker | 100% | 64 of 64 | Yes |
+| Run-to-run stability | 95% same route over 3 runs | 96.0% (192 of 200) | Point estimate only |
+| Cost per denial | Under 0.02 USD | 0.0185 USD | Yes, with little margin |
+
+These are dev results. The held-out split, opened once, gives the final score.
 
 ## How the scorer works
 
@@ -73,12 +92,55 @@ On the 57 denials rules settle, the model marked 5 true duplicates as fixable. O
 | Claude Haiku 4.5 | 22 | 20 | 19 | 0.0061 USD |
 | Claude Sonnet 5.5 (chosen) | 61 | 0 | 0 | 0.0104 USD |
 
-- 100% of shipped letters pass the checker, by construction. With Sonnet 5.5, that is all 61.
+- 100% of shipped letters pass the checker, by construction. With Sonnet 5.5, that is all 61. On the final classifications, letter prompt version 5 passed 64 of 64 on the first try.
 - 13 of the 61 are appeals where the classifier found the documentation does not clearly support the appeal. Their letters state only cited facts and go to a person before they are sent.
 - All 48 letters for well-supported cases cite at least one line the answer key marks as key evidence. No letter cites an injected line.
 - Letter quality beyond citations (tone, persuasiveness, whether a sentence says what its source says) is graded by a calibrated judge, still to come.
 
-## Where the model system loses money
+## Run-to-run stability and the two-read check
+
+The classifier does not always give the same answer on the same record. Across three identical runs with classifier prompt version 3, 192 of 200 denials got the same route every time (96.0%) ([run file](../evals/runs/20261007T222631Z-dev-stability.json)). Money lost per run ranged from 219 to 2,506 USD, almost all of it on the few denials that flipped.
+
+The model's stated confidence does not predict these flips: the three largest losses reported 0.78, 0.88, and 0.88, and a typical right answer reports 0.85. Two independent reads do predict them. Full reasoning is in [ADR-004](adr/ADR-004-two-read-agreement-check.md).
+
+| Classifier prompt version 4 | One read | Two reads, disagreement to a person |
+| --- | --- | --- |
+| Value captured | 98.7% (96.0 to 100) | 99.9% (99.8 to 99.9) |
+| Dollars lost | 3,026 USD | 257 USD |
+| Claims sent to a person | 9 | 15 |
+
+## Errors the model made every time
+
+Two reads that make the same mistake still agree, so consistent errors need a prompt change. Error analysis across the three version-3 runs found two:
+
+| Scenario | Version 3 (three runs) | Version 4 |
+| --- | --- | --- |
+| Authorization for a different code, operative note explains the change, appeal is supported | 3, 5, 3 of 5 right | 5 of 5 |
+| Code the record does not support, nothing to fix | 8, 8, 7 of 10 right | 10 of 10 |
+
+Held-out records use phrasings the prompt was never tuned on, so they test whether these fixes generalize.
+
+## Slices and errors in dollars
+
+For one version-4 read, before the two-read check ([run file](../evals/runs/20261007T233832Z-dev-slices-m_rules_small_think.json)), losses concentrate in medical necessity and prior authorization denials and in the 1,000 to 2,499 USD band. One error, a medical necessity denial where the payer's records request was never answered, explains 2,857 of the 3,026 USD lost. The read appealed it instead of sending the records. The second read caught it.
+
+## Letter grading
+
+Claude Opus 5.5 grades every letter on faithfulness, persuasiveness, tone, and completeness. A letter is ready to send only when faithfulness is 5 and no score is below 3. Full reasoning is in [ADR-005](adr/ADR-005-letter-judge.md) ([run file](../evals/runs/20261007T231943Z-dev-judge.json)).
+
+| Check | Result |
+| --- | --- |
+| Five planted bad letters, all passing the citation checker | 5 of 5 failed by the judge |
+| Completeness agrees with the answer key's evidence lines | 43 of 48 letters (first grading run) |
+| Length bias: 10 good letters padded with irrelevant cited facts | No score rose; 3 of 10 dropped |
+| Well-supported letters ready to send | 45 of 51 |
+| Limited-case letters ready to send | 0 of 13, as expected; a person decides these |
+
+## Regression suite
+
+`tests/test_regression.py` re-routes 20 golden dev denials from saved model answers on every test run, with no model calls. It fails if a route or an expected value moves. The golden set covers rule-settled denials, every root cause, high-value claims, injected records, and the largest past errors.
+
+## Where a single read loses money (prompt version 3)
 
 Rows are the true best action. Columns are what the system did.
 
@@ -126,6 +188,7 @@ Action mutants lower value captured. Root-cause mutants lower root-cause accurac
 
 ## Known limits
 
-- One run per configuration. Run-to-run variance is visible and not yet measured with repeated runs.
+- The two-read check is measured on two runs. More runs would narrow its interval.
+- The judge is calibrated against planted letters and the answer key, not yet against a billing specialist's grades.
 - The win odds table is fitted and scored on the same dev labels. The held-out split tests whether it generalizes.
 - The scorer assumes reviewers always choose the best action. The system-alone column removes this assumption.
