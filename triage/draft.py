@@ -16,7 +16,7 @@ from triage.classify import PROMPTS
 from triage.load import model_payload
 from triage.schema import Classification, DenialInput
 
-DRAFT_PROMPT_VERSION = "draft_v4"
+DRAFT_PROMPT_VERSION = "draft_v5"
 DRAFT_MAX_TOKENS = 2500   # raised from 900: Sonnet 5.5 thinks before answering and ran out on 8 of 61 letters
 
 TOOL = {
@@ -37,8 +37,7 @@ def system_prompt(version: str = DRAFT_PROMPT_VERSION) -> str:
 
 def user_message(d: DenialInput, c: Classification, do_not_cite: list[str]) -> str:
     p = model_payload(d)
-    fields = citations.sources(d)
-    citable = {k: v for k, v in fields.items() if "." in k and v}
+    citable = citations.citable_fields(d)
     docs = "\n".join(f"{line['id']} [{line['source']}]: {line['text']}" for line in p["documentation"])
     findings = {"root_cause": c.root_cause, "evidence_lines": c.evidence_lines, "reason": c.reason,
                 "case_strength": "supported" if c.evidence_supports_appeal else "limited"}
@@ -111,8 +110,8 @@ def draft(d: DenialInput, c: Classification, suspicious: list[str], tier: str = 
 def _mock(user: str) -> dict:
     fields = json.loads(re.search(r"<citable_fields>\n(.*?)\n</citable_fields>", user, re.S).group(1))
     ev = json.loads(re.search(r"<findings>\n(.*?)\n</findings>", user, re.S).group(1))["evidence_lines"]
-    cite = "".join(f"[{x}]" for x in ev) or "[claim.denial_id]"
-    return {"letter": (f"Re: claim {fields['claim.denial_id']} [claim.denial_id], service date {fields['claim.service_date']} [claim.service_date].\n"
+    cite = "".join(f"[{x}]" for x in ev) or "[claim.claim_id]"
+    return {"letter": (f"Re: claim {fields['claim.claim_id']} [claim.claim_id], service date {fields['claim.service_date']} [claim.service_date].\n"
                        f"We ask that you reverse this denial and pay the claim.\n"
                        f"The documentation supports payment {cite}.\n"
                        f"Please reconsider; further records are available on request.")}
