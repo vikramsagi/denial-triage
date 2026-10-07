@@ -1,0 +1,83 @@
+{
+  "run_id": "20261007T204837Z-drafts-small",
+  "mock": false,
+  "split": "dev",
+  "classifications_from": "20261007T153959Z-m_rules_small_think-681557",
+  "model": "claude-haiku-4-5-20251001",
+  "prompt_version": "draft_v3",
+  "letters": 3,
+  "passed_first_try": 2,
+  "passed_after_retry": 0,
+  "failed_twice": 1,
+  "sent_to_person": 3,
+  "limited_cases": 2,
+  "median_words": 105,
+  "cost_usd": 0.013699,
+  "cost_per_letter_usd": 0.004566,
+  "records": [
+    {
+      "denial_id": "DN-98795",
+      "letter": "Claim ID: DN-98795 [claim.denial_id]\nMember ID: W36031849 [claim.member_id]\nProcedure code: 29881 [claim.procedure_codes]\nService date: 2025-06-18 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that you reconsider the denial and reverse it to allow payment of this claim.\n\nThe patient presented on 2025-06-18 with a symptom duration of 1 week [D2]. A prior authorization was obtained under number PA-1362696 [claim.prior_auth_number] before the procedure was performed. We respectfully request reconsideration of whether the clinical circumstances and authorization support coverage under your medical policy for this service.\n\nPlease review this letter and advise whether additional clinical records would support reconsideration of the denial.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.00343,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 105,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D3"
+      ]
+    },
+    {
+      "denial_id": "DN-15965",
+      "letter": "Claim ID: DN-15965 [claim.denial_id]\nMember ID: W29011264 [claim.member_id]\nProcedure code: 29881 [claim.procedure_codes]\nService date: 2025-10-21 [claim.service_date]\nPayer: Bluewater Mutual Insurance [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that Bluewater Mutual Insurance reconsider the denial and approve payment for this claim.\n\nThe provider is in network with Bluewater Mutual Insurance [D2]. The service was performed on the date documented in the claim record [claim.service_date]. We ask for reconsideration of the medical necessity determination and welcome the opportunity to provide additional clinical documentation or records to support this request.\n\nPlease contact our office if you require any further information to complete your review of this appeal.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.003384,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 105,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D4",
+        "D6"
+      ]
+    },
+    {
+      "denial_id": "DN-20644",
+      "letter": "Claim ID: DN-20644 [claim.denial_id]\nMember ID: W19438569 [claim.member_id]\nProcedure code: 99285 [claim.procedure_codes]\nService date: 2026-04-10 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-29 [denial.reason_code]\n\nWe request reversal of the denial and payment of this claim.\n\nNorthwind Health Plan requires claims to be filed within 180 days of the service date [D4]. The claim for service date 2026-04-10 [claim.service_date] was accepted by the payer on 2026-08-20 [D5], which is within the 180-day filing requirement [payer.filing_limit_days]. The timely filing criterion was met.\n\nPlease reconsider this appeal and advise of your determination.",
+      "passed": false,
+      "attempts": 2,
+      "reasons": [
+        "makes a statement with no citation; cite it or remove it: \"The timely filing criterion was met.\""
+      ],
+      "needs_person": true,
+      "why_person": "letter failed the citation check twice",
+      "cost_usd": 0.0068850000000000005,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 91,
+      "flags": [
+        "failed_check_twice"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D4",
+        "D5"
+      ]
+    }
+  ]
+}
