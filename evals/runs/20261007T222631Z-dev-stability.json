@@ -1,0 +1,88 @@
+{
+  "runs": [
+    "20261007T153959Z-m_rules_small_think-681557",
+    "20261007T154105Z-m_all_small_think-568e86",
+    "20261007T220147Z-m_rules_small_think-08a76b"
+  ],
+  "denials": 200,
+  "same_route_in_all_runs": 192,
+  "stability": 0.96,
+  "target": 0.95,
+  "single_runs": [
+    {
+      "run": "20261007T153959Z-m_rules_small_think-681557",
+      "value_captured": 0.9892705258254101,
+      "dollars_lost": 2506.0599999999977,
+      "human_review": 9
+    },
+    {
+      "run": "20261007T154105Z-m_all_small_think-568e86",
+      "value_captured": 0.9990639549975697,
+      "dollars_lost": 218.62999999997555,
+      "human_review": 9
+    },
+    {
+      "run": "20261007T220147Z-m_rules_small_think-08a76b",
+      "value_captured": 0.994034152734133,
+      "dollars_lost": 1393.429999999993,
+      "human_review": 9
+    }
+  ],
+  "pairs": [
+    {
+      "runs": [
+        "20261007T153959Z-m_rules_small_think-681557",
+        "20261007T154105Z-m_all_small_think-568e86"
+      ],
+      "routes_agree": 194,
+      "disagree": [
+        "DN-14039",
+        "DN-19623",
+        "DN-27397",
+        "DN-39098",
+        "DN-81252",
+        "DN-86211"
+      ],
+      "value_captured_with_check": 0.9987919569231775,
+      "dollars_lost_with_check": 282.1599999999744,
+      "dollars_lost_first_run_alone": 2506.0599999999977,
+      "human_review_with_check": 15
+    },
+    {
+      "runs": [
+        "20261007T153959Z-m_rules_small_think-681557",
+        "20261007T220147Z-m_rules_small_think-08a76b"
+      ],
+      "routes_agree": 195,
+      "disagree": [
+        "DN-14039",
+        "DN-27397",
+        "DN-39098",
+        "DN-55042",
+        "DN-77494"
+      ],
+      "value_captured_with_check": 0.9939334111208723,
+      "dollars_lost_with_check": 1416.9599999999919,
+      "dollars_lost_first_run_alone": 2506.0599999999977,
+      "human_review_with_check": 14
+    },
+    {
+      "runs": [
+        "20261007T154105Z-m_all_small_think-568e86",
+        "20261007T220147Z-m_rules_small_think-08a76b"
+      ],
+      "routes_agree": 195,
+      "disagree": [
+        "DN-19623",
+        "DN-55042",
+        "DN-77494",
+        "DN-81252",
+        "DN-86211"
+      ],
+      "value_captured_with_check": 0.9988498844211552,
+      "dollars_lost_with_check": 268.62999999997555,
+      "dollars_lost_first_run_alone": 218.62999999997555,
+      "human_review_with_check": 14
+    }
+  ]
+}
