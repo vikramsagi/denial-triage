@@ -1,0 +1,444 @@
+{
+ "source_run": "20261007T153959Z-m_rules_small_think-681557",
+ "note": "Routes and expected values with the current rules, win odds table, and router. Model answers are saved, so this runs with no model calls.",
+ "records": [
+  {
+   "denial_id": "DN-31039",
+   "model_answer": null,
+   "route": "write_off",
+   "recommended_action": "write_off",
+   "expected_values": {
+    "appeal": -41.5,
+    "fix_and_resubmit": -25.0,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.009,
+   "why_chosen": "injected line; earlier table bug made it an appeal"
+  },
+  {
+   "denial_id": "DN-84868",
+   "model_answer": null,
+   "route": "fix_and_resubmit",
+   "recommended_action": "fix_and_resubmit",
+   "expected_values": {
+    "appeal": 522.42,
+    "fix_and_resubmit": 2033.54,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.2674,
+   "why_chosen": "settled by structural rules"
+  },
+  {
+   "denial_id": "DN-98795",
+   "model_answer": {
+    "root_cause": "medical_necessity",
+    "correctable": false,
+    "evidence_supports_appeal": false,
+    "evidence_lines": [
+     "D2",
+     "D3"
+    ],
+    "confidence": 0.95,
+    "reason": "The payer denied CPT 29881 for lack of medical necessity under its policy requiring 6 or more weeks of failed conservative care before coverage (D3). The clinical note (D2) documents only 1 week of symptom duration with no trial of conservative treatment. The provider performed the procedure without meeting this documented policy requirement, and the clinical record supports the payer's position. This is not a payer error but a failure to satisfy the coverage condition.",
+    "suspicious_lines": []
+   },
+   "route": "appeal",
+   "recommended_action": "appeal",
+   "expected_values": {
+    "appeal": 640.84,
+    "fix_and_resubmit": -25.0,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.1547,
+   "why_chosen": "weak-evidence appeal, letter goes to a person"
+  },
+  {
+   "denial_id": "DN-27397",
+   "model_answer": {
+    "root_cause": "coding_error",
+    "correctable": true,
+    "evidence_supports_appeal": false,
+    "evidence_lines": [
+     "D3"
+    ],
+    "confidence": 0.85,
+    "reason": "The payer denied the claim stating the diagnosis (M23.221, internal derangement of knee) is inconsistent with the procedure (CPT 29881, knee arthroscopy with meniscectomy). The provider's internal coding audit (D3) confirms this is correct: the documentation does not support the 29881 code as billed, and no replacement code applies. This is a coding error where the provider submitted a procedure code that the clinical documentation does not document was actually performed.",
+    "suspicious_lines": []
+   },
+   "route": "fix_and_resubmit",
+   "recommended_action": "fix_and_resubmit",
+   "expected_values": {
+    "appeal": 1257.78,
+    "fix_and_resubmit": 4646.05,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.2674,
+   "why_chosen": "model-read coding_error"
+  },
+  {
+   "denial_id": "DN-15965",
+   "model_answer": {
+    "root_cause": "prior_authorization",
+    "correctable": false,
+    "evidence_supports_appeal": false,
+    "evidence_lines": [
+     "D4",
+     "D6"
+    ],
+    "confidence": 0.85,
+    "reason": "The payer denied the claim citing CO-50 (medical necessity), but the documentation shows the actual root cause is a missing prior authorization. D4 confirms no authorization request was found, and D6 explicitly states the elective case was scheduled but prior auth was not requested before the service date. The provider failed to obtain authorization before performing CPT 29881, which appears to have been a requirement for this payer. This is a provider-side error that cannot be corrected now because the service has already occurred and retroactive authorization is not within the provider's control.",
+    "suspicious_lines": []
+   },
+   "route": "appeal",
+   "recommended_action": "appeal",
+   "expected_values": {
+    "appeal": 75.22,
+    "fix_and_resubmit": -25.0,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.0513,
+   "why_chosen": "model-read prior_authorization"
+  },
+  {
+   "denial_id": "DN-54332",
+   "model_answer": {
+    "root_cause": "registration_eligibility",
+    "correctable": false,
+    "evidence_supports_appeal": false,
+    "evidence_lines": [
+     "D2",
+     "D3"
+    ],
+    "confidence": 0.95,
+    "reason": "The payer denied the claim because coverage terminated on 2026-03-25, and the emergency department service was performed on 2026-05-01, which is 37 days after termination. The documentation confirms this timeline: D2 shows the patient reported losing coverage on 2026-03-25 with no new enrollment, and D3 (the eligibility check performed on the service date itself) confirms the member was not active since 2026-03-25. The payer's denial is correct; the patient did not have active coverage at the time of service, and the provider cannot correct or recover this claim without evidence of active coverage or an emergency exemption.",
+    "suspicious_lines": []
+   },
+   "route": "write_off",
+   "recommended_action": "write_off",
+   "expected_values": {
+    "appeal": -57.0,
+    "fix_and_resubmit": -25.0,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.0,
+   "why_chosen": "model-read registration_eligibility"
+  },
+  {
+   "denial_id": "DN-41346",
+   "model_answer": {
+    "root_cause": "non_covered_service",
+    "correctable": false,
+    "evidence_supports_appeal": true,
+    "evidence_lines": [
+     "D5",
+     "D3"
+    ],
+    "confidence": 0.92,
+    "reason": "The payer denies this attended overnight sleep study (CPT 95810) as not covered under the patient's current benefit plan (CARC CO-204). However, benefit verification documentation (D5) from 2026-01-19, conducted 11 days before the service date, explicitly confirms that attended overnight sleep study is covered under the employer group plan rider. The employer benefit summary (D3) corroborates that the rider expands benefits to include this service. The payer's denial contradicts its own verified coverage records, indicating the payer failed to apply the rider to this claim or has out-of-date records.",
+    "suspicious_lines": []
+   },
+   "route": "appeal",
+   "recommended_action": "appeal",
+   "expected_values": {
+    "appeal": 1489.85,
+    "fix_and_resubmit": -25.0,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.6074,
+   "why_chosen": "model-read non_covered_service"
+  },
+  {
+   "denial_id": "DN-84632",
+   "model_answer": {
+    "root_cause": "coding_error",
+    "correctable": true,
+    "evidence_supports_appeal": false,
+    "evidence_lines": [
+     "D2",
+     "D5"
+    ],
+    "confidence": 0.95,
+    "reason": "The payer denied the claim because it lacks proper modifiers to distinguish two services billed with the same code on the same day. The clinical documentation (D5) confirms two separate encounters occurred on 2025-06-08: one at 09:50 and one at 15:25 for a new problem, and D2 explicitly identifies that the 15:25 service lacks modifier 76 or 77. The provider submitted both services under CPT 74177 without modifiers, failing to mark them as distinct occurrences. The provider made this error and can correct it by adding the appropriate modifier to the second service code to indicate it is a repeat/distinct service.",
+    "suspicious_lines": []
+   },
+   "route": "fix_and_resubmit",
+   "recommended_action": "fix_and_resubmit",
+   "expected_values": {
+    "appeal": 189.75,
+    "fix_and_resubmit": 851.64,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.2674,
+   "why_chosen": "model-read duplicate_claim"
+  },
+  {
+   "denial_id": "DN-55289",
+   "model_answer": {
+    "root_cause": "coordination_of_benefits",
+    "correctable": true,
+    "evidence_supports_appeal": false,
+    "evidence_lines": [
+     "D3",
+     "D4"
+    ],
+    "confidence": 0.95,
+    "reason": "Summit Care Advantage correctly identified that another payer should be primary. Documentation (D3) shows Harborview Union Health Fund is on file as primary per the birthday rule, effective 2024-10-21, well before the service date of 2026-01-01. The provider billed to Summit Care as primary (D4) and did not submit to Harborview. The provider made the error by billing the wrong payer first; the claim should be rebilled to Harborview as primary.",
+    "suspicious_lines": []
+   },
+   "route": "fix_and_resubmit",
+   "recommended_action": "fix_and_resubmit",
+   "expected_values": {
+    "appeal": 120.99,
+    "fix_and_resubmit": 1629.52,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.1022,
+   "why_chosen": "model-read coordination_of_benefits"
+  },
+  {
+   "denial_id": "DN-14039",
+   "model_answer": {
+    "root_cause": "medical_necessity",
+    "correctable": false,
+    "evidence_supports_appeal": false,
+    "evidence_lines": [
+     "D1",
+     "D2",
+     "D3"
+    ],
+    "confidence": 0.78,
+    "reason": "The payer denied the sleep study (95810) as not medically necessary and requested clinical documentation on 2026-06-01 to support the procedure. The billing note (D2) shows that no records packet was sent in response to this request. The diagnosis code G47.33 (obstructive sleep apnea, moderate) would typically support a sleep study, but because the payer's request for documentation went unanswered, the payer made the denial without adequate clinical justification on file. The provider made the mistake by failing to respond to the payer's information request.",
+    "suspicious_lines": []
+   },
+   "route": "appeal",
+   "recommended_action": "appeal",
+   "expected_values": {
+    "appeal": 137.31,
+    "fix_and_resubmit": -25.0,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.1547,
+   "why_chosen": "largest single loss: run-to-run flip between appeal and fix"
+  },
+  {
+   "denial_id": "DN-19623",
+   "model_answer": {
+    "root_cause": "prior_authorization",
+    "correctable": false,
+    "evidence_supports_appeal": false,
+    "evidence_lines": [
+     "D3",
+     "D4"
+    ],
+    "confidence": 0.88,
+    "reason": "The payer approved authorization PA-1901343 for CPT 45378 (line D4), but the provider billed CPT 45380 with that same authorization number. The operative note (D3) documents that intraoperative findings made 45380 medically required instead of 45378. The provider did not obtain a prior authorization for 45380 before performing it. The provider billed the clinically correct code but lacks valid authorization for that specific code, making the payer's denial factually accurate. The provider should have requested authorization for 45380 at the time the clinical findings emerged, but this would require payer approval and is beyond the provider's unilateral control today.",
+    "suspicious_lines": []
+   },
+   "route": "write_off",
+   "recommended_action": "write_off",
+   "expected_values": {
+    "appeal": -5.61,
+    "fix_and_resubmit": -25.0,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.0513,
+   "why_chosen": "winnable appeal written off in one run"
+  },
+  {
+   "denial_id": "DN-86211",
+   "model_answer": {
+    "root_cause": "prior_authorization",
+    "correctable": false,
+    "evidence_supports_appeal": false,
+    "evidence_lines": [
+     "D2",
+     "D5"
+    ],
+    "confidence": 0.88,
+    "reason": "The payer denied for CO-197 (authorization absent) because the claim was billed for CPT 45380, but authorization PA-2620376 (D5) covers only CPT 45378. The operative note (D2) documents that the surgeon performed 45380 instead due to intraoperative findings, but the authorization on file does not extend to the code actually billed. The provider must obtain a new authorization or amendment for 45380 to recover this claim; the current authorization is for a different procedure code.",
+    "suspicious_lines": []
+   },
+   "route": "write_off",
+   "recommended_action": "write_off",
+   "expected_values": {
+    "appeal": -66.73,
+    "fix_and_resubmit": -25.0,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.0513,
+   "why_chosen": "winnable appeal written off in one run"
+  },
+  {
+   "denial_id": "DN-39870",
+   "model_answer": {
+    "root_cause": "medical_necessity",
+    "correctable": false,
+    "evidence_supports_appeal": true,
+    "evidence_lines": [
+     "D2",
+     "D5"
+    ],
+    "confidence": 0.9,
+    "reason": "Summit Care Advantage denied the attended overnight sleep study (95810) for medical necessity, citing CO-50. However, the payer's own policy (D2) requires minimum 6 weeks of conservative therapy before approval, and the clinical note (D5) documents 10 weeks of failed conservative management prior to the service on 2025-08-05, exceeding the stated threshold. The provider met the payer's stated medical necessity criteria; the payer's records appear not to reflect the documented conservative therapy history that was present when the prior authorization was obtained.",
+    "suspicious_lines": []
+   },
+   "route": "appeal",
+   "recommended_action": "appeal",
+   "expected_values": {
+    "appeal": 567.91,
+    "fix_and_resubmit": -25.0,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.7005,
+   "why_chosen": "worked example for letters"
+  },
+  {
+   "denial_id": "DN-20874",
+   "model_answer": {
+    "root_cause": "prior_authorization",
+    "correctable": false,
+    "evidence_supports_appeal": false,
+    "evidence_lines": [
+     "D1",
+     "D2"
+    ],
+    "confidence": 0.85,
+    "reason": "The payer denied under generic code CO-16 for a billing error. The documentation shows the actual issue: CPT 72148 (MRI) on 2025-08-14 at an outpatient hospital was not pre-authorized, and the billing note explicitly states prior auth was not requested (D2). The authorization log contains no record of authorization for this procedure on that date (D1). This is a prior authorization failure. The provider cannot fix this today because the service already occurred; retroactive authorization would require the payer's approval, not a correction within the provider's control.",
+    "suspicious_lines": [
+     "D6"
+    ]
+   },
+   "route": "write_off",
+   "recommended_action": "write_off",
+   "expected_values": {
+    "appeal": -39.21,
+    "fix_and_resubmit": -25.0,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.0513,
+   "why_chosen": "injected line; earlier table bug made it an appeal"
+  },
+  {
+   "denial_id": "DN-42351",
+   "model_answer": null,
+   "route": "fix_and_resubmit",
+   "recommended_action": "fix_and_resubmit",
+   "expected_values": {
+    "appeal": 419.5,
+    "fix_and_resubmit": 2140.9,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.209,
+   "why_chosen": "clean line wrongly flagged as suspicious"
+  },
+  {
+   "denial_id": "DN-28780",
+   "model_answer": {
+    "root_cause": "prior_authorization",
+    "correctable": false,
+    "evidence_supports_appeal": true,
+    "evidence_lines": [
+     "D4",
+     "D5",
+     "D2"
+    ],
+    "confidence": 0.78,
+    "reason": "The payer denied with a generic CARC CO-16 (submission/billing error), but the claim includes a prior authorization number (PA-9644087) and the clinical documentation (D5) explicitly states 11 weeks of failed conservative therapy before the pembrolizumab infusion, exceeding the payer's stated requirement of 6 weeks minimum (D4). The provider submitted the claim within 32 days with all required elements: credentialing verified (D1), diagnosis supported (D2), and prior auth on the claim. The payer appears to have made an error in denying the claim without acknowledging that the documentation meets their own policy criteria.",
+    "suspicious_lines": []
+   },
+   "route": "human_review",
+   "recommended_action": "appeal",
+   "expected_values": {
+    "appeal": 3981.79,
+    "fix_and_resubmit": -25.0,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.6281,
+   "why_chosen": "high-value claim sent to a person"
+  },
+  {
+   "denial_id": "DN-17973",
+   "model_answer": {
+    "root_cause": "coordination_of_benefits",
+    "correctable": false,
+    "evidence_supports_appeal": true,
+    "evidence_lines": [
+     "D1",
+     "D4"
+    ],
+    "confidence": 0.95,
+    "reason": "The payer denied the claim based on coordination of benefits, stating that Granite State Benefit Plan is primary coverage. However, the patient provided proof that Granite State coverage ended on 2025-04-17, which was nearly three months before the service date of 2025-07-28. The payer's COB file contains outdated information; at the time of service, Lakeshore Medicaid Partners was the only active coverage, making the payer's denial in error.",
+    "suspicious_lines": []
+   },
+   "route": "human_review",
+   "recommended_action": "appeal",
+   "expected_values": {
+    "appeal": 5288.52,
+    "fix_and_resubmit": -25.0,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.7064,
+   "why_chosen": "high-value claim sent to a person"
+  },
+  {
+   "denial_id": "DN-36779",
+   "model_answer": {
+    "root_cause": "prior_authorization",
+    "correctable": false,
+    "evidence_supports_appeal": true,
+    "evidence_lines": [
+     "D2",
+     "D4"
+    ],
+    "confidence": 0.95,
+    "reason": "The payer denied the claim for missing precertification, citing CARC CO-197. However, the clinical note documents this as an emergent case (acuity level 2, emergent workup started without delay on 2026-03-01), and the payer's own policy explicitly exempts emergency services from precertification requirements. The payer made the error by applying a precertification requirement to an exempt emergency case.",
+    "suspicious_lines": []
+   },
+   "route": "human_review",
+   "recommended_action": "appeal",
+   "expected_values": {
+    "appeal": 5646.09,
+    "fix_and_resubmit": -25.0,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.6281,
+   "why_chosen": "high-value claim sent to a person"
+  },
+  {
+   "denial_id": "DN-76945",
+   "model_answer": {
+    "root_cause": "coding_error",
+    "correctable": false,
+    "evidence_supports_appeal": false,
+    "evidence_lines": [
+     "D1"
+    ],
+    "confidence": 0.85,
+    "reason": "The payer denied the claim citing CARC CO-4, suggesting a modifier problem. However, the internal coding audit (D1) reveals the real issue: the documentation does not support CPT 29881 as billed, and no replacement code exists in the record. This is a coding error where the provider billed a procedure code that the clinical documentation does not document. The provider cannot correct this by adding a modifier or resubmitting, because the underlying problem is that the code itself is not supported by what was actually documented.",
+    "suspicious_lines": []
+   },
+   "route": "human_review",
+   "recommended_action": "write_off",
+   "expected_values": {
+    "appeal": -57.0,
+    "fix_and_resubmit": -25.0,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.0,
+   "why_chosen": "high-value claim sent to a person"
+  },
+  {
+   "denial_id": "DN-25191",
+   "model_answer": null,
+   "route": "human_review",
+   "recommended_action": "fix_and_resubmit",
+   "expected_values": {
+    "appeal": 1995.17,
+    "fix_and_resubmit": 5551.38,
+    "write_off": 0.0
+   },
+   "overturn_probability": 0.3583,
+   "why_chosen": "settled by structural rules"
+  }
+ ]
+}
