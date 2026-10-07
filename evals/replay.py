@@ -28,8 +28,11 @@ def saved_answers(run_id: str) -> tuple[str, dict[str, dict]]:
     return config_name, answers
 
 
-def replay(run_id: str, subset: str | None, label: str) -> dict:
+def replay(run_id: str, subset: str | None, label: str, config_override: str | None = None) -> dict:
+    """Re-score a saved run. `config_override` re-routes the saved answers under another configuration,
+    for example the answers of a model-for-everything run under rules first."""
     config_name, answers = saved_answers(run_id)
+    config_name = config_override or config_name
     by_text: dict[str, dict] = {}
     from triage.load import load_split
 
