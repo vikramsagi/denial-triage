@@ -1,0 +1,79 @@
+{
+  "run_id": "20261007T204853Z-drafts-large",
+  "mock": false,
+  "split": "dev",
+  "classifications_from": "20261007T153959Z-m_rules_small_think-681557",
+  "model": "claude-sonnet-5-5",
+  "prompt_version": "draft_v3",
+  "letters": 3,
+  "passed_first_try": 3,
+  "passed_after_retry": 0,
+  "failed_twice": 0,
+  "sent_to_person": 2,
+  "limited_cases": 2,
+  "median_words": 76,
+  "cost_usd": 0.031956,
+  "cost_per_letter_usd": 0.010652,
+  "records": [
+    {
+      "denial_id": "DN-98795",
+      "letter": "Claim ID: DN-98795 [claim.denial_id]\nMember ID: W36031849 [claim.member_id]\nProcedure code: 29881 [claim.procedure_codes]\nService date: 2025-06-18 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that the denial be reversed and the claim be paid.\n\nThe claim carries prior authorization number PA-1362696 for procedure code 29881. [claim.prior_auth_number][claim.procedure_codes] The claim lists diagnosis code M23.221 for the service date 2025-06-18. [claim.diagnosis_codes][claim.service_date]\n\nPlease reconsider this denial, and we will provide further records on request.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.012872,
+      "model": "claude-sonnet-5-5",
+      "words": 74,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D3"
+      ]
+    },
+    {
+      "denial_id": "DN-15965",
+      "letter": "Claim ID: DN-15965 [claim.denial_id]\nMember ID: W29011264 [claim.member_id]\nProcedure code: 29881 [claim.procedure_codes]\nService date: 2025-10-21 [claim.service_date]\nPayer: Bluewater Mutual Insurance [payer.name]\nDenial reason code: CO-50 [denial.reason_code]\n\nWe request that Bluewater Mutual Insurance reverse the denial and pay this claim.\n\nProvider 1752624492 is in network with Bluewater Mutual Insurance [D2]. The claim for procedure code 29881 with diagnosis code M23.221 was submitted on 2025-11-14 [claim.procedure_codes][claim.diagnosis_codes][claim.submitted_date].\n\nPlease reconsider the denial, and we will provide further records on request.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.008966,
+      "model": "claude-sonnet-5-5",
+      "words": 76,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D4",
+        "D6"
+      ]
+    },
+    {
+      "denial_id": "DN-20644",
+      "letter": "Claim ID: DN-20644 [claim.denial_id]\nMember ID: W19438569 [claim.member_id]\nProcedure code: 99285 [claim.procedure_codes]\nService date: 2026-04-10 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial reason code: CO-29 [denial.reason_code]\n\nWe request that the denial be reversed and the claim be paid.\n\nThe clearinghouse acceptance report shows the claim was accepted by the payer on 2026-08-20, batch B13679 [D5]. Northwind Health Plan requires claims within 180 days of the service date [D4][payer.filing_limit_days]. The service date on the claim is 2026-04-10 [claim.service_date].\n\nPlease reconsider the denial; we can provide further records on request.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.010118,
+      "model": "claude-sonnet-5-5",
+      "words": 88,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D4",
+        "D5"
+      ]
+    }
+  ]
+}
