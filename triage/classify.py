@@ -37,7 +37,7 @@ TOOL = {
 }
 
 
-REASON_FIRST_VERSIONS = {"classify_v3"}
+REASON_FIRST_VERSIONS = {"classify_v3", "classify_v4"}
 
 
 def tool_for(version: str | None = None) -> dict:
