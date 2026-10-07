@@ -1,0 +1,182 @@
+[
+  {
+    "denial_id": "DN-20644",
+    "words_before": 96,
+    "words_after": 117,
+    "before": {
+      "faithfulness": 5,
+      "persuasiveness": 4,
+      "tone": 5,
+      "completeness": 5
+    },
+    "after": {
+      "faithfulness": 5,
+      "persuasiveness": 4,
+      "tone": 4,
+      "completeness": 5
+    },
+    "ship_after": true
+  },
+  {
+    "denial_id": "DN-39870",
+    "words_before": 119,
+    "words_after": 146,
+    "before": {
+      "faithfulness": 5,
+      "persuasiveness": 5,
+      "tone": 5,
+      "completeness": 5
+    },
+    "after": {
+      "faithfulness": 3,
+      "persuasiveness": 4,
+      "tone": 4,
+      "completeness": 5
+    },
+    "ship_after": false
+  },
+  {
+    "denial_id": "DN-41346",
+    "words_before": 110,
+    "words_after": 130,
+    "before": {
+      "faithfulness": 5,
+      "persuasiveness": 5,
+      "tone": 5,
+      "completeness": 5
+    },
+    "after": {
+      "faithfulness": 5,
+      "persuasiveness": 4,
+      "tone": 5,
+      "completeness": 5
+    },
+    "ship_after": true
+  },
+  {
+    "denial_id": "DN-45867",
+    "words_before": 123,
+    "words_after": 145,
+    "before": {
+      "faithfulness": 5,
+      "persuasiveness": 5,
+      "tone": 5,
+      "completeness": 5
+    },
+    "after": {
+      "faithfulness": 5,
+      "persuasiveness": 4,
+      "tone": 4,
+      "completeness": 5
+    },
+    "ship_after": true
+  },
+  {
+    "denial_id": "DN-17973",
+    "words_before": 110,
+    "words_after": 132,
+    "before": {
+      "faithfulness": 5,
+      "persuasiveness": 4,
+      "tone": 5,
+      "completeness": 5
+    },
+    "after": {
+      "faithfulness": 5,
+      "persuasiveness": 4,
+      "tone": 4,
+      "completeness": 5
+    },
+    "ship_after": true
+  },
+  {
+    "denial_id": "DN-24886",
+    "words_before": 103,
+    "words_after": 126,
+    "before": {
+      "faithfulness": 5,
+      "persuasiveness": 3,
+      "tone": 5,
+      "completeness": 5
+    },
+    "after": {
+      "faithfulness": 5,
+      "persuasiveness": 3,
+      "tone": 4,
+      "completeness": 5
+    },
+    "ship_after": true
+  },
+  {
+    "denial_id": "DN-45608",
+    "words_before": 103,
+    "words_after": 130,
+    "before": {
+      "faithfulness": 5,
+      "persuasiveness": 3,
+      "tone": 5,
+      "completeness": 3
+    },
+    "after": {
+      "faithfulness": 5,
+      "persuasiveness": 3,
+      "tone": 4,
+      "completeness": 3
+    },
+    "ship_after": true
+  },
+  {
+    "denial_id": "DN-36779",
+    "words_before": 116,
+    "words_after": 136,
+    "before": {
+      "faithfulness": 5,
+      "persuasiveness": 4,
+      "tone": 5,
+      "completeness": 5
+    },
+    "after": {
+      "faithfulness": 4,
+      "persuasiveness": 4,
+      "tone": 4,
+      "completeness": 5
+    },
+    "ship_after": false
+  },
+  {
+    "denial_id": "DN-48852",
+    "words_before": 121,
+    "words_after": 143,
+    "before": {
+      "faithfulness": 5,
+      "persuasiveness": 4,
+      "tone": 5,
+      "completeness": 5
+    },
+    "after": {
+      "faithfulness": 5,
+      "persuasiveness": 4,
+      "tone": 4,
+      "completeness": 5
+    },
+    "ship_after": true
+  },
+  {
+    "denial_id": "DN-62012",
+    "words_before": 100,
+    "words_after": 123,
+    "before": {
+      "faithfulness": 5,
+      "persuasiveness": 4,
+      "tone": 5,
+      "completeness": 5
+    },
+    "after": {
+      "faithfulness": 5,
+      "persuasiveness": 4,
+      "tone": 4,
+      "completeness": 5
+    },
+    "ship_after": true
+  }
+]
