@@ -1,0 +1,67 @@
+{
+  "generator_version": "1.1.0",
+  "seed": 20261005,
+  "frozen": true,
+  "sha256": {
+    "dev": "6ced3450e6aefcf4358c873c2914714424a3c421fae387eac20c8e3f379d373a",
+    "heldout": "f7eef728c45193026041b14e99d6e023e6050556a5f94cdc0edd8509d8cd2661"
+  },
+  "template_variants_shared_across_splits": 0,
+  "dev": {
+    "n": 200,
+    "root_cause": {
+      "registration_eligibility": 48,
+      "coding_error": 32,
+      "medical_necessity": 30,
+      "prior_authorization": 26,
+      "non_covered_service": 20,
+      "coordination_of_benefits": 16,
+      "timely_filing": 14,
+      "duplicate_claim": 14
+    },
+    "best_action": {
+      "fix_and_resubmit": 82,
+      "appeal": 62,
+      "write_off": 56
+    },
+    "difficulty": {
+      "easy": 100,
+      "medium": 71,
+      "hard": 29
+    },
+    "amount_band": {
+      "1000_to_2499": 81,
+      "2500_to_4999": 56,
+      "under_1000": 54,
+      "5000_plus": 9
+    },
+    "payer_type": {
+      "commercial": 93,
+      "medicare_advantage": 48,
+      "medicaid": 45,
+      "medicare": 14
+    },
+    "carc": {
+      "CO-16": 44,
+      "CO-50": 29,
+      "CO-4": 16,
+      "CO-29": 14,
+      "CO-197": 14,
+      "CO-27": 13,
+      "CO-31": 13,
+      "CO-22": 13,
+      "CO-96": 12,
+      "CO-18": 10,
+      "CO-11": 8,
+      "CO-252": 6,
+      "CO-204": 5,
+      "CO-15": 3
+    },
+    "adversarial": 12,
+    "total_allowed_usd": 452685.87,
+    "oracle_value_usd": 233567.83
+  },
+  "heldout_counts_only": {
+    "n": 100
+  }
+}
