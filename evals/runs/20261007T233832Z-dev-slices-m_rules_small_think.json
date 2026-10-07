@@ -1,0 +1,265 @@
+{
+  "run": "20261007T224224Z-m_rules_small_think-1f2421",
+  "config": "m_rules_small_think",
+  "slices": {
+    "root_cause": {
+      "coding_error": {
+        "n": 32,
+        "value_captured": 0.9982556172033358,
+        "value_captured_95": [
+          0.9948,
+          1.0
+        ],
+        "root_cause_accuracy": 1.0,
+        "dollars_lost": 30.0
+      },
+      "coordination_of_benefits": {
+        "n": 16,
+        "value_captured": 0.9990170405844283,
+        "value_captured_95": [
+          0.9983,
+          1.0
+        ],
+        "root_cause_accuracy": 1.0,
+        "dollars_lost": 30.0
+      },
+      "duplicate_claim": {
+        "n": 14,
+        "value_captured": 1.0,
+        "value_captured_95": [
+          1.0,
+          1.0
+        ],
+        "root_cause_accuracy": 0.5714285714285714,
+        "dollars_lost": 0.0
+      },
+      "medical_necessity": {
+        "n": 30,
+        "value_captured": 0.9340610178161866,
+        "value_captured_95": [
+          0.7961,
+          1.0
+        ],
+        "root_cause_accuracy": 0.9666666666666667,
+        "dollars_lost": 2897.68
+      },
+      "non_covered_service": {
+        "n": 20,
+        "value_captured": 0.9997993469904778,
+        "value_captured_95": [
+          0.999,
+          1.0
+        ],
+        "root_cause_accuracy": 1.0,
+        "dollars_lost": 1.47
+      },
+      "prior_authorization": {
+        "n": 26,
+        "value_captured": 0.9988479159542605,
+        "value_captured_95": [
+          0.9978,
+          0.9997
+        ],
+        "root_cause_accuracy": 0.9230769230769231,
+        "dollars_lost": 51.48
+      },
+      "registration_eligibility": {
+        "n": 48,
+        "value_captured": 0.9997820274988295,
+        "value_captured_95": [
+          0.9995,
+          1.0
+        ],
+        "root_cause_accuracy": 1.0,
+        "dollars_lost": 15.0
+      },
+      "timely_filing": {
+        "n": 14,
+        "value_captured": 1.0,
+        "value_captured_95": [
+          1.0,
+          1.0
+        ],
+        "root_cause_accuracy": 1.0,
+        "dollars_lost": 0.0
+      }
+    },
+    "difficulty": {
+      "easy": {
+        "n": 100,
+        "value_captured": 0.9991214799164452,
+        "value_captured_95": [
+          0.9986,
+          0.9997
+        ],
+        "root_cause_accuracy": 0.99,
+        "dollars_lost": 105.0
+      },
+      "hard": {
+        "n": 29,
+        "value_captured": 0.9986495126892027,
+        "value_captured_95": [
+          0.9959,
+          1.0
+        ],
+        "root_cause_accuracy": 0.8620689655172413,
+        "dollars_lost": 40.68
+      },
+      "medium": {
+        "n": 71,
+        "value_captured": 0.9656847284500821,
+        "value_captured_95": [
+          0.8924,
+          1.0
+        ],
+        "root_cause_accuracy": 0.9436619718309859,
+        "dollars_lost": 2879.95
+      }
+    },
+    "amount_band": {
+      "1000_to_2499": {
+        "n": 81,
+        "value_captured": 0.9999099153454483,
+        "value_captured_95": [
+          0.9997,
+          1.0
+        ],
+        "root_cause_accuracy": 0.9382716049382716,
+        "dollars_lost": 6.48
+      },
+      "2500_to_4999": {
+        "n": 56,
+        "value_captured": 0.9720371572055949,
+        "value_captured_95": [
+          0.9105,
+          1.0
+        ],
+        "root_cause_accuracy": 0.9821428571428571,
+        "dollars_lost": 2857.0
+      },
+      "5000_plus": {
+        "n": 9,
+        "value_captured": 0.9967760370235133,
+        "value_captured_95": [
+          0.9936,
+          0.9978
+        ],
+        "root_cause_accuracy": 0.8888888888888888,
+        "dollars_lost": 135.0
+      },
+      "under_1000": {
+        "n": 54,
+        "value_captured": 0.9984565321945215,
+        "value_captured_95": [
+          0.9948,
+          1.0
+        ],
+        "root_cause_accuracy": 0.9629629629629629,
+        "dollars_lost": 27.15
+      }
+    },
+    "payer_type": {
+      "commercial": {
+        "n": 93,
+        "value_captured": 0.999480194323879,
+        "value_captured_95": [
+          0.999,
+          0.9999
+        ],
+        "root_cause_accuracy": 0.989247311827957,
+        "dollars_lost": 52.95
+      },
+      "medicaid": {
+        "n": 45,
+        "value_captured": 0.9990851040762732,
+        "value_captured_95": [
+          0.9983,
+          0.9997
+        ],
+        "root_cause_accuracy": 1.0,
+        "dollars_lost": 60.0
+      },
+      "medicare": {
+        "n": 14,
+        "value_captured": 1.0,
+        "value_captured_95": [
+          1.0,
+          1.0
+        ],
+        "root_cause_accuracy": 1.0,
+        "dollars_lost": 0.0
+      },
+      "medicare_advantage": {
+        "n": 48,
+        "value_captured": 0.9483267231107998,
+        "value_captured_95": [
+          0.8354,
+          0.9998
+        ],
+        "root_cause_accuracy": 0.8333333333333334,
+        "dollars_lost": 2912.68
+      }
+    },
+    "adversarial": {
+      "clean": {
+        "n": 188,
+        "value_captured": 0.9865481669456531,
+        "value_captured_95": [
+          0.9572,
+          0.9996
+        ],
+        "root_cause_accuracy": 0.9574468085106383,
+        "dollars_lost": 2995.63
+      },
+      "injected": {
+        "n": 12,
+        "value_captured": 0.9972413184290964,
+        "value_captured_95": [
+          0.985,
+          1.0
+        ],
+        "root_cause_accuracy": 0.9166666666666666,
+        "dollars_lost": 30.0
+      }
+    }
+  },
+  "errors_by_dollars": {
+    "appealed a fixable denial": {
+      "count": 1,
+      "dollars_lost": 2857.0,
+      "denials": [
+        "DN-79796"
+      ]
+    },
+    "sent to a person (review cost only)": {
+      "count": 9,
+      "dollars_lost": 135.0,
+      "denials": [
+        "DN-28780",
+        "DN-17973",
+        "DN-36779",
+        "DN-76945",
+        "DN-25191",
+        "DN-32477",
+        "DN-94136",
+        "DN-12834",
+        "DN-42810"
+      ]
+    },
+    "appealed a denial with no basis": {
+      "count": 2,
+      "dollars_lost": 27.15,
+      "denials": [
+        "DN-88024",
+        "DN-39098"
+      ]
+    },
+    "wrote off a winnable appeal": {
+      "count": 1,
+      "dollars_lost": 6.48,
+      "denials": [
+        "DN-75900"
+      ]
+    }
+  }
+}
