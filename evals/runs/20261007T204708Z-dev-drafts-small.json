@@ -1,0 +1,81 @@
+{
+  "run_id": "20261007T204708Z-drafts-small",
+  "mock": false,
+  "split": "dev",
+  "classifications_from": "20261007T153959Z-m_rules_small_think-681557",
+  "model": "claude-haiku-4-5-20251001",
+  "prompt_version": "draft_v1",
+  "letters": 3,
+  "passed_first_try": 2,
+  "passed_after_retry": 1,
+  "failed_twice": 0,
+  "sent_to_person": 2,
+  "limited_cases": 2,
+  "median_words": 140,
+  "cost_usd": 0.013129,
+  "cost_per_letter_usd": 0.004376,
+  "records": [
+    {
+      "denial_id": "DN-98795",
+      "letter": "Claim ID: DN-98795 [claim.denial_id]\nProcedure Code: 29881 [claim.procedure_codes]\nService Date: 2025-06-18 [claim.service_date]\nPayer: Lakeshore Medicaid Partners [payer.name]\nDenial Reason: CO-50 - Non-covered service; medical necessity not established [denial.reason_code]\n\nWe request reconsideration and reversal of the denial to allow payment of this claim.\n\nThe claim was denied for lack of medical necessity under the payer's policy requiring 6 or more weeks of failed conservative care prior to coverage [D3]. At the time of service on 2025-06-18, the clinical record documents symptom duration of 1 week with no documented trial of conservative treatment [D2]. The procedure was performed before the policy's documented threshold for coverage was satisfied. We respectfully ask that Lakeshore Medicaid Partners reconsider this denial in light of the clinical circumstances and any additional clinical records that may support medical necessity. We are available to provide further documentation if needed.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.003223,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 140,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D2",
+        "D3"
+      ]
+    },
+    {
+      "denial_id": "DN-15965",
+      "letter": "**Appeal of Claim Denial**\n\n**Claim ID:** DN-15965 [claim.denial_id]\n**Procedure Code:** 29881 [claim.procedure_codes]\n**Service Date:** 2025-10-21 [claim.service_date]\n**Payer:** Bluewater Mutual Insurance [payer.name]\n**Denial Reason:** CO-50 \u2013 Not deemed medically necessary [denial.reason_code]\n\nWe respectfully request that Bluewater Mutual Insurance reconsider and reverse the denial of this claim.\n\nThe claim was submitted for a medically necessary procedure performed on a member under an active policy with Bluewater Mutual Insurance. The provider was credentialed in network at the time of service [D2]. The service was performed on the stated service date and submitted within the filing deadline [claim.service_date][claim.submitted_date].\n\nWe recognize that prior authorization documentation was not obtained before the service date [D4][D6]. This represents a procedural error on the provider's part that we acknowledge. However, we request reconsideration of the medical necessity determination, as the procedure itself was clinically appropriate for the member's condition.\n\nWe welcome the opportunity to provide additional clinical documentation to support medical necessity and ask that Bluewater Mutual Insurance review this appeal for possible payment. We remain available to submit further records as requested.",
+      "passed": true,
+      "attempts": 1,
+      "reasons": [],
+      "needs_person": true,
+      "why_person": "documentation does not clearly meet the payer's criteria; a person reviews before sending",
+      "cost_usd": 0.003557,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 174,
+      "flags": [],
+      "route": "appeal",
+      "case_strength": "limited",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D4",
+        "D6"
+      ]
+    },
+    {
+      "denial_id": "DN-20644",
+      "letter": "Claim ID: DN-20644 [claim.denial_id]\nProcedure Code: 99285 [claim.procedure_codes]\nService Date: 2026-04-10 [claim.service_date]\nPayer: Northwind Health Plan [payer.name]\nDenial Reason: CO-29, timely filing [denial.reason_code]\n\nWe request that Northwind Health Plan reverse the denial and pay this claim.\n\nThe claim was accepted by the payer on 2026-08-20 [D5], which falls within the 180-day filing requirement [D4]. The payer's own policy requires claims within 180 days of the service date [D4]. The service date was 2026-04-10 [claim.service_date], and the claim was accepted well before the filing deadline. We respectfully ask Northwind Health Plan to reconsider this denial and process payment of 1340.61 USD [claim.allowed_amount]. We are prepared to provide additional documentation upon request.",
+      "passed": true,
+      "attempts": 2,
+      "reasons": [],
+      "needs_person": false,
+      "why_person": null,
+      "cost_usd": 0.0063490000000000005,
+      "model": "claude-haiku-4-5-20251001",
+      "words": 110,
+      "flags": [
+        "needed_retry"
+      ],
+      "route": "appeal",
+      "case_strength": "supported",
+      "true_best_action": "appeal",
+      "true_evidence_lines": [
+        "D4",
+        "D5"
+      ]
+    }
+  ]
+}
