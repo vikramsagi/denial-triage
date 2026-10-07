@@ -11,9 +11,10 @@ Payers deny about 12% of hospital claims on first submission ([Optum 2024 Denial
 ## How it works
 
 ```
-denial -> rules check -> small model classifies (only if rules cannot) -> overturn probability
+denial -> rules check -> small model classifies twice (only if rules cannot) -> overturn probability
        -> expected value routing: appeal | fix and resubmit | write off | human review
-       -> grounded appeal draft -> citation checker
+          (reads disagree, or claim of 5,000 USD or more: a person decides)
+       -> grounded appeal letter (larger model) -> citation checker -> letter judge (largest model)
 
 every stage -> decision events -> monitoring and alerts -> outcome feedback -> recalibration
 ```
@@ -27,7 +28,7 @@ every stage -> decision events -> monitoring and alerts -> outcome feedback -> r
 | High-risk review: claims of 5,000 USD or more go to a person with the system's recommendation and reasoning | Done |
 | Model classification and prompt injection defense | Done on dev. Rules first, then Claude Haiku 4.5 with thinking: 98.9% of available value (95% interval 97.5 to 99.9), root cause correct 94.5%, 0 of 12 injection attempts succeeded, 0.0053 USD per denial ([evaluation report](docs/eval-report.md), [rules first](docs/adr/ADR-001-rules-first-then-model.md), [model choice](docs/adr/ADR-002-model-tiering.md)) |
 | Grounded drafting and citation checker | Done on dev. Claude Sonnet 5.5 writes the letters; 61 of 61 dev letters pass a deterministic citation checker on the first try, at 0.0104 USD per letter ([decision record](docs/adr/ADR-003-grounded-drafting.md)) |
-| Evaluation suite: intervals, slices, mutants, calibrated judge, regression tests | Planned |
+| Evaluation suite: intervals, slices, mutants, stability, letter judge, regression tests | Done on dev. Final system captures 99.9% of available value (95% interval 99.8 to 99.9) at 0.0185 USD per denial; two independent classifier reads send disagreements to a person ([evaluation report](docs/eval-report.md), [two-read check](docs/adr/ADR-004-two-read-agreement-check.md), [letter judge](docs/adr/ADR-005-letter-judge.md)) |
 | Observability: decision events, drift monitoring, and an outcome feedback loop tested on a simulated post-launch week | Planned |
 | Web demo with a step-by-step replay of each denial | Planned |
 | Held-out results and case study | Planned |
