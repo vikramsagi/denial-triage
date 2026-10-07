@@ -1,0 +1,25 @@
+{
+ "description": "20 dev denials the structural rules cannot settle, not in bakeoff40, stratified 9 easy / 7 medium / 4 hard, seed 20. Used for the first live run and prompt error review.",
+ "denial_ids": [
+  "DN-10615",
+  "DN-15629",
+  "DN-17536",
+  "DN-19623",
+  "DN-20874",
+  "DN-22398",
+  "DN-30166",
+  "DN-33069",
+  "DN-41453",
+  "DN-60830",
+  "DN-72756",
+  "DN-73270",
+  "DN-78769",
+  "DN-83094",
+  "DN-86211",
+  "DN-91577",
+  "DN-94136",
+  "DN-95747",
+  "DN-97986",
+  "DN-98795"
+ ]
+}
