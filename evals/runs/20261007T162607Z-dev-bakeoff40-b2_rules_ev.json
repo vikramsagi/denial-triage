@@ -1,0 +1,519 @@
+{
+  "run_id": "20261007T162607Z-b2_rules_ev-2cf00a",
+  "mock": false,
+  "split": "dev",
+  "subset": "bakeoff40",
+  "config": "b2_rules_ev",
+  "versions": {
+    "config": "56f8bc0eb5ce",
+    "rules": "1.0.0"
+  },
+  "model_ids": {},
+  "prompt_versions": {},
+  "model_calls": 0,
+  "flags": {},
+  "metrics": {
+    "n": 40,
+    "root_cause_accuracy": 0.65,
+    "appeal_recall": 0.5789473684210527,
+    "appeal_precision": 0.7857142857142857,
+    "value_captured": 0.7021555065638306,
+    "value_captured_system_alone": 0.59127321319238,
+    "system_value_usd": 30161.16,
+    "oracle_value_usd": 42955.1,
+    "dollars_lost_usd": 12793.94,
+    "human_review_share": 0.05,
+    "cost_per_denial_usd": 0.0
+  },
+  "intervals_95": {
+    "root_cause_accuracy": [
+      0.5,
+      0.8
+    ],
+    "appeal_recall": [
+      0.3478,
+      0.7917
+    ],
+    "appeal_precision": [
+      0.5455,
+      1.0
+    ],
+    "value_captured": [
+      0.4863,
+      0.9024
+    ],
+    "value_captured_system_alone": [
+      0.358,
+      0.8353
+    ]
+  },
+  "confusion_true_by_route": {
+    "appeal": {
+      "appeal": 10,
+      "fix_and_resubmit": 4,
+      "write_off": 4,
+      "human_review": 1
+    },
+    "fix_and_resubmit": {
+      "appeal": 1,
+      "fix_and_resubmit": 11,
+      "write_off": 0,
+      "human_review": 0
+    },
+    "write_off": {
+      "appeal": 2,
+      "fix_and_resubmit": 3,
+      "write_off": 3,
+      "human_review": 1
+    }
+  },
+  "api_cost_usd": 0.0,
+  "tokens": {
+    "input": 0,
+    "output": 0,
+    "cache_read": 0,
+    "cache_write": 0
+  },
+  "records": [
+    {
+      "denial_id": "DN-15965",
+      "route": "appeal",
+      "effective_action": "appeal",
+      "true_action": "appeal",
+      "pred_cause": "medical_necessity",
+      "true_cause": "prior_authorization",
+      "value": 174.15,
+      "system_alone_value": 174.15,
+      "oracle": 174.15
+    },
+    {
+      "denial_id": "DN-39870",
+      "route": "appeal",
+      "effective_action": "appeal",
+      "true_action": "appeal",
+      "pred_cause": "medical_necessity",
+      "true_cause": "medical_necessity",
+      "value": 543.31,
+      "system_alone_value": 543.31,
+      "oracle": 543.31
+    },
+    {
+      "denial_id": "DN-24006",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "appeal",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "registration_eligibility",
+      "value": -25.0,
+      "system_alone_value": -25.0,
+      "oracle": 2366.21
+    },
+    {
+      "denial_id": "DN-28780",
+      "route": "human_review",
+      "effective_action": "appeal",
+      "true_action": "appeal",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "medical_necessity",
+      "value": 4727.96,
+      "system_alone_value": -25.0,
+      "oracle": 4742.96
+    },
+    {
+      "denial_id": "DN-48223",
+      "route": "write_off",
+      "effective_action": "write_off",
+      "true_action": "write_off",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "registration_eligibility",
+      "value": 0.0,
+      "system_alone_value": 0.0,
+      "oracle": 0.0
+    },
+    {
+      "denial_id": "DN-24886",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "appeal",
+      "pred_cause": "prior_authorization",
+      "true_cause": "prior_authorization",
+      "value": -25.0,
+      "system_alone_value": -25.0,
+      "oracle": 331.64
+    },
+    {
+      "denial_id": "DN-59018",
+      "route": "appeal",
+      "effective_action": "appeal",
+      "true_action": "write_off",
+      "pred_cause": "medical_necessity",
+      "true_cause": "non_covered_service",
+      "value": -57.0,
+      "system_alone_value": -57.0,
+      "oracle": 0.0
+    },
+    {
+      "denial_id": "DN-81252",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "write_off",
+      "pred_cause": "coding_error",
+      "true_cause": "coding_error",
+      "value": -25.0,
+      "system_alone_value": -25.0,
+      "oracle": 0.0
+    },
+    {
+      "denial_id": "DN-16372",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "fix_and_resubmit",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "coding_error",
+      "value": 324.38,
+      "system_alone_value": 324.38,
+      "oracle": 324.38
+    },
+    {
+      "denial_id": "DN-50187",
+      "route": "appeal",
+      "effective_action": "appeal",
+      "true_action": "write_off",
+      "pred_cause": "medical_necessity",
+      "true_cause": "prior_authorization",
+      "value": -60.01,
+      "system_alone_value": -60.01,
+      "oracle": 0.0
+    },
+    {
+      "denial_id": "DN-88024",
+      "route": "write_off",
+      "effective_action": "write_off",
+      "true_action": "write_off",
+      "pred_cause": "non_covered_service",
+      "true_cause": "medical_necessity",
+      "value": 0.0,
+      "system_alone_value": 0.0,
+      "oracle": 0.0
+    },
+    {
+      "denial_id": "DN-86450",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "fix_and_resubmit",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "registration_eligibility",
+      "value": 4039.39,
+      "system_alone_value": 4039.39,
+      "oracle": 4039.39
+    },
+    {
+      "denial_id": "DN-11403",
+      "route": "write_off",
+      "effective_action": "write_off",
+      "true_action": "appeal",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "registration_eligibility",
+      "value": 0.0,
+      "system_alone_value": 0.0,
+      "oracle": 2829.36
+    },
+    {
+      "denial_id": "DN-10477",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "write_off",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "registration_eligibility",
+      "value": -25.0,
+      "system_alone_value": -25.0,
+      "oracle": 0.0
+    },
+    {
+      "denial_id": "DN-36013",
+      "route": "write_off",
+      "effective_action": "write_off",
+      "true_action": "appeal",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "registration_eligibility",
+      "value": 0.0,
+      "system_alone_value": 0.0,
+      "oracle": 550.26
+    },
+    {
+      "denial_id": "DN-53005",
+      "route": "write_off",
+      "effective_action": "write_off",
+      "true_action": "appeal",
+      "pred_cause": "non_covered_service",
+      "true_cause": "non_covered_service",
+      "value": 0.0,
+      "system_alone_value": 0.0,
+      "oracle": 1861.78
+    },
+    {
+      "denial_id": "DN-71728",
+      "route": "write_off",
+      "effective_action": "write_off",
+      "true_action": "write_off",
+      "pred_cause": "non_covered_service",
+      "true_cause": "medical_necessity",
+      "value": 0.0,
+      "system_alone_value": 0.0,
+      "oracle": 0.0
+    },
+    {
+      "denial_id": "DN-19955",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "write_off",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "non_covered_service",
+      "value": -25.0,
+      "system_alone_value": -25.0,
+      "oracle": 0.0
+    },
+    {
+      "denial_id": "DN-78180",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "fix_and_resubmit",
+      "pred_cause": "coordination_of_benefits",
+      "true_cause": "coordination_of_benefits",
+      "value": 1223.73,
+      "system_alone_value": 1223.73,
+      "oracle": 1223.73
+    },
+    {
+      "denial_id": "DN-79796",
+      "route": "appeal",
+      "effective_action": "appeal",
+      "true_action": "fix_and_resubmit",
+      "pred_cause": "medical_necessity",
+      "true_cause": "medical_necessity",
+      "value": 1222.82,
+      "system_alone_value": 1222.82,
+      "oracle": 4079.82
+    },
+    {
+      "denial_id": "DN-76945",
+      "route": "human_review",
+      "effective_action": "write_off",
+      "true_action": "write_off",
+      "pred_cause": "coding_error",
+      "true_cause": "coding_error",
+      "value": -15.0,
+      "system_alone_value": -25.0,
+      "oracle": 0.0
+    },
+    {
+      "denial_id": "DN-87806",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "fix_and_resubmit",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "registration_eligibility",
+      "value": 1205.87,
+      "system_alone_value": 1205.87,
+      "oracle": 1205.87
+    },
+    {
+      "denial_id": "DN-42957",
+      "route": "appeal",
+      "effective_action": "appeal",
+      "true_action": "appeal",
+      "pred_cause": "medical_necessity",
+      "true_cause": "medical_necessity",
+      "value": 858.27,
+      "system_alone_value": 858.27,
+      "oracle": 858.27
+    },
+    {
+      "denial_id": "DN-21538",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "fix_and_resubmit",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "coordination_of_benefits",
+      "value": 746.86,
+      "system_alone_value": 746.86,
+      "oracle": 746.86
+    },
+    {
+      "denial_id": "DN-62058",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "appeal",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "coordination_of_benefits",
+      "value": -25.0,
+      "system_alone_value": -25.0,
+      "oracle": 642.46
+    },
+    {
+      "denial_id": "DN-26900",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "fix_and_resubmit",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "registration_eligibility",
+      "value": 4226.75,
+      "system_alone_value": 4226.75,
+      "oracle": 4226.75
+    },
+    {
+      "denial_id": "DN-60969",
+      "route": "write_off",
+      "effective_action": "write_off",
+      "true_action": "appeal",
+      "pred_cause": "non_covered_service",
+      "true_cause": "medical_necessity",
+      "value": 0.0,
+      "system_alone_value": 0.0,
+      "oracle": 18.72
+    },
+    {
+      "denial_id": "DN-33603",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "fix_and_resubmit",
+      "pred_cause": "coordination_of_benefits",
+      "true_cause": "coordination_of_benefits",
+      "value": 1366.37,
+      "system_alone_value": 1366.37,
+      "oracle": 1366.37
+    },
+    {
+      "denial_id": "DN-91649",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "fix_and_resubmit",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "registration_eligibility",
+      "value": 284.58,
+      "system_alone_value": 284.58,
+      "oracle": 284.58
+    },
+    {
+      "denial_id": "DN-27999",
+      "route": "appeal",
+      "effective_action": "appeal",
+      "true_action": "appeal",
+      "pred_cause": "medical_necessity",
+      "true_cause": "non_covered_service",
+      "value": 497.76,
+      "system_alone_value": 497.76,
+      "oracle": 497.76
+    },
+    {
+      "denial_id": "DN-41313",
+      "route": "appeal",
+      "effective_action": "appeal",
+      "true_action": "appeal",
+      "pred_cause": "medical_necessity",
+      "true_cause": "medical_necessity",
+      "value": 171.89,
+      "system_alone_value": 171.89,
+      "oracle": 171.89
+    },
+    {
+      "denial_id": "DN-82634",
+      "route": "appeal",
+      "effective_action": "appeal",
+      "true_action": "appeal",
+      "pred_cause": "medical_necessity",
+      "true_cause": "prior_authorization",
+      "value": 953.41,
+      "system_alone_value": 953.41,
+      "oracle": 953.41
+    },
+    {
+      "denial_id": "DN-92534",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "fix_and_resubmit",
+      "pred_cause": "registration_eligibility",
+      "true_cause": "coding_error",
+      "value": 218.5,
+      "system_alone_value": 218.5,
+      "oracle": 218.5
+    },
+    {
+      "denial_id": "DN-77112",
+      "route": "appeal",
+      "effective_action": "appeal",
+      "true_action": "appeal",
+      "pred_cause": "medical_necessity",
+      "true_cause": "medical_necessity",
+      "value": 2746.99,
+      "system_alone_value": 2746.99,
+      "oracle": 2746.99
+    },
+    {
+      "denial_id": "DN-21986",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "fix_and_resubmit",
+      "pred_cause": "medical_necessity",
+      "true_cause": "medical_necessity",
+      "value": 1637.27,
+      "system_alone_value": 1637.27,
+      "oracle": 1637.27
+    },
+    {
+      "denial_id": "DN-46414",
+      "route": "appeal",
+      "effective_action": "appeal",
+      "true_action": "appeal",
+      "pred_cause": "prior_authorization",
+      "true_cause": "prior_authorization",
+      "value": 27.52,
+      "system_alone_value": 27.52,
+      "oracle": 27.52
+    },
+    {
+      "denial_id": "DN-77360",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "appeal",
+      "pred_cause": "coordination_of_benefits",
+      "true_cause": "coordination_of_benefits",
+      "value": -25.0,
+      "system_alone_value": -25.0,
+      "oracle": 1014.5
+    },
+    {
+      "denial_id": "DN-13052",
+      "route": "fix_and_resubmit",
+      "effective_action": "fix_and_resubmit",
+      "true_action": "fix_and_resubmit",
+      "pred_cause": "coding_error",
+      "true_cause": "coding_error",
+      "value": 331.15,
+      "system_alone_value": 331.15,
+      "oracle": 331.15
+    },
+    {
+      "denial_id": "DN-97512",
+      "route": "appeal",
+      "effective_action": "appeal",
+      "true_action": "appeal",
+      "pred_cause": "medical_necessity",
+      "true_cause": "medical_necessity",
+      "value": 71.95,
+      "system_alone_value": 71.95,
+      "oracle": 71.95
+    },
+    {
+      "denial_id": "DN-83463",
+      "route": "appeal",
+      "effective_action": "appeal",
+      "true_action": "appeal",
+      "pred_cause": "medical_necessity",
+      "true_cause": "medical_necessity",
+      "value": 2867.29,
+      "system_alone_value": 2867.29,
+      "oracle": 2867.29
+    }
+  ]
+}
