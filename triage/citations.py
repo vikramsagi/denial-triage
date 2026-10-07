@@ -42,13 +42,22 @@ def sources(d: DenialInput) -> dict[str, str]:
         "claim.procedure_codes": " ".join(line.cpt for line in c.lines),
         "claim.diagnosis_codes": " ".join(c.icd10),
         "claim.prior_auth_number": c.prior_auth_number or "",
-        "claim.denial_id": d.denial_id,
+        "claim.claim_id": d.denial_id,
+        "claim.denial_id": d.denial_id,   # older name for the same value, kept so earlier letters still check
         "denial.reason_code": d.denial.carc,
         "denial.denial_date": str(d.denial.denial_date),
         "payer.name": d.payer.name,
         "payer.filing_limit_days": str(d.payer.filing_limit_days),
     })
     return out
+
+
+LEGACY_FIELDS = {"claim.denial_id"}
+
+
+def citable_fields(d: DenialInput) -> dict[str, str]:
+    """Claim fields shown to the drafter and the judge, without the legacy names."""
+    return {k: v for k, v in sources(d).items() if "." in k and v and k not in LEGACY_FIELDS}
 
 
 def _norm(kind: str, tok: str) -> str:
