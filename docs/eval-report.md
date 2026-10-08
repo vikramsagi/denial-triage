@@ -1,8 +1,49 @@
 # Evaluation report
 
-All results on this page use the dev split (200 denials). The held-out split has not been opened. Intervals are 95% bootstrap intervals from 2,000 resamples of the 200 denials. Assumptions behind the scores are listed in [assumptions.md](assumptions.md).
+Results below use the dev split (200 denials) unless a section says held-out. The held-out split (100 denials) was opened once, for the final evaluation, after every design choice was fixed. Intervals are 95% bootstrap intervals from 2,000 resamples of the 200 denials. Assumptions behind the scores are listed in [assumptions.md](assumptions.md).
 
-## Headline
+## Held-out result (final score)
+
+The final system ran once on the 100 held-out denials, which use phrasings the system never saw while it was built. The ship rule was set before the run: each target counts as met only when the low end of its 95% interval clears it ([run file](../evals/runs/20261008T132056Z-heldout-m_rules_small_think_x2.json), [log](../evals/heldout_log.md)).
+
+| Measure | Target | Held-out (95% interval) | Met with confidence |
+| --- | --- | --- | --- |
+| Root cause correct | 85% or better | 94.0% (89.0 to 98.0) | Yes |
+| Appeal recall | 90% or better | 93.8% (83.9 to 100) | No. The point estimate clears the target; the interval does not |
+| Appeal precision | 75% or better | 96.8% (89.3 to 100) | Yes |
+| Value captured | Beat every baseline | 99.1% (97.2 to 99.9) | Yes. Best baseline 82.5% (71.8 to 90.7) |
+| Prompt injection success | 0% | 0 of 6 (5 read by the model, all 5 flagged; 1 settled by rules) | Yes, but 6 records is a weak bound |
+| Shipped letters pass the citation checker | 100% | 31 of 31 | Yes |
+| Letters ready to send, strong cases (judge) | Report | 22 of 25 | Not a target |
+| API cost per denial | Under 0.02 USD | 0.0182 USD (two reads 0.0106, letters 0.0032, grading 0.0045) | Yes |
+
+**Ship call: not yet under the strict rule.** Six of seven targets are met with confidence. Appeal recall is not: the held-out set has 32 denials worth appealing, so each one missed moves recall by about 3 points, and the interval is wide. The single costly error was a coordination-of-benefits denial (another insurer's coverage had ended) that the model read as a patient ID problem and wrote off, losing 976.69 USD of the 1,112.98 USD lost on the whole set. More held-out data, or a targeted fix for coordination-of-benefits wording followed by a fresh test set, would settle it.
+
+| System on held-out | Root cause correct | Appeal recall | Appeal precision | Value captured |
+| --- | --- | --- | --- | --- |
+| Appeal every claim above 500 USD | not applicable | 100% | 35.6% (26.1 to 45.5) | 49.1% (36.3 to 62.3) |
+| Reason-code lookup | 77.0% (69.0 to 85.0) | 40.6% (24.0 to 58.1) | 65.0% (42.9 to 86.2) | 66.5% (50.2 to 81.2) |
+| Rules and expected value, no model | 80.0% (72.0 to 87.0) | 53.1% (36.7 to 70.4) | 81.0% (61.3 to 96.0) | 82.5% (71.8 to 90.7) |
+| Final system | 94.0% (89.0 to 98.0) | 93.8% (83.9 to 100) | 96.8% (89.3 to 100) | 99.1% (97.2 to 99.9) |
+
+Dev and held-out agree closely (value captured 99.9% on dev, 99.1% on held-out), so the build did not overfit the dev wording.
+
+## After launch: a simulated week with a payer change
+
+A week of 150 new synthetic denials tests what happens when the world changes. Northwind Health Plan tightens prior authorization: prior-authorization denials rise from 13% to 30% of the queue, its notes use new wording, and its appeals win about a fifth as often. The week was never used for tuning. Full reasoning is in [ADR-006](adr/ADR-006-monitoring-and-feedback.md) ([results](../evals/runs/20261008T140348Z-week-feedback.json), [week run](../evals/runs/20261008T135903Z-week-m_rules_small_think_x2.json)).
+
+| Check | Result |
+| --- | --- |
+| Monitor on a rerun of dev | 0 alerts, 0 warnings |
+| Monitor on the week, without right answers | Warning: denial reason mix shifted (PSI 0.226, alert line 0.25). All other signals inside their bands, except injection flags dropping to 0 because the week has no planted attacks |
+| Feedback from days 1 to 3 | Northwind prior authorization: 7 appeals, 3.82 wins expected, 1 won. Win odds corrected to 0.53 times their old value |
+| Days 4 to 7, before correction | 99.81% value captured (99.64 to 99.92), 211.31 USD lost |
+| Days 4 to 7, after correction | 99.87% value captured (99.78 to 99.94), 147.32 USD lost; 1 decision changed |
+| Whole week, final system | 99.78% value captured (99.61 to 99.89), 15 of 150 sent to a person, 0.0106 USD per denial for classification |
+
+The mechanism works: the change was detected without right answers, and the correction moved the right way from a handful of outcomes. The gain is small because most affected claims were still worth appealing at the lower odds, and the intervals overlap.
+
+## Headline (dev)
 
 The final system: structural rules first, then two independent reads by Claude Haiku 4.5 with thinking (classifier prompt version 4). When the two reads lead to different actions, a person decides. Claims of 5,000 USD or more always go to a person. Claude Sonnet 5.5 writes appeal letters, a deterministic checker verifies every citation, and Claude Opus 5.5 grades every letter.
 
@@ -189,6 +230,7 @@ Action mutants lower value captured. Root-cause mutants lower root-cause accurac
 ## Known limits
 
 - The two-read check is measured on two runs. More runs would narrow its interval.
+- Appeal outcomes in the simulated week are drawn from the answer key's true win odds, standing in for a real outcome feed.
 - The judge is calibrated against planted letters and the answer key, not yet against a billing specialist's grades.
 - The win odds table is fitted and scored on the same dev labels. The held-out split tests whether it generalizes.
 - The scorer assumes reviewers always choose the best action. The system-alone column removes this assumption.
