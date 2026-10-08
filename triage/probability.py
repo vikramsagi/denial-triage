@@ -62,6 +62,17 @@ def fit(labels: dict[str, dict]) -> dict:
     }
 
 
+# Payer-specific corrections learned from real appeal outcomes after launch, as multipliers on the
+# table's win odds: {(payer name, root cause): factor}. Empty until the feedback loop sets them.
+ADJUSTMENTS: dict[tuple[str, str], float] = {}
+
+
+def adjusted(p: float, payer: str, root_cause: str) -> tuple[float, float]:
+    """Apply any learned payer correction. Returns the adjusted odds and the factor used."""
+    f = ADJUSTMENTS.get((payer, root_cause), 1.0)
+    return min(1.0, round(p * f, 4)), f
+
+
 def load_table() -> dict:
     return json.loads(TABLE_PATH.read_text())
 
