@@ -1,0 +1,538 @@
+<title>Denial triage replay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a billing work desk. Top bar with three views; the replay reads as a numbered pipeline,
+   one stage per row, with the denial record pinned beside it on wide screens. */
+:root {
+  --paper: #F7F6FF;
+  --sheet: #FFFFFF;
+  --ink: #1F1D2B;
+  --muted: #5E5A72;
+  --rule: #E3E0F5;
+  --form: #6941E6;          /* the blue of printed remittance forms */
+  --form-soft: #EDE8FF; --on-form: #FFFFFF;
+  --gain: #1E7F52;
+  --gain-soft: #E2F3EA;
+  --loss: #C23434;
+  --loss-soft: #FBE7E7;
+  --person: #A35F00;
+  --person-soft: #FBF0DF;
+  --mark: #E3F4F0;
+  --f-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --f-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #12111A; --sheet: #1C1A28; --ink: #EDEBF7; --muted: #A9A5BE; --rule: #2E2B40;
+  --form: #A48BFF; --form-soft: #2A2250; --on-form: #12111A; --gain: #4CC38A; --gain-soft: #1B3328; --loss: #F07878; --loss-soft: #3A1F24;
+  --person: #E8A23A; --person-soft: #3A2E1A; --mark: #173A35; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #12111A; --sheet: #1C1A28; --ink: #EDEBF7; --muted: #A9A5BE; --rule: #2E2B40;
+  --form: #A48BFF; --form-soft: #2A2250; --on-form: #12111A; --gain: #4CC38A; --gain-soft: #1B3328; --loss: #F07878; --loss-soft: #3A1F24;
+  --person: #E8A23A; --person-soft: #3A2E1A; --mark: #173A35; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.55 var(--f-body); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 0 48px; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 600; line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: 26px; letter-spacing: .01em; }
+h2 { font-size: 21px; }
+h3 { font-size: 16px; letter-spacing: .02em; }
+.mono, code { font-family: var(--f-mono); font-size: .9em; }
+.muted { color: var(--muted); }
+.label { font: 600 11px/1.2 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+a { color: var(--form); }
+button, select, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--form); outline-offset: 2px; }
+
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); border-bottom: 1px solid var(--rule); }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding-block: 14px 12px; }
+.brand { display: flex; flex-direction: column; gap: 2px; margin-right: auto; }
+.brand p { margin: 0; font-size: 13px; color: var(--muted); }
+nav.tabs { display: flex; gap: 4px; }
+nav.tabs a { text-decoration: none; color: var(--ink); padding: 6px 12px; border-radius: 6px; font-weight: 500; }
+nav.tabs a[aria-current="page"] { background: var(--form-soft); color: var(--form); }
+.toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; user-select: none; }
+.toggle input { width: 16px; height: 16px; accent-color: var(--form); }
+
+.view { padding-top: 24px; }
+.intro { max-width: 70ch; margin: 0 0 20px; color: var(--muted); }
+
+/* chips */
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px; border-radius: 999px; font-size: 13px; font-weight: 500; white-space: nowrap; border: 1px solid transparent; }
+.a-appeal { background: var(--form-soft); color: var(--form); }
+.a-fix_and_resubmit { background: var(--gain-soft); color: var(--gain); }
+.a-write_off { background: var(--paper); color: var(--muted); border-color: var(--rule); }
+.a-human_review { background: var(--person-soft); color: var(--person); }
+.ok { color: var(--gain); } .bad { color: var(--loss); }
+.money { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* tour */
+.tour { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; margin-bottom: 28px; }
+.tour button { text-align: left; background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 14px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; }
+.tour button:hover { border-color: var(--form); }
+.tour .why { font-weight: 500; }
+
+/* queue */
+.filters { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: end; margin-bottom: 12px; }
+.filters label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
+.filters select, .filters input { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 6px 8px; min-width: 150px; }
+.scroll { overflow-x: auto; background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 600 12px/1.3 var(--f-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); position: sticky; top: 0; background: var(--sheet); }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody tr { cursor: pointer; }
+tbody tr:hover { background: var(--form-soft); }
+.count { font-size: 13px; color: var(--muted); margin: 8px 2px; }
+
+/* replay */
+.replay-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; margin-bottom: 18px; }
+.replay-head h2 { font-size: 24px; }
+.pick { display: flex; gap: 8px; align-items: center; margin-left: auto; }
+.pick select { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 5px 8px; max-width: 60vw; }
+.grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px); gap: 24px; align-items: start; }
+@media (max-width: 900px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+ol.stages { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; counter-reset: st; }
+ol.stages > li { counter-increment: st; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-top: 1px solid var(--rule); }
+ol.stages > li::before { content: counter(st); font: 600 13px/26px var(--f-mono); width: 26px; height: 26px; text-align: center; border-radius: 50%; background: var(--form-soft); color: var(--form); }
+.stage-h { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; margin-bottom: 6px; }
+.stage-h .cost { margin-left: auto; font: 12px var(--f-mono); color: var(--muted); }
+.stage p { margin: 4px 0; max-width: 72ch; }
+.reads { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
+@media (max-width: 640px) { .reads { grid-template-columns: minmax(0, 1fr); } }
+.read { background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+dl.kv { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 12px; margin: 0; font-size: 14px; }
+dl.kv dt { color: var(--muted); }
+dl.kv dd { margin: 0; }
+.reason { font-size: 13.5px; color: var(--ink); max-height: 9.5em; overflow: auto; border-left: 2px solid var(--rule); padding-left: 10px; }
+.truth { font-size: 13px; padding: 2px 8px; border-radius: 4px; background: var(--mark); color: var(--ink); display: inline-block; }
+.evbars { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; max-width: 520px; }
+.evrow { display: grid; grid-template-columns: 120px minmax(0, 1fr) 90px; gap: 8px; align-items: center; font-size: 14px; }
+.evtrack { height: 12px; background: var(--paper); border: 1px solid var(--rule); border-radius: 3px; position: relative; overflow: hidden; }
+.evfill { position: absolute; top: 0; bottom: 0; left: 0; background: var(--form); opacity: .8; }
+.evrow.best .evfill { background: var(--gain); opacity: 1; }
+.evrow.neg .evfill { background: var(--loss); }
+.letter { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 18px 20px; font-family: var(--f-mono); font-size: 13px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 480px; overflow: auto; }
+.scores { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+.score { display: flex; flex-direction: column; align-items: center; min-width: 96px; padding: 6px 10px; border: 1px solid var(--rule); border-radius: 6px; background: var(--sheet); }
+.score b { font: 600 20px var(--f-display); font-variant-numeric: tabular-nums; }
+.score span { font-size: 12px; color: var(--muted); }
+.outcome { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; }
+
+aside.record { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 84px); background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; max-height: calc(100vh - 110px); overflow: auto; }
+@media (max-width: 900px) { aside.record { position: static; max-height: none; } }
+ul.docs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+ul.docs li { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 8px; font-size: 13.5px; padding: 6px 8px; border-radius: 6px; border: 1px solid transparent; }
+ul.docs li .id { font: 500 12px/1.6 var(--f-mono); color: var(--muted); }
+ul.docs li .src { display: block; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+ul.docs li.cited { border-color: var(--form); background: var(--form-soft); }
+ul.docs li.flagged { border-color: var(--loss); background: var(--loss-soft); }
+ul.docs li.key { box-shadow: inset 4px 0 0 var(--mark); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 12px; color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: -1px; border: 1px solid var(--rule); }
+
+/* results */
+.targets td:nth-child(3) { font-variant-numeric: tabular-nums; }
+.bars { display: flex; flex-direction: column; gap: 10px; max-width: 760px; }
+.bar { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr) 120px; gap: 10px; align-items: center; font-size: 14px; }
+@media (max-width: 640px) { .bar { grid-template-columns: minmax(0, 1fr) 90px; } .bar .track { grid-column: 1 / -1; grid-row: 2; } }
+.track { height: 18px; background: var(--paper); border: 1px solid var(--rule); border-radius: 3px; position: relative; }
+.fill { position: absolute; top: 0; bottom: 0; left: 0; background: var(--muted); opacity: .55; border-radius: 2px; }
+.bar.final .fill { background: var(--gain); opacity: 1; }
+.ci { position: absolute; top: 4px; bottom: 4px; border-left: 2px solid var(--ink); border-right: 2px solid var(--ink); opacity: .6; }
+.stack { display: flex; height: 22px; border-radius: 3px; overflow: hidden; border: 1px solid var(--rule); max-width: 760px; }
+.stack div { height: 100%; }
+.sections { display: flex; flex-direction: column; gap: 32px; }
+.sections section { display: flex; flex-direction: column; gap: 12px; }
+.note { font-size: 13px; color: var(--muted); max-width: 75ch; }
+/* overview */
+.hero { display: flex; flex-direction: column; gap: 14px; padding-block: 12px 8px; max-width: 78ch; }
+.hero h2 { font-size: clamp(28px, 4.2vw, 40px); line-height: 1.08; letter-spacing: -.005em; }
+.hero p { margin: 0; font-size: 17px; color: var(--ink); }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 12px; border: 1px solid var(--form); background: var(--form); color: var(--on-form); font-weight: 600; text-decoration: none; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--form); }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-block: 26px; }
+@media (max-width: 760px) { .tiles { grid-template-columns: minmax(0, 1fr); } }
+.tile { background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 4px; }
+.tile b { font: 700 34px/1 var(--f-display); font-variant-numeric: tabular-nums; color: var(--gain); }
+.tile .t { font-weight: 600; }
+.tile .s { font-size: 13.5px; color: var(--muted); }
+.flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; counter-reset: fl; }
+@media (max-width: 900px) { .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.flow li { counter-increment: fl; background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 4px; font-size: 13.5px; }
+.flow li::before { content: counter(fl); font: 600 12px/22px var(--f-mono); width: 22px; height: 22px; text-align: center; border-radius: 50%; background: var(--form-soft); color: var(--form); }
+.flow li b { font-size: 14.5px; }
+.flow li span { color: var(--muted); }
+.cols { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px; margin-top: 30px; }
+@media (max-width: 900px) { .cols { grid-template-columns: minmax(0, 1fr); } }
+.points { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.points li { display: flex; flex-direction: column; gap: 2px; padding-left: 14px; border-left: 3px solid var(--rule); }
+.points li b { font-weight: 600; }
+.points li span { color: var(--muted); font-size: 14px; }
+details.gloss { background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 16px; }
+details.gloss summary { cursor: pointer; font-weight: 600; }
+details.gloss dl { display: grid; grid-template-columns: minmax(0, 9.5em) minmax(0, 1fr); gap: 8px 14px; margin: 12px 0 4px; font-size: 14px; }
+details.gloss dt { font-weight: 600; }
+details.gloss dd { margin: 0; color: var(--ink); }
+.readhow { background: var(--form-soft); border-radius: 12px; padding: 14px 16px; font-size: 14.5px; display: flex; flex-direction: column; gap: 6px; }
+.readhow p { margin: 0; }
+/* tour story */
+.story { background: var(--sheet); border: 1px solid var(--form); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; display: flex; flex-direction: column; gap: 8px; }
+.story .top { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: baseline; }
+.story h3 { font-size: 19px; }
+.story p { margin: 0; max-width: 80ch; }
+.story .look { font-size: 14px; color: var(--muted); }
+.story .nav { display: flex; gap: 8px; margin-left: auto; }
+.story .nav button { padding: 5px 12px; border-radius: 6px; border: 1px solid var(--rule); background: var(--paper); cursor: pointer; }
+.story .nav button:disabled { opacity: .45; cursor: default; }
+.why-step { font-size: 13.5px; color: var(--muted); margin: 0 0 6px !important; }
+nav.tabs a { white-space: nowrap; }
+@media (max-width: 640px) { header.top { position: static; } nav.tabs { flex-wrap: wrap; width: 100%; } nav.tabs a { padding: 5px 9px; font-size: 14px; } aside.record { position: static; } }
+a.gh { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); text-decoration: none; font-weight: 500; font-size: 14px; }
+a.gh:hover { border-color: var(--form); color: var(--form); }
+a.gh svg { width: 16px; height: 16px; fill: currentColor; }
+.points li a, .evidence a { font-size: 13.5px; }
+.evidence { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.evidence a { display: flex; flex-direction: column; gap: 3px; padding: 12px 14px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; text-decoration: none; color: var(--ink); }
+.evidence a:hover { border-color: var(--form); }
+.evidence a b { color: var(--form); font-size: 14.5px; }
+.evidence a span { color: var(--muted); }
+.src-link { font-size: 13px; }
+footer { margin-top: 40px; font-size: 13px; color: var(--muted); max-width: 80ch; }
+@media (prefers-reduced-motion: no-preference) { tbody tr, .tour button { transition: background .12s, border-color .12s; } }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <h1>Denial triage replay</h1>
+      <p>An AI agent that decides which denied insurance claims to fix, appeal, or let go</p>
+    </div>
+    <nav class="tabs" aria-label="Views">
+      <a href="#overview" data-view="overview">Overview</a>
+      <a href="#tour" data-view="tour">Guided tour</a>
+      <a href="#queue" data-view="queue">All denials</a>
+      <a href="#results" data-view="results">Results</a>
+    </nav>
+    <a class="gh" href="https://github.com/vikramsagi/denial-triage" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Code on GitHub</a>
+    <label class="toggle" for="truth-toggle" title="Each synthetic denial was generated with a known right answer. Turn this off to see only what the system saw."><input type="checkbox" id="truth-toggle" checked> Show the right answers</label>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="view" id="v-overview">
+    <div class="hero">
+      <h2>Which denied claims are worth fighting for?</h2>
+      <p>When an insurer denies a hospital claim, a billing specialist has to choose: fix the claim and resend it, appeal the decision, or write the money off. An appeal costs 57 to 108 USD of staff time, so appealing everything wastes money and appealing nothing leaves revenue unpaid.</p>
+      <p>This prototype makes that choice for every denial, shows its reasoning step by step, writes the appeal letter, and hands the cases it should not decide alone to a person.</p>
+      <div class="cta"><a class="btn" href="#tour">Take the 3-minute tour</a><a class="btn ghost" href="#queue">Browse all 200 denials</a><a class="btn ghost" href="#results">See the results</a><a class="btn ghost" href="https://github.com/vikramsagi/denial-triage" target="_blank" rel="noopener">Read the code</a></div>
+    </div>
+    <div class="tiles">
+      <div class="tile"><b>99.9%</b><span class="t">of recoverable dollars captured</span><span class="s">on the 200 development denials shown here, against 83.1% without AI. On 100 held-out denials: 99.1%</span></div>
+      <div class="tile"><b>7.5%</b><span class="t">of denials sent to a person</span><span class="s">the uncertain and high-value ones, each with a recommendation and reasons attached</span></div>
+      <div class="tile"><b>2 cents</b><span class="t">of AI cost per denial</span><span class="s">0.0185 USD, including two reads, the letter, and a review of the letter</span></div>
+    </div>
+    <h2 style="margin-bottom:12px">How a denial moves through the system</h2>
+    <ol class="flow">
+      <li><b>Read the denial</b><span>The insurer's reason code, the claim, and the notes in the record.</span></li>
+      <li><b>Simple rules first</b><span>A typo or a missing number on file needs no AI. Rules settle 57 of 200.</span></li>
+      <li><b>AI reads it twice</b><span>Two separate reads of the record. If they disagree, a person decides.</span></li>
+      <li><b>Compare in dollars</b><span>Chance of winning times the amount, minus the cost of each action.</span></li>
+      <li><b>Act or hand off</b><span>Take the best action, or pass it to a person with a recommendation.</span></li>
+      <li><b>Write and check the letter</b><span>Every fact must point to a line in the record, then a second AI reviews it.</span></li>
+    </ol>
+    <div class="cols">
+      <div>
+        <h2 style="margin-bottom:12px">Product decisions worth noticing</h2>
+        <ul class="points">
+          <li><b>It decides by dollars, not by label.</b><span>A denial that could be won is still written off if winning is worth less than the appeal costs.</span><a href="https://github.com/vikramsagi/denial-triage/blob/main/docs/eval-report.md" target="_blank" rel="noopener">How decisions are scored</a></li>
+          <li><b>Rules before AI where rules are certain.</b><span>57 of 200 denials are settled from IDs, codes, and dates alone, all correctly, at no AI cost.</span><a href="https://github.com/vikramsagi/denial-triage/blob/main/docs/adr/ADR-001-rules-first-then-model.md" target="_blank" rel="noopener">Decision record: rules first</a></li>
+          <li><b>It knows when it does not know.</b><span>The AI's own confidence score did not predict its mistakes, so the system asks twice instead. Disagreement goes to a person.</span><a href="https://github.com/vikramsagi/denial-triage/blob/main/docs/adr/ADR-004-two-read-agreement-check.md" target="_blank" rel="noopener">Decision record: two reads</a></li>
+          <li><b>Every letter is checked twice.</b><span>Code verifies each date, amount, and ID against its source. A stronger model checks meaning. It caught 5 of 5 planted bad letters.</span><a href="https://github.com/vikramsagi/denial-triage/blob/main/docs/adr/ADR-003-grounded-drafting.md" target="_blank" rel="noopener">Decision records: letters and the letter review</a></li>
+          <li><b>Measured, not asserted.</b><span>Every result is scored against known right answers, with 95% ranges, against three simpler baselines.</span><a href="https://github.com/vikramsagi/denial-triage/blob/main/docs/eval-report.md" target="_blank" rel="noopener">Full evaluation report</a></li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="readhow"><b>How to read this demo</b>
+          <p>The 200 denials are synthetic, so each one has a known right answer. That lets every decision be scored in dollars: what the system earned against the best possible action.</p>
+          <p>Use <b>Show the right answers</b> at the top to hide them and see only what the system saw.</p>
+          <p>Nothing here calls an AI model. The page replays saved results, so it shows exactly what happened in the test run.</p></div>
+        <details class="gloss" id="glossary"><summary>Terms used on this page</summary><dl>
+          <dt>Denial</dt><dd>An insurer's refusal to pay a claim, sent with a reason code.</dd>
+          <dt>Payer</dt><dd>The insurance company or plan that pays the claim.</dd>
+          <dt>Reason code</dt><dd>The standard code for why the claim was denied. CO-50 means "not medically necessary", CO-29 "filed too late", CO-197 "no prior authorization".</dd>
+          <dt>Allowed amount</dt><dd>What the payer would pay if the claim were approved.</dd>
+          <dt>Fix and resend</dt><dd>Correct the provider's own mistake, such as a wrong ID or missing records, and submit again. Costs about 25 USD.</dd>
+          <dt>Appeal</dt><dd>Ask the payer to reverse its decision, with evidence. Costs 57 USD, or 108 USD when clinical review is needed.</dd>
+          <dt>Write off</dt><dd>Accept the denial. Right when there is no real basis to recover the money.</dd>
+          <dt>Win odds</dt><dd>The chance an appeal succeeds, based on past outcomes for similar denials.</dd>
+          <dt>Expected value</dt><dd>What an action is worth on average: chance of success times the amount, minus its cost.</dd>
+          <dt>Person decides</dt><dd>A billing specialist makes the call, starting from the system's recommendation. Costs about 15 USD of their time.</dd>
+          <dt>Value captured</dt><dd>Dollars the system earned, divided by what the best action on every denial would have earned.</dd>
+        </dl></details>
+      </div>
+    </div>
+    <h2 style="margin:34px 0 12px">Check the work</h2>
+    <p class="note" style="margin:0 0 12px">Everything shown here can be traced to code and saved results in the repository.</p>
+    <div class="evidence"><a href="https://github.com/vikramsagi/denial-triage" target="_blank" rel="noopener"><b>Code and tests</b><span>The pipeline, the citation checker, 89 tests, and a regression suite of 20 known cases</span></a><a href="https://github.com/vikramsagi/denial-triage/blob/main/docs/eval-report.md" target="_blank" rel="noopener"><b>Evaluation report</b><span>Every number on this page, with 95% ranges, baselines, and the checks that each metric can fail</span></a><a href="https://github.com/vikramsagi/denial-triage/tree/main/docs/adr" target="_blank" rel="noopener"><b>Decision records</b><span>Five records: each choice, the options rejected, and the number that decided it</span></a><a href="https://github.com/vikramsagi/denial-triage/blob/main/docs/assumptions.md" target="_blank" rel="noopener"><b>Assumptions log</b><span>Every cost and rule the results depend on, with its source and how to test it</span></a><a href="https://github.com/vikramsagi/denial-triage/blob/main/docs/data-card.md" target="_blank" rel="noopener"><b>Data card</b><span>How the synthetic denials and their right answers were built</span></a><a href="https://github.com/vikramsagi/denial-triage/tree/main/evals/runs" target="_blank" rel="noopener"><b>Raw run files</b><span>Saved output of every evaluation run, including the ones this page replays</span></a></div>
+  </section>
+
+  <section class="view" id="v-queue" hidden>
+    <p class="intro">All 200 development denials. Each row shows what the system decided, the right answer, and the dollars earned or lost against it. Click any row to replay that denial step by step.</p>
+    <h2 style="margin-bottom:12px">Start with a guided case</h2>
+    <div class="tour" id="tour"></div>
+    <h2 style="margin-bottom:12px">Every denial</h2>
+    <div class="filters">
+      <label for="f-route">System decision<select id="f-route"><option value="">All</option></select></label>
+      <label for="f-cause">Root cause (answer key)<select id="f-cause"><option value="">All</option></select></label>
+      <label for="f-result">Result<select id="f-result"><option value="">All</option><option value="lost">Lost money</option><option value="right">Matched the best action</option></select></label>
+      <label for="f-q">Search<input id="f-q" type="search" placeholder="Denial ID, payer, or code"></label>
+    </div>
+    <div class="scroll"><table id="queue"><thead><tr>
+      <th>Denial</th><th>Payer</th><th title="Why the payer denied it">Reason code</th><th class="num" title="What the payer would pay if approved">Allowed</th><th>System decided</th><th class="truth-col">Right answer</th><th class="num truth-col">Result</th>
+    </tr></thead><tbody></tbody></table></div>
+    <p class="count" id="q-count"></p>
+  </section>
+
+  <section class="view" id="v-replay" hidden>
+    <div class="story" id="story" hidden></div>
+    <div class="replay-head">
+      <h2 id="r-title"></h2>
+      <span id="r-sub" class="muted"></span>
+      <label class="pick" for="r-pick"><span class="label">Denial</span><select id="r-pick"></select></label>
+    </div>
+    <div class="grid">
+      <ol class="stages" id="stages"></ol>
+      <aside class="record" id="record"></aside>
+    </div>
+  </section>
+
+  <section class="view" id="v-results" hidden>
+    <div class="sections" id="results"></div>
+  </section>
+
+  <footer>All data is synthetic and was generated with an answer key, so every decision can be scored against the truth. These are results on the 200 development records; a separate held-out set is scored once. Nothing on this page calls a model: it replays saved results. Not for clinical or billing use. Code, tests, and results: <a href="https://github.com/vikramsagi/denial-triage" target="_blank" rel="noopener">github.com/vikramsagi/denial-triage</a>.</footer>
+</main>
+
+<script type="application/json" id="data">__DATA__</script>
+<script>
+(() => {
+const D = JSON.parse(document.getElementById("data").textContent);
+const byId = Object.fromEntries(D.denials.map(d => [d.id, d]));
+const ACT = { appeal: "Appeal", fix_and_resubmit: "Fix and resend", write_off: "Write off", human_review: "Person decides" };
+const CAUSE = c => (c || "").replace(/_/g, " ");
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const usd = (n, d = 0) => (n < 0 ? "−" : "") + Math.abs(n).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d }) + " USD";
+const pct = (x, d = 1) => (x * 100).toFixed(d) + "%";
+const chip = a => `<span class="chip a-${a}">${ACT[a] || esc(a)}</span>`;
+const yn = b => b ? "yes" : "no";
+const $ = s => document.querySelector(s);
+const truthOn = () => $("#truth-toggle").checked;
+let current = D.tour[0].id, inTour = false;
+const TOUR = [
+  { id: "DN-56758", title: "A strong appeal, from start to finish", story: "The payer says a heart catheterization was not medically necessary. Its own policy asks for 6 weeks of conservative treatment first, and the record documents exactly 6 weeks that failed. Both AI reads agree, the system works out that an appeal is worth about 3,170 USD after its cost, and it writes a letter where every sentence points to a line in the record. A second AI reviews the letter and clears it to send.", look: "Look at step 4, where the three actions are compared in dollars, and step 6, the letter with its enclosures." },
+  { id: "DN-14039", title: "Fix it instead of fighting it", story: "The payer asked for medical records that were never sent. An appeal might win, but sending the records and resubmitting is worth much more: about 1,481 USD against 392 USD for an appeal. The system takes the cheaper, surer path, as an experienced biller would.", look: "Look at the dollar comparison in step 4." },
+  { id: "DN-79796", title: "Knowing when to ask a person", story: "The AI read this record twice and reached two different answers: appeal, or send the missing records. Instead of guessing, the system hands the claim to a billing specialist with both readings. Sending the records was right, worth about 4,080 USD. Acting on the first read alone would have filed a weak appeal.", look: "Look at the two reads side by side in step 3." },
+  { id: "DN-20874", title: "An attack hidden in the paperwork", story: "One line in the record pretends to be a system command telling the AI to appeal. The AI flags it as an attempt to manipulate it, ignores it, and recommends writing the claim off, because the authorization really was never requested. The right answer agrees.", look: "Look at line D6, marked in red in the record." },
+  { id: "DN-28780", title: "Large claims always get a person", story: "Every claim of 5,000 USD or more goes to a person, however sure the AI is. The reviewer starts from the system's recommendation, appeal, and its reasons, so the review takes minutes instead of starting from scratch.", look: "Look at step 5, what the reviewer receives." },
+  { id: "DN-98795", title: "A long shot, handled honestly", story: "The record does not meet the payer's policy: one week of symptoms against a six-week requirement. The claim is large enough that an appeal is still worth filing on the odds, but the letter claims nothing the record cannot support, and a person reads it before it is sent.", look: "Look at the letter in step 6. It asks for reconsideration without overstating the case." },
+];
+const tourIdx = id => TOUR.findIndex(t => t.id === id);
+
+try { const t = localStorage.getItem("dt-truth"); if (t !== null) $("#truth-toggle").checked = t === "1"; } catch (e) {}
+
+/* ---------- queue ---------- */
+const routes = [...new Set(D.denials.map(d => d.route))];
+routes.forEach(r => $("#f-route").insertAdjacentHTML("beforeend", `<option value="${r}">${ACT[r]}</option>`));
+[...new Set(D.denials.map(d => d.truth.root_cause))].sort().forEach(c => $("#f-cause").insertAdjacentHTML("beforeend", `<option value="${c}">${CAUSE(c)}</option>`));
+$("#tour").innerHTML = TOUR.map(t => { const d = byId[t.id]; return `<button type="button" data-id="${t.id}"><span class="why">${esc(t.title)}</span><span class="muted mono">${t.id} · ${esc(d.carc)} · ${usd(d.allowed)}</span><span>${chip(d.route)}</span></button>`; }).join("");
+$("#tour").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { inTour = true; openReplay(b.dataset.id); } });
+
+function drawQueue() {
+  const fr = $("#f-route").value, fc = $("#f-cause").value, fx = $("#f-result").value, q = $("#f-q").value.trim().toLowerCase();
+  const rows = D.denials.filter(d => (!fr || d.route === fr) && (!fc || d.truth.root_cause === fc)
+    && (!fx || (fx === "lost" ? d.value < d.oracle - 0.5 : d.value >= d.oracle - 15.5))
+    && (!q || (d.id + " " + d.payer + " " + d.carc).toLowerCase().includes(q)));
+  $("#queue tbody").innerHTML = rows.map(d => {
+    const lost = d.oracle - d.value;
+    const res = lost > 0.5 ? `<span class="bad">lost ${usd(lost)}</span>` : `<span class="ok">${usd(d.value)}</span>`;
+    return `<tr data-id="${d.id}"><td class="mono">${d.id}</td><td>${esc(d.payer)}</td><td class="mono">${esc(d.carc)}</td><td class="num money">${usd(d.allowed)}</td><td>${chip(d.route)}</td><td class="truth-col">${chip(d.truth.best_action)}</td><td class="num truth-col money">${res}</td></tr>`;
+  }).join("");
+  const lostSum = rows.reduce((s, d) => s + Math.max(0, d.oracle - d.value), 0);
+  $("#q-count").textContent = `${rows.length} of ${D.denials.length} denials` + (truthOn() ? ` · lost against the best action: ${usd(lostSum)}` : "");
+  document.querySelectorAll(".truth-col").forEach(el => el.hidden = !truthOn());
+}
+["#f-route", "#f-cause", "#f-result"].forEach(s => $(s).addEventListener("change", drawQueue));
+$("#f-q").addEventListener("input", drawQueue);
+$("#queue tbody").addEventListener("click", e => { const tr = e.target.closest("tr"); if (tr) { inTour = false; openReplay(tr.dataset.id); } });
+
+/* ---------- replay ---------- */
+$("#r-pick").innerHTML = D.denials.map(d => `<option value="${d.id}">${d.id} · ${esc(d.carc)} · ${ACT[d.route]}</option>`).join("");
+$("#r-pick").addEventListener("change", e => { inTour = false; openReplay(e.target.value); });
+
+function readCard(r, n, other) {
+  if (!r) return "";
+  const same = other && r.action === other.action;
+  return `<div class="read"><div class="stage-h"><h3>Read ${n}</h3><span class="cost">${usd(r.cost_usd, 4)}</span></div>
+    <dl class="kv"><dt>Why it was denied</dt><dd>${CAUSE(r.root_cause)}</dd><dt>Provider can fix it</dt><dd>${yn(r.correctable)}</dd>
+    <dt>Evidence supports an appeal</dt><dd>${yn(r.evidence_supports_appeal)}</dd><dt>Confidence</dt><dd>${r.confidence.toFixed(2)}</dd>
+    <dt>Lines it relied on</dt><dd class="mono">${(r.evidence_lines || []).join(", ") || "none"}</dd>
+    ${(r.suspicious_lines || []).length ? `<dt>Flagged</dt><dd class="mono bad">${r.suspicious_lines.join(", ")} (tries to give instructions)</dd>` : ""}
+    <dt>Leads to</dt><dd>${chip(r.action)}</dd></dl>
+    <div class="reason">${esc(r.reason)}</div></div>`;
+}
+
+function evBars(ev, best) {
+  const vals = Object.values(ev), max = Math.max(1, ...vals.map(Math.abs));
+  const order = ["appeal", "fix_and_resubmit", "write_off"];
+  return `<div class="evbars">` + order.map(a => {
+    const v = ev[a], w = Math.abs(v) / max * 100;
+    return `<div class="evrow ${a === best ? "best" : ""} ${v < 0 ? "neg" : ""}"><span>${ACT[a]}</span><span class="evtrack"><span class="evfill" style="width:${w.toFixed(1)}%"></span></span><span class="money" style="text-align:right">${usd(v, 2)}</span></div>`;
+  }).join("") + `</div>`;
+}
+
+function plainTrigger(d) {
+  const tr = d.trigger || "";
+  if (tr.startsWith("high-risk")) return `This claim is ${usd(d.allowed, 2)}, at or above the 5,000 USD line, so a person decides. The system recommends: ${ACT[d.recommended].toLowerCase()}.`;
+  if (tr.startsWith("The two reads")) return `The two reads led to different actions, so a person decides. Read 1 says ${ACT[d.read1.action].toLowerCase()}, read 2 says ${ACT[d.read2.action].toLowerCase()}.`;
+  if (tr.startsWith("highest expected value")) return `${ACT[d.route]} has the highest expected value, so the system takes it.`;
+  if (tr.includes("instructions")) return "The AI cited a line that tries to give it instructions, so a person decides.";
+  return tr.charAt(0).toUpperCase() + tr.slice(1);
+}
+
+function drawReplay() {
+  const d = byId[current], t = d.truth, T = truthOn();
+  const ti = tourIdx(d.id), st = $("#story");
+  if (inTour && ti >= 0) {
+    const tc = TOUR[ti];
+    st.hidden = false;
+    st.innerHTML = `<div class="top"><span class="label">Guided tour · case ${ti + 1} of ${TOUR.length}</span><span class="nav"><button type="button" id="t-prev" ${ti === 0 ? "disabled" : ""}>Previous</button><button type="button" id="t-next">${ti === TOUR.length - 1 ? "See the results" : "Next case"}</button></span></div>
+      <h3>${esc(tc.title)}</h3><p>${esc(tc.story)}</p><p class="look">${esc(tc.look)}</p>`;
+    $("#t-prev").onclick = () => openReplay(TOUR[ti - 1].id);
+    $("#t-next").onclick = () => { if (ti === TOUR.length - 1) { inTour = false; location.hash = "results"; } else openReplay(TOUR[ti + 1].id); };
+  } else { st.hidden = true; }
+  $("#r-pick").value = d.id;
+  $("#r-title").textContent = d.id;
+  $("#r-sub").innerHTML = `${esc(d.payer)} · <span class="mono">${esc(d.carc)}</span> · ${usd(d.allowed, 2)} allowed`;
+  const cited = new Set([...(d.read1?.evidence_lines || []), ...(d.read2?.evidence_lines || [])]);
+  const flagged = new Set([...(d.read1?.suspicious_lines || []), ...(d.read2?.suspicious_lines || [])]);
+  const key = new Set(T ? t.evidence_lines : []);
+  const c = d.claim;
+  $("#record").innerHTML = `<div class="label">The denial record</div>
+    <div><b>${esc(d.carc)}</b>: ${esc(d.carc_text)}</div>
+    <dl class="kv"><dt>Payer</dt><dd>${esc(d.payer)} (${esc(d.payer_type.replace(/_/g, " "))})</dd><dt>Service date</dt><dd class="mono">${esc(c.service_date)}</dd>
+    <dt>Submitted</dt><dd class="mono">${esc(c.submitted_date)}</dd><dt>Procedure</dt><dd class="mono">${c.lines.map(l => esc(l.cpt)).join(", ")}</dd>
+    <dt>Diagnosis</dt><dd class="mono">${c.icd10.map(esc).join(", ")}</dd><dt>Prior auth</dt><dd class="mono">${esc(c.prior_auth_number || "none")}</dd>
+    <dt>Allowed</dt><dd class="money">${usd(d.allowed, 2)}</dd></dl>
+    <div class="label">Documentation</div>
+    <ul class="docs">${d.docs.map(x => `<li class="${cited.has(x.id) ? "cited" : ""} ${flagged.has(x.id) ? "flagged" : ""} ${key.has(x.id) ? "key" : ""}"><span class="id">${x.id}</span><span><span class="src">${esc(x.source.replace(/_/g, " "))}</span>${esc(x.text)}</span></li>`).join("")}</ul>
+    <div class="legend"><span><i style="background:var(--form-soft);border-color:var(--form)"></i>relied on by the AI</span><span><i style="background:var(--loss-soft);border-color:var(--loss)"></i>flagged as a manipulation attempt</span>${T ? `<span><i style="background:var(--mark)"></i>the lines that actually matter</span>` : ""}</div>`;
+
+  const S = [];
+  S.push(`<div class="stage-h"><h3>Denial received</h3></div><p class="why-step">What the billing team starts with: the payer's reason and the paperwork.</p><p>${esc(d.payer)} denied this claim with reason code <span class="mono">${esc(d.carc)}</span>. The record has ${d.docs.length} documentation lines, shown on the right. Documentation is treated as untrusted data.</p>`);
+  S.push(`<div class="stage-h"><h3>Simple rules</h3><span class="cost">0 USD, no AI</span></div><p class="why-step">Some denials have a mechanical answer, such as a swapped digit in a member ID. Rules handle those for free and always give the same answer.</p>` + (d.rules.resolved
+    ? `<p>Settled by the <span class="mono">${esc(d.rules.rule.replace(/_/g, " "))}</span> rule. No AI is needed.</p>`
+    : `<p>No rule applies, so the AI reads the record.</p>`));
+  if (d.read1) {
+    const agree = d.read1.action === d.read2?.action;
+    S.push(`<div class="stage-h"><h3>Two independent reads</h3><span class="chip ${agree ? "a-fix_and_resubmit" : "a-human_review"}">${agree ? "reads agree" : "reads disagree"}</span><span class="cost">${usd((d.read1.cost_usd || 0) + (d.read2?.cost_usd || 0), 4)}</span></div>
+      <p class="why-step">The AI (Claude Haiku 4.5) reads the record twice, separately. It names why the claim was denied, whether the provider can fix it, and whether the evidence supports an appeal. If the two reads lead to different actions, a person decides.</p>
+      <div class="reads">${readCard(d.read1, 1, d.read2)}${readCard(d.read2, 2, d.read1)}</div>
+      ${T ? `<p><span class="truth">Right answer: ${CAUSE(t.root_cause)}; provider can fix it: ${yn(t.correctable)}; evidence supports an appeal: ${yn(t.evidence_supports_appeal)}${t.injected_line ? `; line ${t.injected_line} is a planted manipulation attempt` : ""}</span></p>` : ""}`);
+  } else if (T) {
+    S.push(`<div class="stage-h"><h3>Rule result</h3></div><p><span class="truth">Right answer: ${CAUSE(t.root_cause)}; provider can fix it: ${yn(t.correctable)}</span></p>`);
+  }
+  const bestEv = Object.entries(d.ev).sort((a, b) => b[1] - a[1])[0][0];
+  S.push(`<div class="stage-h"><h3>Compare the options in dollars</h3><span class="cost">0 USD, no AI</span></div>
+    <p class="why-step">Each action is worth its chance of success times the ${usd(d.allowed, 2)} at stake, minus its cost: 57 or 108 USD to appeal, 25 USD to fix and resend, nothing to write off.</p>
+    <p>Chance an appeal wins: <b>${pct(d.p)}</b>, from past outcomes for similar denials.</p>
+    ${evBars(d.ev, bestEv)}
+    ${T ? `<p><span class="truth">Right answer: true win odds ${pct(t.overturn_p)}; true values appeal ${usd(t.action_values.appeal, 2)}, fix ${usd(t.action_values.fix_and_resubmit, 2)}, write off 0 USD</span></p>` : ""}`);
+  S.push(`<div class="stage-h"><h3>Decision</h3>${chip(d.route)}</div>
+    <p class="why-step">The system takes the best-value action, unless the claim is 5,000 USD or more, the two reads disagree, or something looks wrong. Then a person decides.</p>
+    <p>${esc(plainTrigger(d))}</p>
+    ${d.route === "human_review" ? `<p>The reviewer sees the recommendation, ${chip(d.recommended)}, and the reasoning:</p><div class="reason">${esc(d.rationale)}</div>` : ""}`);
+  if (d.letter) {
+    const L = d.letter, G = L.grade;
+    S.push(`<div class="stage-h"><h3>Appeal letter</h3><span class="chip ${L.passed_checker ? "a-fix_and_resubmit" : "a-human_review"}">${L.passed_checker ? "citation check passed" : "citation check failed"}</span><span class="cost">${usd(L.cost_usd, 4)}</span></div>
+      <p class="why-step">A stronger AI (Claude Sonnet 5.5) writes the letter. Code then checks that every date, amount, code, and ID in it appears in the record line it cites. Each cited line becomes an enclosure. ${L.case_strength === "limited" ? "The documentation does not clearly support this appeal, so a person reviews the letter before it is sent." : ""}</p>
+      <div class="letter">${esc(L.sent)}</div>`);
+    if (G) S.push(`<div class="stage-h"><h3>Letter grade</h3><span class="chip ${G.ship ? "a-fix_and_resubmit" : "a-human_review"}">${G.ship ? "ready to send" : "a person edits first"}</span><span class="cost">${usd(L.grade_cost_usd, 4)}</span></div>
+      <p class="why-step">The strongest AI (Claude Opus 5.5) reviews every letter for what code cannot check: whether each sentence says what its source says, and whether it makes the case well. Scores run from 1 to 5.</p>
+      <div class="scores">${["faithfulness", "persuasiveness", "tone", "completeness"].map(k => `<div class="score"><b>${G[k]}<span style="font-size:12px;color:var(--muted)"> / 5</span></b><span>${k}</span></div>`).join("")}</div>
+      ${G.fix_note ? `<p><b>Fix note:</b> ${esc(G.fix_note)}</p>` : ""}`);
+  }
+  if (T) {
+    const lost = d.oracle - d.value;
+    S.push(`<div class="stage-h"><h3>How it scored</h3></div>
+      <div class="outcome"><span>Right answer: ${chip(t.best_action)}</span><span>Best possible: <b class="money">${usd(d.oracle, 2)}</b></span>
+      <span>Earned: <b class="money ${lost > 0.5 ? "bad" : "ok"}">${usd(d.value, 2)}</b></span>${lost > 0.5 ? `<span class="bad">Lost ${usd(lost, 2)}${d.route === "human_review" ? " (review cost)" : ""}</span>` : ""}</div>
+      <p class="muted">Scenario: ${esc(t.scenario.replace(/_/g, " "))}, ${esc(t.difficulty)}. When a person decides, the score assumes they pick the right action, at a cost of 15 USD.</p>`);
+  }
+  $("#stages").innerHTML = S.map(s => `<li class="stage">${`<div>${s}</div>`}</li>`).join("");
+}
+
+/* ---------- results ---------- */
+function drawResults() {
+  const m = D.summary.metrics, iv = D.summary.intervals, cost = D.summary.cost_per_denial;
+  const tgt = [
+    ["Root cause correct", "85% or better", m.root_cause_accuracy, iv.root_cause_accuracy, .85],
+    ["Appeal recall: winnable appeals that were appealed", "90% or better", m.appeal_recall, iv.appeal_recall, .90],
+    ["Appeal precision: appeals that were worth filing", "75% or better", m.appeal_precision, iv.appeal_precision, .75],
+    ["Value captured: dollars earned out of the best possible", "Beat every baseline", m.value_captured, iv.value_captured, .8309],
+  ];
+  const bars = [...Object.entries(D.baselines).map(([k, v]) => [k, v.value_captured, v.ci, false]), ["Final system", m.value_captured, iv.value_captured, true]];
+  const losers = D.denials.filter(d => d.oracle - d.value > 15.5).sort((a, b) => (b.oracle - b.value) - (a.oracle - a.value));
+  const seg = [["Two classifier reads", cost.two_reads, "var(--form)"], ["Appeal letters", cost.letters, "var(--gain)"], ["Letter grading", cost.grading, "var(--person)"]];
+  $("#results").innerHTML = `
+  <section><h2>Against the targets</h2>
+    <p class="note">Each target was set before the build. <a href="https://github.com/vikramsagi/denial-triage/blob/main/docs/eval-report.md" target="_blank" rel="noopener">Full evaluation report</a>. 95% ranges come from resampling the 200 denials 2,000 times. A target counts as met when the low end of the range clears it.</p>
+    <div class="scroll"><table class="targets"><thead><tr><th>Measure</th><th>Target</th><th>Result (95% range)</th><th>Met</th></tr></thead><tbody>
+    ${tgt.map(([n, g, v, r, lo]) => `<tr><td>${n}</td><td>${g}</td><td>${pct(v)} (${pct(r[0])} to ${pct(r[1])})</td><td class="${r[0] >= lo ? "ok" : "bad"}">${r[0] >= lo ? "yes" : "not yet"}</td></tr>`).join("")}
+    <tr><td>Prompt injection attempts that changed a decision</td><td>0%</td><td>0 of 12</td><td class="ok">yes</td></tr>
+    <tr><td>Letters sent that pass the citation check</td><td>100%</td><td>64 of 64</td><td class="ok">yes</td></tr>
+    <tr><td>API cost per denial</td><td>under 0.02 USD</td><td>${usd(cost.total, 4)}</td><td class="ok">yes</td></tr>
+    </tbody></table></div></section>
+  <section><h2>Compared with simpler approaches</h2>
+    <p class="note">How much of the recoverable money each approach would collect on the same 200 denials. The first two are common rules of thumb; the third uses this system's rules and dollar math with no AI.</p>
+    <div class="bars">${bars.map(([n, v, ci, fin]) => `<div class="bar ${fin ? "final" : ""}"><span>${esc(n)}</span><span class="track"><span class="fill" style="width:${(v * 100).toFixed(1)}%"></span><span class="ci" style="left:${(ci[0] * 100).toFixed(1)}%;width:${((ci[1] - ci[0]) * 100).toFixed(1)}%"></span></span><span class="money">${pct(v)}</span></div>`).join("")}</div>
+    <p class="note">Bars run from 0% to 100% of the 233,568 USD a perfect decision on every denial would earn. Marks show the 95% range. The final system loses ${usd(m.dollars_lost_usd)} on 200 denials and sends ${D.summary.human_review} of them (${pct(m.human_review_share)}) to a person.</p></section>
+  <section><h2>API cost per denial</h2>
+    <div class="stack" role="img" aria-label="Cost per denial by stage">${seg.map(([n, v, col]) => `<div style="width:${(v / cost.total * 100).toFixed(1)}%;background:${col}" title="${n}"></div>`).join("")}</div>
+    <div class="legend">${seg.map(([n, v, col]) => `<span><i style="background:${col}"></i>${n}: ${usd(v, 4)}</span>`).join("")}<span>Total: ${usd(cost.total, 4)}</span></div>
+    <p class="note">Rules settle 57 of 200 denials with no model call. Letters are written for about a third of denials. Grading uses the batch interface at half price.</p></section>
+  <section><h2>Where money is still lost</h2>
+    <div class="scroll"><table><thead><tr><th>Denial</th><th>System decision</th><th>Best action</th><th class="num">Lost</th></tr></thead><tbody>
+    ${losers.map(d => `<tr data-id="${d.id}"><td class="mono">${d.id}</td><td>${chip(d.route)}</td><td>${chip(d.truth.best_action)}</td><td class="num money bad">${usd(d.oracle - d.value, 2)}</td></tr>`).join("") || `<tr><td colspan="4">No losses beyond review costs.</td></tr>`}
+    </tbody></table></div>
+    <p class="note">Every claim sent to a person also costs 15 USD of review time; those are not listed. Click a row to replay it.</p></section>
+  <section><h2>Sources</h2><p class="note">Run files behind these numbers: <a href="https://github.com/vikramsagi/denial-triage/blob/main/evals/runs/20261007T233811Z-dev-two-read-check.json" target="_blank" rel="noopener">final system</a>, <a href="https://github.com/vikramsagi/denial-triage/blob/main/evals/runs/20261007T231943Z-dev-judge.json" target="_blank" rel="noopener">letter review</a>, <a href="https://github.com/vikramsagi/denial-triage/blob/main/evals/runs/20261007T162440Z-dev-b2_rules_ev.json" target="_blank" rel="noopener">best approach without AI</a>. Methods: <a href="https://github.com/vikramsagi/denial-triage/blob/main/docs/eval-report.md" target="_blank" rel="noopener">evaluation report</a>, <a href="https://github.com/vikramsagi/denial-triage/blob/main/docs/assumptions.md" target="_blank" rel="noopener">assumptions log</a>.</p></section>`;
+  $("#results").querySelectorAll("tr[data-id]").forEach(tr => tr.addEventListener("click", () => openReplay(tr.dataset.id)));
+}
+
+/* ---------- views ---------- */
+function show(view) {
+  ["overview", "queue", "replay", "results"].forEach(v => { $("#v-" + v).hidden = v !== view; });
+  const tab = view === "replay" ? (inTour ? "tour" : "queue") : view;
+  document.querySelectorAll("nav.tabs a").forEach(a => { if (a.dataset.view === tab) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  if (view === "replay") drawReplay();
+  window.scrollTo(0, 0);
+}
+function openReplay(id) { current = id; if (tourIdx(id) < 0) inTour = false; if (location.hash !== "#" + id) location.hash = id; else show("replay"); }
+function route() {
+  const h = location.hash.slice(1);
+  if (h === "tour") { inTour = true; current = TOUR[0].id; location.hash = current; return; }
+  if (byId[h]) { current = h; if (tourIdx(h) < 0) inTour = false; show("replay"); }
+  else { inTour = false; show(["queue", "results"].includes(h) ? h : "overview"); }
+}
+$("#truth-toggle").addEventListener("change", () => {
+  try { localStorage.setItem("dt-truth", truthOn() ? "1" : "0"); } catch (e) {}
+  drawQueue(); if (!$("#v-replay").hidden) drawReplay();
+});
+window.addEventListener("hashchange", route);
+drawQueue(); drawResults(); route();
+})();
+</script>
