@@ -1,0 +1,13 @@
+{
+  "seed": 20261012,
+  "records": 150,
+  "drift_payer": "Northwind Health Plan",
+  "auth_share": 0.3,
+  "drifting_records": 37,
+  "learn_days": [
+    1,
+    2,
+    3
+  ],
+  "sha256": "e9e860a40058be2d2384145b3e9312f66b166855b04da8cd7412d65aaad7ec2d"
+}
