@@ -116,3 +116,7 @@ Held-out counts are fixed by the stratified design. They were not read from the 
 - One root cause per record. Real denials can have several.
 - Real hospital denial queues are more concentrated in high-value claims than this dataset. The high-value slice has only 9 dev records, so its metrics carry wide intervals.
 - Cost figures come from 2020 to 2025 publications and mostly from hospital settings. Physician practices may have lower costs per claim.
+
+## Simulated post-launch week
+
+`data/week.jsonl` holds 150 additional synthetic denials from `data/generate_week.py` (seed 20261012, hash in `data/week_summary.json`). It reuses the same templates with one deliberate change: Northwind Health Plan tightens prior authorization, with more prior-authorization denials, new note wording, and appeal win odds cut to a fifth. Each record carries a day from 1 to 7. Days 1 to 3 feed the feedback loop and days 4 to 7 measure it. The week is never used for tuning.
