@@ -23,3 +23,6 @@ notes/
 Claude outputs/
 *.zip
 evals/runs/MOCK-*
+
+# demo build copy used for previews
+docs/demo/fragment.html
