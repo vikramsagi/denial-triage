@@ -1,0 +1,236 @@
+{
+  "week_run": "20261008T132157Z-m_rules_small_think_x2-191617",
+  "week_run_file": "evals/runs/20261008T135903Z-week-m_rules_small_think_x2.json",
+  "config": "m_rules_small_think_x2",
+  "denials": 150,
+  "monitoring": {
+    "alerts": [],
+    "warnings": [
+      {
+        "signal": "denial_reason_mix shift (PSI)",
+        "baseline": null,
+        "current": 0.226,
+        "level": "warn",
+        "rule": "warn above 0.1, alert above 0.25"
+      },
+      {
+        "signal": "injection_flag_rate",
+        "baseline": 0.05,
+        "current": 0.0,
+        "level": "warn",
+        "rule": "warn if it moves more than 0.03, alert above 0.06"
+      }
+    ],
+    "checks": [
+      {
+        "signal": "route_mix shift (PSI)",
+        "baseline": null,
+        "current": 0.025,
+        "level": "ok",
+        "rule": "warn above 0.1, alert above 0.25"
+      },
+      {
+        "signal": "denial_reason_mix shift (PSI)",
+        "baseline": null,
+        "current": 0.226,
+        "level": "warn",
+        "rule": "warn above 0.1, alert above 0.25"
+      },
+      {
+        "signal": "confidence shift (PSI)",
+        "baseline": null,
+        "current": 0.064,
+        "level": "ok",
+        "rule": "warn above 0.1, alert above 0.25"
+      },
+      {
+        "signal": "rules_share",
+        "baseline": 0.285,
+        "current": 0.28,
+        "level": "ok",
+        "rule": "warn if it moves more than 0.05, alert above 0.1"
+      },
+      {
+        "signal": "disagree_rate",
+        "baseline": 0.03,
+        "current": 0.02,
+        "level": "ok",
+        "rule": "warn if it moves more than 0.03, alert above 0.06"
+      },
+      {
+        "signal": "review_share",
+        "baseline": 0.075,
+        "current": 0.1,
+        "level": "ok",
+        "rule": "warn if it moves more than 0.03, alert above 0.06"
+      },
+      {
+        "signal": "injection_flag_rate",
+        "baseline": 0.05,
+        "current": 0.0,
+        "level": "warn",
+        "rule": "warn if it moves more than 0.03, alert above 0.06"
+      },
+      {
+        "signal": "mean_appeal_win_odds",
+        "baseline": 0.5722,
+        "current": 0.5788,
+        "level": "ok",
+        "rule": "warn if it moves more than 0.05, alert above 0.1"
+      },
+      {
+        "signal": "cost_per_denial_usd",
+        "baseline": 0.0103,
+        "current": 0.01064,
+        "level": "ok",
+        "rule": "warn above +20%, alert above +50%"
+      }
+    ]
+  },
+  "feedback": {
+    "learn_days": [
+      1,
+      2,
+      3
+    ],
+    "appeal_outcomes": 19,
+    "appeals_won": 8,
+    "reviewer_decisions": 6,
+    "reviewer_overrides": 2,
+    "corrections": [
+      {
+        "payer": "Northwind Health Plan",
+        "root_cause": "prior_authorization",
+        "factor": 0.53
+      }
+    ],
+    "cells": [
+      {
+        "payer": "Bluewater Mutual Insurance",
+        "root_cause": "medical_necessity",
+        "appeals": 1,
+        "wins": 1,
+        "expected_wins": 0.7,
+        "factor": 1.0,
+        "applied": false
+      },
+      {
+        "payer": "Bluewater Mutual Insurance",
+        "root_cause": "non_covered_service",
+        "appeals": 1,
+        "wins": 1,
+        "expected_wins": 0.61,
+        "factor": 1.0,
+        "applied": false
+      },
+      {
+        "payer": "Bluewater Mutual Insurance",
+        "root_cause": "prior_authorization",
+        "appeals": 2,
+        "wins": 0,
+        "expected_wins": 1.26,
+        "factor": 1.0,
+        "applied": false
+      },
+      {
+        "payer": "Lakeshore Medicaid Partners",
+        "root_cause": "medical_necessity",
+        "appeals": 1,
+        "wins": 1,
+        "expected_wins": 0.15,
+        "factor": 1.0,
+        "applied": false
+      },
+      {
+        "payer": "Medicare Part B (synthetic jurisdiction)",
+        "root_cause": "medical_necessity",
+        "appeals": 1,
+        "wins": 0,
+        "expected_wins": 0.15,
+        "factor": 1.0,
+        "applied": false
+      },
+      {
+        "payer": "Northwind Health Plan",
+        "root_cause": "medical_necessity",
+        "appeals": 1,
+        "wins": 0,
+        "expected_wins": 0.7,
+        "factor": 1.0,
+        "applied": false
+      },
+      {
+        "payer": "Northwind Health Plan",
+        "root_cause": "prior_authorization",
+        "appeals": 7,
+        "wins": 1,
+        "expected_wins": 3.82,
+        "factor": 0.53,
+        "applied": true
+      },
+      {
+        "payer": "Northwind Health Plan",
+        "root_cause": "registration_eligibility",
+        "appeals": 1,
+        "wins": 1,
+        "expected_wins": 0.67,
+        "factor": 1.0,
+        "applied": false
+      },
+      {
+        "payer": "Summit Care Advantage",
+        "root_cause": "non_covered_service",
+        "appeals": 2,
+        "wins": 1,
+        "expected_wins": 1.21,
+        "factor": 1.0,
+        "applied": false
+      },
+      {
+        "payer": "Summit Care Advantage",
+        "root_cause": "registration_eligibility",
+        "appeals": 1,
+        "wins": 1,
+        "expected_wins": 0.67,
+        "factor": 1.0,
+        "applied": false
+      },
+      {
+        "payer": "Summit Care Advantage",
+        "root_cause": "timely_filing",
+        "appeals": 1,
+        "wins": 1,
+        "expected_wins": 0.8,
+        "factor": 1.0,
+        "applied": false
+      }
+    ]
+  },
+  "days_4_to_7": {
+    "denials": 85,
+    "drifting_denials": 21,
+    "before": {
+      "value_captured": 0.9981436045855805,
+      "dollars_lost_usd": 211.31,
+      "appeal_precision": 0.90625,
+      "appeal_recall": 1.0,
+      "ci": [
+        0.9964,
+        0.9992
+      ]
+    },
+    "after": {
+      "value_captured": 0.998705767959622,
+      "dollars_lost_usd": 147.32,
+      "appeal_precision": 0.9354838709677419,
+      "appeal_recall": 1.0,
+      "ci": [
+        0.9978,
+        0.9994
+      ]
+    },
+    "changed_decisions": [
+      "DN-91254"
+    ]
+  }
+}
