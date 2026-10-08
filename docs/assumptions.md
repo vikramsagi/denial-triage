@@ -43,6 +43,11 @@ Every number or rule that the results depend on but that was not measured direct
 | A20 | Letters may omit facts that weaken the case | Letters state only cited facts that support payment | `prompts/draft_v4.md` | Usual practice in appeals; the payer holds the same records. Limited cases go to a person before sending | Judge review of omissions |
 | A21 | A person resolves every two-read disagreement correctly | Same as A8 | `evals/two_read.py` | No reviewer data. The value captured for the system alone is reported beside it | Rerun with reviewers right 85% of the time |
 | A22 | Monthly queue sizes used for grading cost | 1,000, 5,000, and 25,000 denials | ADR-005 | Scenarios for a small, mid-size, and large provider. Not measured | Replace with a real provider's volume |
+| A23 | The payer policy that decides a denial is already in the record | 41 of 200 dev records carry a one-line policy excerpt as a documentation line | Generator, classifier, letters | Simplification. In practice a biller looks the policy up by payer, procedure code, and service date, and policies change between versions | Planned retrieval add-on: remove the excerpts into a policy library and compare value captured with and without the lookup |
+| A24 | Appeal outcomes after launch | Each appeal filed in the simulated week wins with its answer-key win odds, drawn with a fixed seed | `triage/feedback.py` | No real outcome feed. Real outcomes arrive weeks later | Replace with a provider's real appeal outcomes |
+| A25 | The simulated payer change | Northwind Health Plan: prior-authorization share of denials 13% to 30%, new note wording, appeal win odds times 0.2 | `data/generate_week.py` | Chosen to change the right action on some claims. Real changes vary | Rerun the week with a milder (times 0.5) and a harsher change |
+| A26 | Monitoring thresholds | PSI warn 0.10, alert 0.25; rate bands in ADR-006 | `triage/monitor.py` | Common rules of thumb, set before the test week and not adjusted after | Tune on several months of production events |
+| A27 | Feedback correction strength | Corrections need 4 outcomes and are pulled toward 1.0 by 4 pseudo-appeals | `triage/feedback.py` | Set before the test week to avoid swings from a few outcomes | Compare 2, 4, and 8 pseudo-appeals on a second simulated week |
 
 ## Change history
 
