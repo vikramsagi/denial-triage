@@ -155,7 +155,10 @@ def run_one(d: DenialInput, config_name: str, rec: Recorder, table: dict) -> Res
 
     t = time.perf_counter()
     p, row = probability.lookup(c, table)
-    rec.emit(did, TraceStep(stage="probability", summary=f"overturn probability {p:.3f} from table row {row}", inputs={"row": row}, output={"p": p}), started=t)
+    p, factor = probability.adjusted(p, d.payer.name, c.root_cause)
+    note = f", payer correction x{factor:.2f}" if factor != 1.0 else ""
+    rec.emit(did, TraceStep(stage="probability", summary=f"overturn probability {p:.3f} from table row {row}{note}",
+                            inputs={"row": row, "payer_factor": factor}, output={"p": p}), started=t)
 
     t = time.perf_counter()
     decision = router.route(c, allowed, p, force_review=force)
