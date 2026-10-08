@@ -151,6 +151,7 @@ The gain is small and the ranges overlap. Most of the affected claims were still
 
 In the order I would do them, with the reason for each.
 
+- [ ] **Make a write-off the hardest action to take.** A write-off cannot be undone, and the costliest miss was one. Every write-off would need stronger evidence than other actions, plus a check before it is final.
 - [ ] **Add an eligibility lookup for other insurance.** The costliest miss came from reading coverage status out of a note. Structured eligibility data would answer that question directly.
 - [ ] **Look up payer policy by payer, procedure code and service date.** Policies change often. Fetching the version in force on the date of service is how billing teams work, and it would show policy changes to the monitor directly.
 - [ ] **Calibrate the judge.** Collect grades from a billing specialist and test a judge from a different model family against them.
