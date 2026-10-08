@@ -2,14 +2,33 @@
 
 An AI agent that works a queue of denied medical claims. It finds why each claim was denied, appeals only when the expected recovery is greater than the cost of the appeal, and drafts appeal letters in which every fact cites the source document. Quality is measured with evals on a frozen held-out set.
 
-![Held-out value captured](https://img.shields.io/badge/held--out_value_captured-99.1%25-6941E6)
-![Cost per denial](https://img.shields.io/badge/cost_per_denial-0.018_USD-6941E6)
-![Tests](https://img.shields.io/badge/tests-93_passing-0F8F7A)
-![Data](https://img.shields.io/badge/data-100%25_synthetic-8C8899)
+<img src="docs/img/badges.svg" alt="Held-out value captured 99.1%. Cost per denial 0.018 USD. Tests: 93 passing. Data: 100% synthetic." height="32">
 
 [Live demo](https://vikramsagi.github.io/denial-triage/demo/) · [Evaluation report](docs/eval-report.md) · [Design decisions](docs/adr/) · [Run it yourself](#run-it-yourself)
 
 All data is synthetic. This project is not for clinical or billing use.
+
+## Contents
+
+- [The problem](#the-problem)
+- [The solution](#the-solution)
+  - [What it does](#what-it-does)
+  - [Demo](#demo)
+  - [How it works](#how-it-works)
+  - [One denial, end to end](#one-denial-end-to-end)
+  - [Results](#results)
+- [Key decisions & Tradeoffs](#key-decisions--tradeoffs)
+- [How quality was proven](#how-quality-was-proven)
+- [After launch](#after-launch)
+- [What did not work](#what-did-not-work)
+- [What I would do differently](#what-i-would-do-differently)
+- [Next steps](#next-steps)
+- [Run it yourself](#run-it-yourself)
+  - [Try it without spending anything](#try-it-without-spending-anything)
+  - [Run it with your own API key](#run-it-with-your-own-api-key)
+  - [Try your own models](#try-your-own-models)
+  - [Reproduce my numbers](#reproduce-my-numbers)
+- [Built with](#built-with)
 
 ## The problem
 
