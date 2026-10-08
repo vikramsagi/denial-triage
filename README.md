@@ -101,6 +101,8 @@ Six decisions shaped the system. For each one: what I rejected, the number that 
 
 <img src="docs/img/decisions-table.svg" alt="Six decisions with what was rejected, what settled it, and what each gains and gives up in architecture and business terms. In focus: a small model with thinking reads every denial; ask twice and send disagreements to a person." width="100%">
 
+Why Claude at all: it is what I use for my own work, so I built on it and compared the Claude models against each other. A judge from a different model family is on the list of things I would change.
+
 Decision records, with every option and the full evidence: [small model reads](docs/adr/ADR-002-model-tiering.md) · [ask twice](docs/adr/ADR-004-two-read-agreement-check.md) · [letter judge](docs/adr/ADR-005-letter-judge.md) · [rules read formats](docs/adr/ADR-001-rules-first-then-model.md) · [citation check](docs/adr/ADR-003-grounded-drafting.md) · [monitoring and feedback](docs/adr/ADR-006-monitoring-and-feedback.md)
 
 ## How quality was proven
