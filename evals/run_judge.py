@@ -42,22 +42,21 @@ def planted(letters: dict[str, dict], denials: dict) -> list[dict]:
     return out
 
 
-def main(letters_path: str) -> dict:
-    denials = {d.denial_id: d for d in load_split("dev")}
-    letters = {json.loads(l)["denial_id"]: json.loads(l) for l in (ROOT / letters_path).read_text().splitlines()}
-    items = [{"denial_id": k, "letter": v["letter"], "case_strength": v["case_strength"], "planted": None} for k, v in letters.items() if v["passed"]]
-    plant_from = {json.loads(l)["denial_id"]: json.loads(l) for l in (ROOT / PLANT_SOURCE).read_text().splitlines()}
-    items += planted(plant_from, denials)
-    stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run_id = f"{stamp}-judge"
+def grade_batch(items: list[dict], denials: dict, run_id: str) -> list[dict]:
+    """Grade letters through the batch API. Each item has denial_id, letter, case_strength."""
+    if not items:
+        return []
     reqs = [(f"{i:03d}-{x['denial_id']}", judge.user_message(denials[x["denial_id"]], x["letter"], x["case_strength"])) for i, x in enumerate(items)]
-    batch_id = llm.submit_batch(tier=judge.JUDGE_TIER, system=judge.system_prompt(), items=reqs, tool=judge.TOOL, max_tokens=judge.JUDGE_MAX_TOKENS)
-    print("batch submitted:", batch_id, len(reqs), "letters")
-    got = llm.collect_batch(batch_id, tier=judge.JUDGE_TIER, purpose="judge", run_id=run_id, poll_s=20)
+    if llm.mock_mode():
+        got = {cid: {"output": judge._mock(""), "cost_usd": 0.0} for cid, _ in reqs}
+    else:
+        batch_id = llm.submit_batch(tier=judge.JUDGE_TIER, system=judge.system_prompt(), items=reqs, tool=judge.TOOL, max_tokens=judge.JUDGE_MAX_TOKENS)
+        print("batch submitted:", batch_id, len(reqs), "letters")
+        got = llm.collect_batch(batch_id, tier=judge.JUDGE_TIER, purpose="judge", run_id=run_id, poll_s=20)
     rows = []
     for (cid, _), x in zip(reqs, items):
         g = got.get(cid, {"error": "missing"})
-        out = g.get("output", {})
+        out = dict(g.get("output", {}))
         try:
             judge.validate(out)
             out["ship"] = judge.ship_rule(out)
@@ -66,11 +65,23 @@ def main(letters_path: str) -> dict:
             err = f"{type(e).__name__}: {e}"
         rows.append(x | {"grade": out if not err else None, "error": err or g.get("error"), "cost_usd": g.get("cost_usd", 0),
                          "words": len(x["letter"].split())})
+    return rows
+
+
+def main(letters_path: str) -> dict:
+    denials = {d.denial_id: d for d in load_split("dev")}
+    letters = {json.loads(l)["denial_id"]: json.loads(l) for l in (ROOT / letters_path).read_text().splitlines()}
+    items = [{"denial_id": k, "letter": v["letter"], "case_strength": v["case_strength"], "planted": None} for k, v in letters.items() if v["passed"]]
+    plant_from = {json.loads(l)["denial_id"]: json.loads(l) for l in (ROOT / PLANT_SOURCE).read_text().splitlines()}
+    items += planted(plant_from, denials)
+    stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    run_id = f"{stamp}-judge"
+    rows = grade_batch(items, denials, run_id)
     (ROOT / "results" / f"judge_dev_{judge.JUDGE_PROMPT_VERSION}_on_{Path(letters_path).stem}.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows))
     real = [r for r in rows if not r["planted"] and r["grade"]]
     plants = [r for r in rows if r["planted"]]
     summary = {
-        "run_id": run_id, "batch_id": batch_id, "split": "dev", "letters_from": letters_path, "judge_model": llm.config.MODELS[judge.JUDGE_TIER]["id"],
+        "run_id": run_id, "split": "dev", "letters_from": letters_path, "judge_model": llm.config.MODELS[judge.JUDGE_TIER]["id"],
         "prompt_version": judge.JUDGE_PROMPT_VERSION, "graded": len(real), "errors": sum(1 for r in rows if not r["grade"]),
         "ship": sum(r["grade"]["ship"] for r in real),
         "mean_scores": {c: round(sum(r["grade"][c] for r in real) / len(real), 2) for c in judge.CRITERIA} if real else {},
