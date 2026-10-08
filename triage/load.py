@@ -11,7 +11,7 @@ from pathlib import Path
 from triage.schema import DenialInput
 
 DATA = Path(__file__).resolve().parent.parent / "data"
-SPLITS = {"dev", "heldout"}
+SPLITS = {"dev", "heldout", "week"}   # week: simulated post-launch week, never used for tuning
 
 
 class HeldoutLocked(RuntimeError):
