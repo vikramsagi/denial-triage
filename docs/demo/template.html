@@ -203,6 +203,9 @@ a.gh svg { width: 16px; height: 16px; fill: currentColor; }
 .src-link { font-size: 13px; }
 footer { margin-top: 40px; font-size: 13px; color: var(--muted); max-width: 80ch; }
 @media (prefers-reduced-motion: no-preference) { tbody tr, .tour button { transition: background .12s, border-color .12s; } }
+.toggle[hidden]{display:none}
+.more-link{margin-top:16px;color:var(--muted);font-size:14px}
+.more-link a{color:var(--primary);font-weight:600}
 </style>
 
 <header class="top">
@@ -228,7 +231,8 @@ footer { margin-top: 40px; font-size: 13px; color: var(--muted); max-width: 80ch
       <h2>Which denied claims are worth fighting for?</h2>
       <p>When an insurer denies a hospital claim, a billing specialist has to choose: fix the claim and resend it, appeal the decision, or write the money off. An appeal costs 57 to 108 USD of staff time, so appealing everything wastes money and appealing nothing leaves revenue unpaid.</p>
       <p>This prototype makes that choice for every denial, shows its reasoning step by step, writes the appeal letter, and hands the cases it should not decide alone to a person.</p>
-      <div class="cta"><a class="btn" href="#tour">Take the 3-minute tour</a><a class="btn ghost" href="#queue">Browse all 200 denials</a><a class="btn ghost" href="#results">See the results</a><a class="btn ghost" href="https://github.com/vikramsagi/denial-triage" target="_blank" rel="noopener">Read the code</a></div>
+      <div class="cta"><a class="btn" href="#tour">Take the 3-minute tour</a><a class="btn ghost" href="#queue">Browse all 200 denials</a><a class="btn ghost" href="#results">See the results</a></div>
+      <p class="more-link">Want the full story, including what did not work? <a href="https://github.com/vikramsagi/denial-triage#readme" target="_blank" rel="noopener">Read the case study</a></p>
     </div>
     <div class="tiles">
       <div class="tile"><b>99.9%</b><span class="t">of recoverable dollars captured</span><span class="s">on the 200 development denials shown here, against 83.1% without AI. On 100 held-out denials: 99.1%</span></div>
@@ -258,7 +262,7 @@ footer { margin-top: 40px; font-size: 13px; color: var(--muted); max-width: 80ch
       <div style="display:flex;flex-direction:column;gap:14px">
         <div class="readhow"><b>How to read this demo</b>
           <p>The 200 denials are synthetic, so each one has a known right answer. That lets every decision be scored in dollars: what the system earned against the best possible action.</p>
-          <p>Use <b>Show the right answers</b> at the top to hide them and see only what the system saw.</p>
+          <p>On the denial pages, turn off <b>Show the right answers</b> at the top to see only what the system saw.</p>
           <p>Nothing here calls an AI model. The page replays saved results, so it shows exactly what happened in the test run.</p></div>
         <details class="gloss" id="glossary"><summary>Terms used on this page</summary><dl>
           <dt>Denial</dt><dd>An insurer's refusal to pay a claim, sent with a reason code.</dd>
@@ -518,6 +522,7 @@ function show(view) {
   ["overview", "queue", "replay", "results"].forEach(v => { $("#v-" + v).hidden = v !== view; });
   const tab = view === "replay" ? (inTour ? "tour" : "queue") : view;
   document.querySelectorAll("nav.tabs a").forEach(a => { if (a.dataset.view === tab) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  $("#truth-toggle").closest("label").hidden = !["queue", "replay"].includes(view);
   if (view === "replay") drawReplay();
   window.scrollTo(0, 0);
 }
