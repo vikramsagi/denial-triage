@@ -41,7 +41,7 @@
 
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.55 var(--f-body); }
-.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 0 48px; }
+.wrap { max-width: 1440px; margin: 0 auto; padding-inline: clamp(20px, 4vw, 64px); padding-block: 0 48px; }
 h1, h2, h3 { font-family: var(--f-display); font-weight: 600; line-height: 1.15; text-wrap: balance; margin: 0; }
 h1 { font-size: 26px; letter-spacing: .01em; }
 h2 { font-size: 21px; }
@@ -54,7 +54,7 @@ button, select, input { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--form); outline-offset: 2px; }
 
 header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); border-bottom: 1px solid var(--rule); }
-header.top .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding-block: 14px 12px; }
+header.top .wrap { max-width: none; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding-block: 14px 12px; }
 .brand { display: flex; flex-direction: column; gap: 2px; margin-right: auto; }
 .brand p { margin: 0; font-size: 13px; color: var(--muted); }
 nav.tabs { display: flex; gap: 4px; }
@@ -162,6 +162,9 @@ ul.docs li.key { box-shadow: inset 4px 0 0 var(--mark); }
 .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 12px; border: 1px solid var(--form); background: var(--form); color: var(--on-form); font-weight: 600; text-decoration: none; cursor: pointer; }
 .btn.ghost { background: transparent; color: var(--form); }
 .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-block: 26px; }
+.lead { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 64px; align-items: center; margin-bottom: 32px; }
+.lead .tiles { grid-template-columns: minmax(0, 1fr); margin: 0; }
+@media (max-width: 1100px) { .lead { grid-template-columns: minmax(0, 1fr); gap: 0; margin-bottom: 0; } .lead .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-block: 26px; } }
 @media (max-width: 760px) { .tiles { grid-template-columns: minmax(0, 1fr); } }
 .tile { background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 4px; }
 .tile b { font: 700 34px/1 var(--f-display); font-variant-numeric: tabular-nums; color: var(--gain); }
@@ -210,7 +213,7 @@ a.gh svg { width: 16px; height: 16px; fill: currentColor; }
 .src-link { font-size: 13px; }
 footer { margin-top: 40px; font-size: 13px; color: var(--muted); max-width: 80ch; }
 @media (prefers-reduced-motion: no-preference) { tbody tr, .tour button { transition: background .12s, border-color .12s; } }
-.toggle[hidden]{display:none}
+[hidden]{display:none !important}
 .more-link{margin-top:16px;color:var(--muted);font-size:14px}
 .more-link a{color:var(--primary);font-weight:600}
 </style>
@@ -234,6 +237,7 @@ footer { margin-top: 40px; font-size: 13px; color: var(--muted); max-width: 80ch
 
 <main class="wrap">
   <section class="view" id="v-overview">
+    <div class="lead">
     <div class="hero">
       <h2>Which denied claims are worth fighting for?</h2>
       <p>When an insurer denies a hospital claim, a billing specialist has to choose: fix the claim and resend it, appeal the decision, or write the money off. An appeal costs 57 to 108 USD of staff time, so appealing everything wastes money and appealing nothing leaves revenue unpaid.</p>
@@ -245,6 +249,7 @@ footer { margin-top: 40px; font-size: 13px; color: var(--muted); max-width: 80ch
       <div class="tile"><b>99.9%</b><span class="t">of recoverable dollars captured</span><span class="s">on the 200 development denials shown here, against 83.1% without AI. On 100 held-out denials: 99.1%</span></div>
       <div class="tile"><b>7.5%</b><span class="t">of denials sent to a person</span><span class="s">the uncertain and high-value ones, each with a recommendation and reasons attached</span></div>
       <div class="tile"><b>2 cents</b><span class="t">of AI cost per denial</span><span class="s">0.0185 USD, including two reads, the letter, and a review of the letter</span></div>
+    </div>
     </div>
     <h2 style="margin-bottom:12px">How a denial moves through the system</h2>
     <ol class="flow">
