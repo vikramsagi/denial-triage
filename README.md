@@ -29,6 +29,7 @@ All data is synthetic. This project is not for clinical or billing use.
   - [Try your own models](#try-your-own-models)
   - [Reproduce my numbers](#reproduce-my-numbers)
 - [Built with](#built-with)
+- [License](#license)
 
 ## The problem
 
@@ -213,6 +214,10 @@ Model answers vary a little between runs, so expect small differences from the s
 - **Data:** 450 synthetic denials from a seeded generator: 200 for development, 100 held out and 150 for the simulated week. See the [data card](docs/data-card.md).
 
 More detail: [brief](docs/brief.md) · [evaluation report](docs/eval-report.md) · [assumptions](docs/assumptions.md) · [decision records](docs/adr/)
+
+## License
+
+Released under the [MIT License](LICENSE). The data is synthetic and the project is not for clinical or billing use.
 
 ---
 
